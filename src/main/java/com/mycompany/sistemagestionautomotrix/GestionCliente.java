@@ -1,5 +1,5 @@
 package com.mycompany.sistemagestionautomotrix;
-
+// @author Huber Herrera
 public interface GestionCliente {
     
     void crear(Cliente cliente);
