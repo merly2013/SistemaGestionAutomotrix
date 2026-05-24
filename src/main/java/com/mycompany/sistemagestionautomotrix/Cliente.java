@@ -1,4 +1,5 @@
 package com.mycompany.sistemagestionautomotrix;
+// @author Huber Herrera
 
 public class Cliente extends Persona {
 
