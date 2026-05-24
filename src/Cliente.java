@@ -1,4 +1,4 @@
-package src;
+package com.mycompany.sistemagestionautomotriz;
 
 public class Cliente extends Persona {
 
