@@ -22,7 +22,7 @@ public class VehiculoService implements GestionVehiculo {
     @Override
     public Vehiculo buscar(String id) {
         for (Vehiculo v : vehiculos) {
-            if (v.getId().equals(id)) {
+            if (v.getPlaca().equals(id)) {
                 return v;
             }
         }
@@ -32,7 +32,7 @@ public class VehiculoService implements GestionVehiculo {
     @Override
     public void modificar(Vehiculo v) {
         for (int i = 0; i < vehiculos.size(); i++) {
-            if (vehiculos.get(i).getId().equals(v.getId())) {
+            if (vehiculos.get(i).getPlaca().equals(v.getPlaca())) {
                 vehiculos.set(i, v);
                 break;
             }
@@ -41,7 +41,7 @@ public class VehiculoService implements GestionVehiculo {
 
     @Override
     public void eliminar(String id) {
-        vehiculos.removeIf(v -> v.getId().equals(id));
+        vehiculos.removeIf(v -> v.getPlaca().equals(id));
     }
 
     public ArrayList<Vehiculo> consultar() {
