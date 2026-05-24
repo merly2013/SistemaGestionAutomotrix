@@ -1,4 +1,4 @@
-package src;
+package com.mycompany.sistemagestionautomotrix;
 
 public class Cliente extends Persona {
 

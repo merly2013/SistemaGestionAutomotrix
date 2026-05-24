@@ -1,15 +1,9 @@
-package src;
-
-
-
+package com.mycompany.sistemagestionautomotrix;
 
 public abstract class Persona {
 
 protected String nombre;
 protected int id;
-
-
-
 
 public Persona(String nombre, int id) {
     this.nombre = nombre;

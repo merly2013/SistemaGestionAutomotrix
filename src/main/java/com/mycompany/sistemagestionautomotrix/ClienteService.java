@@ -1,11 +1,9 @@
-package src;
+package com.mycompany.sistemagestionautomotrix;
 
 import java.util.ArrayList;
 
 public class ClienteService implements GestionCliente {
-    
-
-
+ 
     private ArrayList<Cliente> clientes;
 
     public ClienteService() {
