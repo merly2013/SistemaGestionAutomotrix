@@ -54,5 +54,9 @@ public class Orden {
 
         return total;
     }
+    
+    public Factura generarFactura() {
+        return new Factura(this);
+    }
 }
     
