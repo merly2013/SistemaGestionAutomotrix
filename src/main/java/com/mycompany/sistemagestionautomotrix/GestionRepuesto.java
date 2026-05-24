@@ -6,8 +6,12 @@ package com.mycompany.sistemagestionautomotrix;
 
 
 public interface GestionRepuesto {
-    void registrarRepuesto();
-    void actualizarRepuesto();
-    void eliminarRepuesto();
-    void listarRepuestos();
+
+    void crear(Repuesto r);
+
+    Repuesto buscar(String id);
+
+    void modificar(Repuesto r);
+
+    void eliminar(String id);
 }

@@ -4,101 +4,47 @@
  */
 package com.mycompany.sistemagestionautomotrix;
 
-import Interfaces.GestionVehiculo;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 
 public class VehiculoService implements GestionVehiculo {
-    private List<Vehiculo> vehiculos;
-    private static final String FILE_NAME = "vehiculos.dat";
-    private Scanner scanner;
+
+    private ArrayList<Vehiculo> vehiculos;
 
     public VehiculoService() {
-        this.vehiculos = new ArrayList<>();
-        this.scanner = new Scanner(System.in);
-        cargarDesdeArchivo();
+        vehiculos = new ArrayList<>();
     }
 
     @Override
-    public void registrarVehiculo() {
-        System.out.println("=== Registrar Vehículo ===");
-        System.out.print("Placa: ");
-        String placa = scanner.nextLine();
-        System.out.print("Marca: ");
-        String marca = scanner.nextLine();
-        System.out.print("Modelo: ");
-        String modelo = scanner.nextLine();
-
-        Vehiculo v = new Vehiculo(placa, marca, modelo);
+    public void crear(Vehiculo v) {
         vehiculos.add(v);
-        guardarEnArchivo();
-        System.out.println("Vehículo registrado.");
     }
 
     @Override
-    public void actualizarVehiculo() {
-        System.out.print("Ingrese placa: ");
-        String placa = scanner.nextLine();
-        Vehiculo v = buscarVehiculo(placa);
-        if (v != null) {
-            System.out.print("Nueva marca (" + v.getMarca() + "): ");
-            v.setMarca(scanner.nextLine());
-            System.out.print("Nuevo modelo (" + v.getModelo() + "): ");
-            v.setModelo(scanner.nextLine());
-            guardarEnArchivo();
-            System.out.println("Vehículo actualizado.");
-        } else {
-            System.out.println("Vehículo no encontrado.");
+    public Vehiculo buscar(String id) {
+        for (Vehiculo v : vehiculos) {
+            if (v.getId().equals(id)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void modificar(Vehiculo v) {
+        for (int i = 0; i < vehiculos.size(); i++) {
+            if (vehiculos.get(i).getId().equals(v.getId())) {
+                vehiculos.set(i, v);
+                break;
+            }
         }
     }
 
     @Override
-    public void eliminarVehiculo() {
-        System.out.print("Ingrese placa: ");
-        String placa = scanner.nextLine();
-        vehiculos.removeIf(v -> v.getPlaca().equals(placa));
-        guardarEnArchivo();
-        System.out.println("Vehículo eliminado.");
+    public void eliminar(String id) {
+        vehiculos.removeIf(v -> v.getId().equals(id));
     }
 
-    @Override
-    public void listarVehiculos() {
-        if (vehiculos.isEmpty()) {
-            System.out.println("No hay vehículos registrados.");
-        } else {
-            vehiculos.forEach(System.out::println);
-        }
-    }
-
-    private Vehiculo buscarVehiculo(String placa) {
-        return vehiculos.stream().filter(v -> v.getPlaca().equals(placa)).findFirst().orElse(null);
-    }
-
-    private void guardarEnArchivo() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_NAME))) {
-            oos.writeObject(vehiculos);
-        } catch (IOException e) {
-            System.err.println("Error guardando vehículos: " + e.getMessage());
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void cargarDesdeArchivo() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) return;
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_NAME))) {
-            vehiculos = (List<Vehiculo>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error cargando vehículos: " + e.getMessage());
-        }
+    public ArrayList<Vehiculo> consultar() {
+        return vehiculos;
     }
 }
-
