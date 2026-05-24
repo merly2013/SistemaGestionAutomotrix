@@ -1,0 +1,12 @@
+# Ignorar los archivos compilados de Maven (La carpeta target)
+target/
+
+# Ignorar archivos temporales o de configuración del sistema
+*.class
+.DS_Store
+Thumbs.db
+
+# Opcional: Ignorar carpetas ocultas de configuración de editores (si aparecen)
+.vscode/
+.idea/
+*.iml
