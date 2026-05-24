@@ -5,8 +5,12 @@
 package com.mycompany.sistemagestionautomotrix;
 
 public interface GestionOrden {
-    void crearOrden();
-    void actualizarOrden();
-    void eliminarOrden();
-    void listarOrdenes();
+
+    void crear(Orden o);
+
+    Orden buscar(String id);
+
+    void modificar(Orden o);
+
+    void eliminar(String id);
 }

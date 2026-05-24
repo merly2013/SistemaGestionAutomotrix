@@ -6,8 +6,12 @@ package com.mycompany.sistemagestionautomotrix;
 
 
 public interface GestionVehiculo {
-    void registrarVehiculo();
-    void actualizarVehiculo();
-    void eliminarVehiculo();
-    void listarVehiculos();
+
+    void crear(Vehiculo v);
+
+    Vehiculo buscar(String id);
+
+    void modificar(Vehiculo v);
+
+    void eliminar(String id);
 }
