@@ -1,6 +1,6 @@
 package com.mycompany.sistemagestionautomotrix;
 
-public abstract class Vehiculo implements java.io.Serializable {
+public abstract class Vehiculo {
     
     protected String placa;
     protected String marca;
