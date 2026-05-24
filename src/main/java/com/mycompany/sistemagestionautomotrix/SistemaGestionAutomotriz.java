@@ -1,7 +1,5 @@
 
-
 package com.mycompany.sistemagestionautomotrix;
-
 // @author Merlin landero
 
 public class SistemaGestionAutomotriz {

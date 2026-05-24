@@ -1,7 +1,4 @@
-package com.mycompany.sistemagestionautomotriz;
-
-
-
+package com.mycompany.sistemagestionautomotrix;
 
 public abstract class Persona {
 

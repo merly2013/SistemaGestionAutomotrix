@@ -1,4 +1,4 @@
-package com.mycompany.sistemagestionautomotriz;
+package com.mycompany.sistemagestionautomotrix;
 
 public interface GestionCliente {
     

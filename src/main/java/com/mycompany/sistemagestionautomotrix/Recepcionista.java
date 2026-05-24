@@ -1,4 +1,4 @@
-package com.mycompany.sistemagestionautomotriz;
+package com.mycompany.sistemagestionautomotrix;
 
 public class Recepcionista extends Persona {
     
@@ -30,7 +30,4 @@ public class Recepcionista extends Persona {
         System.out.println("La recepcionista " + nombre + " ha registrado la orden.");
 
     }
-
-    
-
 }
