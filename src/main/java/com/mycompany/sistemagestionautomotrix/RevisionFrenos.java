@@ -42,7 +42,7 @@ public class RevisionFrenos extends Servicio{
 
     @Override
     public void ejecutar() {
-        System.out.println("Revisando frenos del vehículo");
+        System.out.println("Revisando frenos del vehiculo");
         System.out.println(diagnosticar());
         System.out.println(generarReporte());
     }

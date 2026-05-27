@@ -37,8 +37,8 @@ public class Factura {
         System.out.println("=== FACTURA ===");
         System.out.println("Fecha: " + fecha);
         System.out.println("Cliente: " + orden.getCliente().getNombre());
-        System.out.println("Vehículo: " + orden.getVehiculo().getPlaca());
-        System.out.println("Mecánico: " + orden.getMecanico().getNombre());
+        System.out.println("Vehiculo: " + orden.getVehiculo().getPlaca());
+        System.out.println("Mecanico: " + orden.getMecanico().getNombre());
         System.out.println("Servicios realizados:");
         
         for (Servicio s : orden.getServicios()) {
