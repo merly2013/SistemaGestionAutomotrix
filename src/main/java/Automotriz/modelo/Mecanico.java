@@ -1,4 +1,4 @@
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.modelo;
 // @author Huber Herrera
 
 public class Mecanico extends Persona {
@@ -13,16 +13,17 @@ public class Mecanico extends Persona {
         this.disponible = disponible;
     }
 
-
     public int getMaxOrdenes() {
         return maxOrdenes;
     }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-
+    //metodos
     public boolean isDisponible() {
         return disponible;
     }
-
 
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
@@ -36,12 +37,8 @@ public class Mecanico extends Persona {
             ", disponible: " + disponible +
             ' ';
 }
-
-
     public void setMaxOrdenes(int maxOrdenes) {
         this.maxOrdenes = maxOrdenes;
     }
-
-
 
 }

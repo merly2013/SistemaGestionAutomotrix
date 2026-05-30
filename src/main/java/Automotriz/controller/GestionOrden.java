@@ -1,6 +1,9 @@
 
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.controller;
 // @author Leonarno Rivera
+
+import Automotriz.modelo.Orden;
+
 
 public interface GestionOrden {
 

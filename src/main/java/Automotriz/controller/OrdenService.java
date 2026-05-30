@@ -1,7 +1,8 @@
 
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.controller;
 // @author Leonarno Rivera
 
+import Automotriz.modelo.Orden;
 import java.util.ArrayList;
 
 public class OrdenService implements GestionOrden {

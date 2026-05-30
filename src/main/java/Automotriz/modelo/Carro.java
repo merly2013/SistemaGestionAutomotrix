@@ -1,4 +1,4 @@
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.modelo;
 // @author Huber Herrera
 
 public class Carro extends Vehiculo {
@@ -17,9 +17,9 @@ public class Carro extends Vehiculo {
     public void setNumPuertas(int numPuertas) {
         this.numPuertas = numPuertas;
     }
-
     
-
-    
-
+    @Override
+    public String toString() {
+        return super.toString() + " (Carro - " + numPuertas + " puertas)";
+    }
 }

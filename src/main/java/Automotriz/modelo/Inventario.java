@@ -1,7 +1,9 @@
 
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.modelo;
 // @author Leonarno Rivera
 
+import Automotriz.modelo.Repuesto;
+import Automotriz.controller.GestionRepuesto;
 import java.util.ArrayList;
 
 public class Inventario implements GestionRepuesto {

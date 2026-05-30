@@ -1,5 +1,8 @@
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.controller;
 // @author Huber Herrera
+
+import Automotriz.modelo.Cliente;
+
 public interface GestionCliente {
     
     void crear(Cliente cliente);

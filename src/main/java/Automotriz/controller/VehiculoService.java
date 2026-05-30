@@ -1,7 +1,8 @@
 
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.controller;
 // @author Leonarno Rivera
 
+import Automotriz.modelo.Vehiculo;
 import java.util.ArrayList;
 
 public class VehiculoService implements GestionVehiculo {

@@ -1,6 +1,9 @@
 
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.modelo;
 // @author Merlin landero
+import Automotriz.modelo.Mecanico;
+import Automotriz.modelo.Cliente;
+import Automotriz.modelo.Factura;
 import java.util.ArrayList;
 
 public class Orden {

@@ -1,6 +1,9 @@
 
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.controller;
 // @author Leonarno Rivera
+
+import Automotriz.modelo.Vehiculo;
+
 
 public interface GestionVehiculo {
 

@@ -1,4 +1,4 @@
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.modelo;
 // @author Huber Herrera
 
 public class Bus extends Vehiculo {
@@ -13,11 +13,12 @@ public class Bus extends Vehiculo {
     public int getCapacidad() {
         return capacidad;
     }
-
     public void setCapacidad(int capacidad) {
         this.capacidad = capacidad;
     }
     
-    
-
+    @Override
+    public String toString() {
+        return super.toString() + " (Bus - " + capacidad + " pasajeros)";
+    }
 }

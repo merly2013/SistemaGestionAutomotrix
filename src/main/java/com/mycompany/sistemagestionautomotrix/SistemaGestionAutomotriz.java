@@ -2,6 +2,15 @@
 package com.mycompany.sistemagestionautomotrix;
 // @author Merlin landero
 
+import Automotriz.modelo.RevisionFrenos;
+import Automotriz.modelo.Orden;
+import Automotriz.modelo.Mecanico;
+import Automotriz.modelo.CambioAceite;
+import Automotriz.modelo.Cliente;
+import Automotriz.modelo.Factura;
+import Automotriz.modelo.Carro;
+
+
 public class SistemaGestionAutomotriz {
 
     public static void main(String[] args) {

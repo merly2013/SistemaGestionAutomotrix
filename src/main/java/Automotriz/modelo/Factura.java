@@ -1,6 +1,7 @@
 
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.modelo;
 // @author Merlin landero
+
 
 public class Factura {
     private String fecha;

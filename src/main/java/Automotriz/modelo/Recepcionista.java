@@ -1,4 +1,4 @@
-package com.mycompany.sistemagestionautomotrix;
+package Automotriz.modelo;
 // @author Huber Herrera
 
 public class Recepcionista extends Persona {
