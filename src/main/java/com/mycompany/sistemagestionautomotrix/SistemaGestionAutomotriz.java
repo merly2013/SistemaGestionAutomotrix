@@ -4,7 +4,7 @@ package com.mycompany.sistemagestionautomotrix;
 
 import Automotriz.modelo.RevisionFrenos;
 import Automotriz.modelo.Usuario;
-import Automotriz.view.LoginFrame;
+
 import Automotriz.modelo.Orden;
 import Automotriz.modelo.Mecanico;
 
@@ -46,14 +46,5 @@ public class SistemaGestionAutomotriz {
         factura.mostrar();
 
         SistemaController sistema = new SistemaController();
-        
-       
-        Automotriz.modelo.Mecanico meca1 = new Automotriz.modelo.Mecanico("Juan Perez", 101, 5, true);
-        sistema.getMecanicoService().crear(meca1);
-       
-        java.awt.EventQueue.invokeLater(() -> {
-            new LoginFrame(sistema).setVisible(true);
-        });
-        
     }
 }
