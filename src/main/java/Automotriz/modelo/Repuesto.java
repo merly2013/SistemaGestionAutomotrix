@@ -4,8 +4,11 @@
  */
 package Automotriz.modelo;
 
+import java.io.Serializable;
 
-public class Repuesto {
+public class Repuesto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String id;
     private String nombre;

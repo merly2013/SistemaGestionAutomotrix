@@ -1,7 +1,11 @@
 package Automotriz.modelo;
 // @author Huber Herrera
 
-public abstract class Vehiculo {
+import java.io.Serializable;
+
+public abstract class Vehiculo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     protected String placa;
     protected String marca;
