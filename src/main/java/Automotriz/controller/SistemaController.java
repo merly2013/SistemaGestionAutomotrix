@@ -21,4 +21,26 @@ public class SistemaController {
     public OrdenService getOrdenService() { return ordenService; }
     public MecanicoService getMecanicoService() { return mecanicoService; }
     public LoginController getLoginController() { return loginController; }
+
+    
+    public void iniciarAplicacion() {
+       
+        Automotriz.modelo.Mecanico meca1 = new Automotriz.modelo.Mecanico("Juan Perez", 101, 5, true);
+        
+        
+        this.mecanicoService.crear(meca1);
+
+
+        
+        java.awt.EventQueue.invokeLater(() -> {
+            new Automotriz.view.LoginFrame(this).setVisible(true);
+        });
+    }
+
+    
+    public static void main(String[] args) {
+        SistemaController sistema = new SistemaController();
+        sistema.iniciarAplicacion();
+    }
+
 }
