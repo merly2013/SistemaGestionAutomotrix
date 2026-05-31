@@ -56,6 +56,11 @@ public class MecanicoService implements GestionMecanico {
             }
         }
     }
+
+    public ArrayList<Mecanico> getMecanicos() {
+   
+       return this.mecanicos; 
+    }
     
     public ArrayList<Mecanico> consultar() {
         return mecanicos;
