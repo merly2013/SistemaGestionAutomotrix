@@ -1,8 +1,11 @@
-
 package Automotriz.modelo;
 // @author Merlin landero
 
-public abstract class Servicio {
+import java.io.Serializable;
+
+public abstract class Servicio implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     protected String descripcion;
     protected double costo;

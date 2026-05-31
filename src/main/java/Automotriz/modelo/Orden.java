@@ -5,8 +5,12 @@ import Automotriz.modelo.Mecanico;
 import Automotriz.modelo.Cliente;
 import Automotriz.modelo.Factura;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Orden {
+public class Orden implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private String fecha;
     private String estado;
@@ -62,4 +66,3 @@ public class Orden {
         return new Factura(this);
     }
 }
-    
