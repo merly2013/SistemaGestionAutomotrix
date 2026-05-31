@@ -6,11 +6,12 @@ public class SistemaController {
     private VehiculoService vehiculoService;
     private OrdenService ordenService;
     private MecanicoService mecanicoService;
-    private LoginController loginController;
+    private LoginController LoginController;
+    
     
     public SistemaController() {
-        loginController = new LoginController();
-        mecanicoService = new MecanicoService(loginController.getUsuarios());
+        LoginController = new LoginController();
+        mecanicoService = new MecanicoService(LoginController.getUsuarios());
         clienteService = new ClienteService();
         vehiculoService = new VehiculoService();
         ordenService = new OrdenService();
@@ -20,6 +21,6 @@ public class SistemaController {
     public VehiculoService getVehiculoService() { return vehiculoService; }
     public OrdenService getOrdenService() { return ordenService; }
     public MecanicoService getMecanicoService() { return mecanicoService; }
-    public LoginController getLoginController() { return loginController; }
+    public LoginController getLoginController() { return LoginController; }
 
 }

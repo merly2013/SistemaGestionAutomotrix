@@ -1,4 +1,7 @@
 package Automotriz.view;
+import Automotriz.controller.SistemaController;
+import Automotriz.modelo.Usuario;
+import javax.swing.JOptionPane;
 
 /**
                     Color(25, 41, 66)    // #192942 
@@ -8,14 +11,21 @@ package Automotriz.view;
                     Color(158, 195, 255) // #9EC3FF
  * @author 57300
  */
-public class loginFrame extends javax.swing.JFrame {
+public class LoginFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(loginFrame.class.getName());
+    private SistemaController sistema;
+
+    public LoginFrame(SistemaController sistema) {
+        initComponents();
+        this.sistema = sistema;
+    }
+    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginFrame.class.getName());
 
     /**
      * Creates new form loginFrame
      */
-    public loginFrame() {
+    public LoginFrame() {
         initComponents();
     }
 
@@ -83,6 +93,33 @@ public class loginFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String usuario = jTextField1.getText();
+    String contrasena = new String(jPasswordField1.getPassword());
+
+    if (usuario.isEmpty() || contrasena.isEmpty()) {
+        JOptionPane.showMessageDialog(this,
+                "Por favor ingrese usuario y contraseña",
+                "Campos vacíos",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    Usuario u = sistema.getLoginController().login(usuario, contrasena);
+
+    if (u == null) {
+        JOptionPane.showMessageDialog(this,
+                "Usuario o contraseña incorrectos",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (u.getRol().equals("RECEPCIONISTA")) {
+        new RecepcionistaFrame(sistema).setVisible(true);
+    } else {
+        new MecanicoFrame(sistema, u.getMecanico()).setVisible(true);
+    }
+    this.dispose();//se supone quecierra el login
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -115,7 +152,7 @@ public class loginFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new loginFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new LoginFrame(new SistemaController()).setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
