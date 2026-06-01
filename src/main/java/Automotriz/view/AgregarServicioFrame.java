@@ -17,11 +17,16 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     public AgregarServicioFrame() {
         initComponents();
     }
-//******************AGREGADO POR LA LA CREECION AUTOMATICA***********************************
+//CONSTRUCTOR
     AgregarServicioFrame(SistemaController sistema, Orden orden, MecanicoFrame aThis) {
         throw new UnsupportedOperationException("Not supported yet.");
+        servicios.removeAllItems();
+        servicios.addItem("Cambio de Aceite");
+        servicios.addItem("Revision de Frenos");
+        servicios.addItem("Revision General");
+        servicios.addItem("Cambio de Repuesto");
     }
-//*******************************************************************************************
+//*******************
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +47,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        panelExtra = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,6 +75,17 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
 
         jTextField3.setText("jTextField3");
 
+        javax.swing.GroupLayout panelExtraLayout = new javax.swing.GroupLayout(panelExtra);
+        panelExtra.setLayout(panelExtraLayout);
+        panelExtraLayout.setHorizontalGroup(
+            panelExtraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelExtraLayout.setVerticalGroup(
+            panelExtraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -93,10 +110,8 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                                     .addComponent(servicios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(8, 8, 8)
-                                                .addComponent(jLabel5))
-                                            .addComponent(jLabel3))
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel5))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -104,6 +119,10 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(0, 46, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelExtra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(52, 52, 52))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +145,9 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -138,6 +159,9 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
 
     private void serviciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviciosActionPerformed
         // TODO add your handling code here:
+        String seleccion = (String) servicios.getSelectedItem();
+        // por ahora solo muestra en consola
+        System.out.println("Seleccionado: " + seleccion);
         
     }//GEN-LAST:event_serviciosActionPerformed
 
@@ -177,6 +201,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JPanel panelExtra;
     private javax.swing.JComboBox<String> servicios;
     // End of variables declaration//GEN-END:variables
 }
