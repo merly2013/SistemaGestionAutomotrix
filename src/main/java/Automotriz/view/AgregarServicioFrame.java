@@ -1,25 +1,17 @@
 package Automotriz.view;
-import Automotriz.controller.SistemaController;
 
 /**
  *
  * @author 57300
  */
-public class RecepcionistaFrame extends javax.swing.JFrame {
+public class AgregarServicioFrame extends javax.swing.JFrame {
     
-    private SistemaController sistema;
-
-    public RecepcionistaFrame(SistemaController sistema) {
-        initComponents();
-        this.sistema = sistema;
-    }
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RecepcionistaFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AgregarServicioFrame.class.getName());
 
     /**
-     * Creates new form RecepcionistaFrame
+     * Creates new form AgregarServicioFrame
      */
-    public RecepcionistaFrame() {
+    public AgregarServicioFrame() {
         initComponents();
     }
 
@@ -38,11 +30,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 970, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -70,7 +62,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new RecepcionistaFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new AgregarServicioFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

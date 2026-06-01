@@ -2,6 +2,7 @@ package Automotriz.view;
 import Automotriz.controller.SistemaController;
 import Automotriz.modelo.Mecanico;
 import javax.swing.JOptionPane;
+import Automotriz.modelo.Orden;
 /**
  *
  * @author 57300
@@ -143,16 +144,19 @@ public class MecanicoFrame extends javax.swing.JFrame {
         btnVerDetalles.setForeground(new java.awt.Color(255, 255, 255));
         btnVerDetalles.setText("Ver Detalles");
         btnVerDetalles.setBorderPainted(false);
+        btnVerDetalles.addActionListener(this::btnVerDetallesActionPerformed);
 
         btnAgregarServicios.setBackground(new java.awt.Color(68, 87, 117));
         btnAgregarServicios.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregarServicios.setText("Agregar Servicios");
+        btnAgregarServicios.addActionListener(this::btnAgregarServiciosActionPerformed);
 
         btnCambiarContrasena.setBackground(new java.awt.Color(131, 145, 168));
         btnCambiarContrasena.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         btnCambiarContrasena.setForeground(new java.awt.Color(255, 255, 255));
         btnCambiarContrasena.setText("Cambiar Contraseña");
         btnCambiarContrasena.setBorderPainted(false);
+        btnCambiarContrasena.addActionListener(this::btnCambiarContrasenaActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -214,6 +218,74 @@ public class MecanicoFrame extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
+        // TODO add your handling code here:
+         int fila = jTable1.getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this,
+                "Seleccione una orden de la tabla",
+                "Aviso",
+                JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    String idOrden = jTable1.getValueAt(fila, 0).toString();
+    Orden orden = sistema.getOrdenService().buscar(idOrden);
+    // por ahora mostramos los datos en un mensaje
+    JOptionPane.showMessageDialog(this,
+            "Orden: " + orden.getId() + "\n" +
+            "Fecha: " + orden.getFecha() + "\n" +
+            "Estado: " + orden.getEstado() + "\n" +
+            "Total: $" + orden.calcularTotal(),
+            "Detalle de Orden",
+            JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnVerDetallesActionPerformed
+
+    private void btnAgregarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarServiciosActionPerformed
+        // TODO add your handling code here:
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione una orden primero",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String idOrden = jTable1.getValueAt(fila, 0).toString();
+        Orden orden = sistema.getOrdenService().buscar(idOrden);
+        new AgregarServicioFrame(sistema, orden, this).setVisible(true);
+    }//GEN-LAST:event_btnAgregarServiciosActionPerformed
+
+    private void btnCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContrasenaActionPerformed
+        // TODO add your handling code here:
+        private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
+        String nuevaContrasena = JOptionPane.showInputDialog(this,
+                "Ingrese su nueva contraseña:",
+                "Cambiar Contraseña",
+                JOptionPane.PLAIN_MESSAGE);
+
+        if (nuevaContrasena == null || nuevaContrasena.isBlank()) {
+            JOptionPane.showMessageDialog(this,
+                    "La contraseña no puede estar vacía",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // busca el usuario del mecánico y cambia la contraseña
+        for (Usuario u : sistema.getLoginController().getUsuarios()) {
+            if (u.getMecanico() != null
+                    && u.getMecanico().getId() == mecanico.getId()) {
+                u.cambiarContrasena(nuevaContrasena);
+                JOptionPane.showMessageDialog(this,
+                        "Contraseña cambiada exitosamente",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+                break;
+            }
+        }
+    }
+    }//GEN-LAST:event_btnCambiarContrasenaActionPerformed
 
     /**
      * @param args the command line arguments

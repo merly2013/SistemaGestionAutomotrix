@@ -259,6 +259,9 @@
             <Property name="text" type="java.lang.String" value="Ver Detalles"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerDetallesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnAgregarServicios">
           <Properties>
@@ -270,6 +273,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Agregar Servicios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarServiciosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCambiarContrasena">
           <Properties>
@@ -285,6 +291,9 @@
             <Property name="text" type="java.lang.String" value="Cambiar Contrase&#xf1;a"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCambiarContrasenaActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
