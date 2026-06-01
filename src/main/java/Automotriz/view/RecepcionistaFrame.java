@@ -261,11 +261,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jButton14.setText("Agregar");
         jButton14.addActionListener(this::jButton14ActionPerformed);
 
-        jButton15.setText("Nombre");
+        jButton15.setText("Modificar");
 
-        jButton16.setText("jButton4");
+        jButton16.setText("Eliminar");
 
-        jButton17.setText("jButton5");
+        jButton17.setText("Buscar");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);

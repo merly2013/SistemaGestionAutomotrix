@@ -455,17 +455,17 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton15">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Nombre"/>
+                    <Property name="text" type="java.lang.String" value="Modificar"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton16">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jButton4"/>
+                    <Property name="text" type="java.lang.String" value="Eliminar"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton17">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jButton5"/>
+                    <Property name="text" type="java.lang.String" value="Buscar"/>
                   </Properties>
                 </Component>
               </SubComponents>
