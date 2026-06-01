@@ -17,6 +17,13 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
      */
     public AgregarServicioFrame() {
         initComponents();
+        // llenar combobox
+        servicios.removeAllItems();
+        servicios.addItem("Cambio de Aceite");
+        servicios.addItem("Revision de Frenos");
+        servicios.addItem("Revision General");
+        servicios.addItem("Cambio de Repuesto");
+        panelExtra.setLayout(new java.awt.FlowLayout());
     }
     
     //atributos
@@ -38,6 +45,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         servicios.addItem("Revision de Frenos");
         servicios.addItem("Revision General");
         servicios.addItem("Cambio de Repuesto");
+        panelExtra.setLayout(new java.awt.FlowLayout());
     }
 //*******************
     /**

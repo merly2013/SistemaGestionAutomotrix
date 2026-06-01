@@ -244,7 +244,9 @@ public class MecanicoFrame extends javax.swing.JFrame {
 
     private void btnAgregarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarServiciosActionPerformed
         // TODO add your handling code here:
+   
         int fila = jTable1.getSelectedRow();
+
         if (fila == -1) {
             JOptionPane.showMessageDialog(this,
                     "Seleccione una orden primero",
@@ -252,9 +254,21 @@ public class MecanicoFrame extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
+
         String idOrden = jTable1.getValueAt(fila, 0).toString();
         Orden orden = sistema.getOrdenService().buscar(idOrden);
-        new AgregarServicioFrame(sistema, orden, this).setVisible(true);
+
+        if (orden == null) {
+            JOptionPane.showMessageDialog(this,
+                    "No se encontró la orden",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        AgregarServicioFrame ventana = new AgregarServicioFrame(sistema, orden, this);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
     }//GEN-LAST:event_btnAgregarServiciosActionPerformed
 
     private void btnCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContrasenaActionPerformed
