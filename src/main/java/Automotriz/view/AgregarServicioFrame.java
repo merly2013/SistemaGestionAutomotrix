@@ -3,6 +3,7 @@ package Automotriz.view;
 import Automotriz.controller.SistemaController;
 import Automotriz.modelo.Orden;
 
+
 /**
  *
  * @author 57300
@@ -17,9 +18,21 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     public AgregarServicioFrame() {
         initComponents();
     }
-//CONSTRUCTOR
-    AgregarServicioFrame(SistemaController sistema, Orden orden, MecanicoFrame aThis) {
-        
+    
+    //atributos
+    private SistemaController sistema;
+    private Orden orden;
+    private MecanicoFrame mecanicoFrame;
+    
+    //CONSTRUCTOR
+    AgregarServicioFrame(SistemaController sistema, Orden orden, MecanicoFrame mecanicoFrame) {
+        initComponents();
+        this.sistema = sistema;
+        this.orden = orden;
+        this.mecanicoFrame = mecanicoFrame;
+        // título con el id de la orden
+        jLabel1.setText("Agregar Servicio a Orden: " + orden.getId());
+        // llenar combobox
         servicios.removeAllItems();
         servicios.addItem("Cambio de Aceite");
         servicios.addItem("Revision de Frenos");
