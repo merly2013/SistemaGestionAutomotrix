@@ -1,8 +1,18 @@
 package Automotriz.view;
 
+import Automotriz.controller.ClienteService;
 import Automotriz.controller.SistemaController;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import java.awt.Color;
+import javax.swing.JOptionPane;
+
+
+import Automotriz.controller.ClienteService;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +22,17 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RecepcionistaFrame.class.getName());
 
+    
+    private ClienteService clienteService = new ClienteService(); 
+    private DefaultTableModel modeloTabla;
     /**
      * Creates new form RecepcionistaFrame
      */
     public RecepcionistaFrame() {
         initComponents();
+  
+        modeloTabla = (DefaultTableModel) jTable1.getModel(); 
+        cargarDatosClientes();
     }
         private SistemaController sistema;
     //  constructor
@@ -156,12 +172,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("Agregar");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setText("Modificar");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jButton4.setText("Eliminar");
+        jButton4.addActionListener(this::jButton4ActionPerformed);
 
         jButton5.setText("Buscar");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -533,6 +553,62 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton14ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        AgregarClienteFrame ventanaAgregar = new AgregarClienteFrame();
+        
+        ventanaAgregar.setLocationRelativeTo(this); 
+        ventanaAgregar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // Solo cierra esta ventana, no todo el programa
+    
+        ventanaAgregar.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable1.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente de la tabla.");
+        return;
+    }
+        
+        ModificarClienteFrame ventanaModificar = new ModificarClienteFrame();
+        ventanaModificar.setLocationRelativeTo(this);
+        ventanaModificar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaModificar.setVisible(true);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable1.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente para eliminar.");
+        return;
+    }
+            int confirmar = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea eliminar el cliente seleccionado?", 
+            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+            if (confirmar == JOptionPane.YES_OPTION) {
+            // Aquí irá tu línea de backend: clienteService.eliminar(...);
+            JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación ejecutada.");
+    }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        
+        BuscarClienteFrame ventanaBuscar = new BuscarClienteFrame();
+        ventanaBuscar.setLocationRelativeTo(this);
+        ventanaBuscar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaBuscar.setVisible(true);
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -604,4 +680,8 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTable6;
     private javax.swing.JTable jTable7;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarDatosClientes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
