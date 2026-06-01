@@ -11,6 +11,11 @@ import javax.swing.JOptionPane;
 
 
 import Automotriz.controller.ClienteService;
+import Automotriz.controller.MecanicoService;
+import Automotriz.controller.OrdenService;
+import Automotriz.controller.VehiculoService;
+import Automotriz.modelo.Inventario;
+import Automotriz.persistencia.ArchivoUtil;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +30,15 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     
     private ClienteService clienteService = new ClienteService(); 
     private DefaultTableModel modeloTabla;
+    private VehiculoService vehiculoService = new VehiculoService();
+    private DefaultTableModel modeloTablaVehiculos;
+    private MecanicoService mecanicoService = new MecanicoService(ArchivoUtil.cargarDatos("usuarios.dat"));
+    private DefaultTableModel modeloTablaMecanicos;
+    private OrdenService ordenService = new OrdenService(); 
+    private DefaultTableModel modeloTablaOrdenes;
+    private Inventario inventarioService = new Inventario(); 
+    private DefaultTableModel modeloTablaInventario;
+    
     /**
      * Creates new form RecepcionistaFrame
      */
@@ -234,12 +248,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jScrollPane5.setViewportView(jTable5);
 
         jButton18.setText("Agregar");
+        jButton18.addActionListener(this::jButton18ActionPerformed);
 
         jButton19.setText("Modificar");
+        jButton19.addActionListener(this::jButton19ActionPerformed);
 
         jButton20.setText("Eliminar");
+        jButton20.addActionListener(this::jButton20ActionPerformed);
 
         jButton21.setText("Buscar");
+        jButton21.addActionListener(this::jButton21ActionPerformed);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -310,10 +328,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jButton14.addActionListener(this::jButton14ActionPerformed);
 
         jButton15.setText("Modificar");
+        jButton15.addActionListener(this::jButton15ActionPerformed);
 
         jButton16.setText("Eliminar");
+        jButton16.addActionListener(this::jButton16ActionPerformed);
 
         jButton17.setText("Buscar");
+        jButton17.addActionListener(this::jButton17ActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -381,12 +402,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jScrollPane6.setViewportView(jTable6);
 
         jButton22.setText("Agregar");
+        jButton22.addActionListener(this::jButton22ActionPerformed);
 
         jButton23.setText("Modificar");
+        jButton23.addActionListener(this::jButton23ActionPerformed);
 
         jButton24.setText("Eliminar");
+        jButton24.addActionListener(this::jButton24ActionPerformed);
 
         jButton25.setText("Buscar");
+        jButton25.addActionListener(this::jButton25ActionPerformed);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -454,12 +479,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jScrollPane7.setViewportView(jTable7);
 
         jButton26.setText("Agregar");
+        jButton26.addActionListener(this::jButton26ActionPerformed);
 
         jButton27.setText("Modificar");
+        jButton27.addActionListener(this::jButton27ActionPerformed);
 
         jButton28.setText("Eliminar");
+        jButton28.addActionListener(this::jButton28ActionPerformed);
 
         jButton29.setText("Buscar");
+        jButton29.addActionListener(this::jButton29ActionPerformed);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -549,6 +578,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
         
+        AgregarMecanicoFrame ventanaAgregarMecanico = new AgregarMecanicoFrame();
+        ventanaAgregarMecanico.setLocationRelativeTo(this);
+        ventanaAgregarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaAgregarMecanico.setVisible(true);
+        
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -606,6 +640,220 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         ventanaBuscar.setVisible(true);
         
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+        AgregarVehiculoFrame ventanaAgregarVehiculo = new AgregarVehiculoFrame();
+        ventanaAgregarVehiculo.setLocationRelativeTo(this);
+        ventanaAgregarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaAgregarVehiculo.setVisible(true);
+        
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable5.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un vehículo de la tabla.");
+        return;
+    }
+        
+        ModificarVehiculoFrame ventanaModificarVehiculo = new ModificarVehiculoFrame();
+        ventanaModificarVehiculo.setLocationRelativeTo(this);
+        ventanaModificarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaModificarVehiculo.setVisible(true);
+        
+        
+        
+    }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = jTable5.getSelectedRow();
+    
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo para eliminar.");
+        return;
+    }
+    
+    int confirmar = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea eliminar el vehículo seleccionado?", 
+            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+    if (confirmar == JOptionPane.YES_OPTION) {
+        // Aquí conectarás tu servicio: vehiculoService.eliminar(...);
+        JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de vehículo ejecutada.");
+    }
+        
+        
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        // TODO add your handling code here:
+        
+        BuscarVehiculoFrame ventanaBuscarVehiculo = new BuscarVehiculoFrame();
+        ventanaBuscarVehiculo.setLocationRelativeTo(this);
+        ventanaBuscarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaBuscarVehiculo.setVisible(true);
+    }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable4.getSelectedRow(); 
+    
+        if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un mecánico de la tabla.");
+        return;
+        }
+    
+        ModificarMecanicoFrame ventanaModificarMecanico = new ModificarMecanicoFrame();
+        ventanaModificarMecanico.setLocationRelativeTo(this);
+        ventanaModificarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaModificarMecanico.setVisible(true);
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable4.getSelectedRow();
+    
+        if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un mecánico para eliminar.");
+        return;
+        }
+    
+        int confirmar = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea eliminar al mecánico seleccionado?", 
+            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+        if (confirmar == JOptionPane.YES_OPTION) {
+        // Aquí conectarás tu servicio: mecanicoService.eliminar(...);
+        JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de mecánico ejecutada.");
+        }
+    }//GEN-LAST:event_jButton16ActionPerformed
+
+    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+        // TODO add your handling code here:
+        
+        BuscarMecanicoFrame ventanaBuscarMecanico = new BuscarMecanicoFrame();
+        ventanaBuscarMecanico.setLocationRelativeTo(this);
+        ventanaBuscarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaBuscarMecanico.setVisible(true);
+    }//GEN-LAST:event_jButton17ActionPerformed
+
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        // TODO add your handling code here:
+        
+        AgregarOrdenFrame ventanaAgregarOrden = new AgregarOrdenFrame();
+        ventanaAgregarOrden.setLocationRelativeTo(this);
+        ventanaAgregarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaAgregarOrden.setVisible(true);
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        // TODO add your handling code here:
+        
+    int filaSeleccionada = jTable6.getSelectedRow(); 
+    
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione una orden de la tabla.");
+        return;
+    }
+    
+    ModificarOrdenFrame ventanaModificarOrden = new ModificarOrdenFrame();
+    ventanaModificarOrden.setLocationRelativeTo(this);
+    ventanaModificarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    ventanaModificarOrden.setVisible(true);
+    }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable4.getSelectedRow();
+    
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar una orden para eliminar.");
+        return;
+    }
+    
+    int confirmar = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea eliminar la orden seleccionada?", 
+            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+    if (confirmar == JOptionPane.YES_OPTION) {
+        // Aquí conectarás tu servicio: ordenService.eliminar(...);
+        JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de orden ejecutada.");
+        
+    }
+    }//GEN-LAST:event_jButton24ActionPerformed
+
+    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+        // TODO add your handling code here:
+        
+        BuscarOrdenFrame ventanaBuscarOrden = new BuscarOrdenFrame();
+        ventanaBuscarOrden.setLocationRelativeTo(this);
+        ventanaBuscarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaBuscarOrden.setVisible(true);
+        
+        
+    }//GEN-LAST:event_jButton25ActionPerformed
+
+    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+        // TODO add your handling code here:
+        AgregarInventarioFrame ventanaAgregarInv = new AgregarInventarioFrame();
+        ventanaAgregarInv.setLocationRelativeTo(this);
+        ventanaAgregarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaAgregarInv.setVisible(true);
+    }//GEN-LAST:event_jButton26ActionPerformed
+
+    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable7.getSelectedRow(); 
+    
+        if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un artículo de la tabla.");
+        return;
+        }
+    
+        ModificarInventarioFrame ventanaModificarInv = new ModificarInventarioFrame();
+        ventanaModificarInv.setLocationRelativeTo(this);
+        ventanaModificarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaModificarInv.setVisible(true);
+
+    }//GEN-LAST:event_jButton27ActionPerformed
+
+    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+        // TODO add your handling code here:
+        
+        int filaSeleccionada = jTable5.getSelectedRow();
+    
+        if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Debe seleccionar un artículo para eliminar.");
+        return;
+        }
+    
+        int confirmar = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea eliminar el artículo seleccionado del inventario?", 
+            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            
+        if (confirmar == JOptionPane.YES_OPTION) {
+            // Aquí conectarás tu servicio: inventarioService.eliminar(...);
+            JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de inventario ejecutada.");
+        }
+    }//GEN-LAST:event_jButton28ActionPerformed
+
+    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+        // TODO add your handling code here:
+        
+        BuscarInventarioFrame ventanaBuscarInv = new BuscarInventarioFrame();
+        ventanaBuscarInv.setLocationRelativeTo(this);
+        ventanaBuscarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        ventanaBuscarInv.setVisible(true);
+    }//GEN-LAST:event_jButton29ActionPerformed
 
     /**
      * @param args the command line arguments
