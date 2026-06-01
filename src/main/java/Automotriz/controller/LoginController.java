@@ -16,7 +16,7 @@ public class LoginController {
         }
         if (usuarios.isEmpty()) {
             // recepcionista por defecto
-            usuarios.add(new Usuario("recepcionista", "admin123", "RECEPCIONISTA", null));
+            usuarios.add(new Usuario("recepcionista", "258", "RECEPCIONISTA", null));
             // mecánico de prueba
             Mecanico mecPrueba = new Mecanico("Juan Pérez", 1, 5, true);
             usuarios.add(new Usuario("mecanico", "1234", "MECANICO", mecPrueba));
