@@ -136,6 +136,8 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrarSesion.setText("Cerrar sesion");
         btnCerrarSesion.setBorderPainted(false);
+        btnCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -153,16 +155,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(32, 32, 32))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCerrarSesion)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 9, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(32, 32, 32))
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(180, 195, 219));
@@ -180,21 +182,33 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Cedula", "Nombre", "Telefono", "Correo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton2.setBackground(new java.awt.Color(68, 87, 117));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Agregar");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+        jButton3.setBackground(new java.awt.Color(68, 87, 117));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Modificar");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(this::jButton3ActionPerformed);
 
+        jButton4.setBackground(new java.awt.Color(68, 87, 117));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Eliminar");
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(this::jButton4ActionPerformed);
 
+        jButton5.setBackground(new java.awt.Color(68, 87, 117));
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Buscar");
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.addActionListener(this::jButton5ActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -236,27 +250,39 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Placa", "Marca", "Modelo"
             }
         ));
         jScrollPane5.setViewportView(jTable5);
 
+        jButton18.setBackground(new java.awt.Color(68, 87, 117));
+        jButton18.setForeground(new java.awt.Color(255, 255, 255));
         jButton18.setText("Agregar");
+        jButton18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton18.addActionListener(this::jButton18ActionPerformed);
 
+        jButton19.setBackground(new java.awt.Color(68, 87, 117));
+        jButton19.setForeground(new java.awt.Color(255, 255, 255));
         jButton19.setText("Modificar");
+        jButton19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton19.addActionListener(this::jButton19ActionPerformed);
 
+        jButton20.setBackground(new java.awt.Color(68, 87, 117));
+        jButton20.setForeground(new java.awt.Color(255, 255, 255));
         jButton20.setText("Eliminar");
+        jButton20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton20.addActionListener(this::jButton20ActionPerformed);
 
+        jButton21.setBackground(new java.awt.Color(68, 87, 117));
+        jButton21.setForeground(new java.awt.Color(255, 255, 255));
         jButton21.setText("Buscar");
+        jButton21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton21.addActionListener(this::jButton21ActionPerformed);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -319,21 +345,33 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Cedula", "Nombre", "Max ordenes", "Disponible"
             }
         ));
         jScrollPane4.setViewportView(jTable4);
 
+        jButton14.setBackground(new java.awt.Color(68, 87, 117));
+        jButton14.setForeground(new java.awt.Color(255, 255, 255));
         jButton14.setText("Agregar");
+        jButton14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton14.addActionListener(this::jButton14ActionPerformed);
 
+        jButton15.setBackground(new java.awt.Color(68, 87, 117));
+        jButton15.setForeground(new java.awt.Color(255, 255, 255));
         jButton15.setText("Modificar");
+        jButton15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton15.addActionListener(this::jButton15ActionPerformed);
 
+        jButton16.setBackground(new java.awt.Color(68, 87, 117));
+        jButton16.setForeground(new java.awt.Color(255, 255, 255));
         jButton16.setText("Eliminar");
+        jButton16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton16.addActionListener(this::jButton16ActionPerformed);
 
+        jButton17.setBackground(new java.awt.Color(68, 87, 117));
+        jButton17.setForeground(new java.awt.Color(255, 255, 255));
         jButton17.setText("Buscar");
+        jButton17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton17.addActionListener(this::jButton17ActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -390,27 +428,39 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jTable6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Fecha", "ID", "Estado"
             }
         ));
         jScrollPane6.setViewportView(jTable6);
 
+        jButton22.setBackground(new java.awt.Color(68, 87, 117));
+        jButton22.setForeground(new java.awt.Color(255, 255, 255));
         jButton22.setText("Agregar");
+        jButton22.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton22.addActionListener(this::jButton22ActionPerformed);
 
+        jButton23.setBackground(new java.awt.Color(68, 87, 117));
+        jButton23.setForeground(new java.awt.Color(255, 255, 255));
         jButton23.setText("Modificar");
+        jButton23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton23.addActionListener(this::jButton23ActionPerformed);
 
+        jButton24.setBackground(new java.awt.Color(68, 87, 117));
+        jButton24.setForeground(new java.awt.Color(255, 255, 255));
         jButton24.setText("Eliminar");
+        jButton24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton24.addActionListener(this::jButton24ActionPerformed);
 
+        jButton25.setBackground(new java.awt.Color(68, 87, 117));
+        jButton25.setForeground(new java.awt.Color(255, 255, 255));
         jButton25.setText("Buscar");
+        jButton25.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton25.addActionListener(this::jButton25ActionPerformed);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -473,21 +523,30 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Nombre", "Costo", "Cantidad"
             }
         ));
         jScrollPane7.setViewportView(jTable7);
 
+        jButton26.setBackground(new java.awt.Color(68, 87, 117));
+        jButton26.setForeground(new java.awt.Color(255, 255, 255));
         jButton26.setText("Agregar");
         jButton26.addActionListener(this::jButton26ActionPerformed);
 
+        jButton27.setBackground(new java.awt.Color(68, 87, 117));
+        jButton27.setForeground(new java.awt.Color(255, 255, 255));
         jButton27.setText("Modificar");
         jButton27.addActionListener(this::jButton27ActionPerformed);
 
+        jButton28.setBackground(new java.awt.Color(68, 87, 117));
+        jButton28.setForeground(new java.awt.Color(255, 255, 255));
         jButton28.setText("Eliminar");
         jButton28.addActionListener(this::jButton28ActionPerformed);
 
+        jButton29.setBackground(new java.awt.Color(68, 87, 117));
+        jButton29.setForeground(new java.awt.Color(255, 255, 255));
         jButton29.setText("Buscar");
+        jButton29.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton29.addActionListener(this::jButton29ActionPerformed);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);

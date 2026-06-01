@@ -94,7 +94,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String usuario = jTextField1.getText();
-    String contrasena = new String(jPasswordField1.getPassword());
+        String contrasena = new String(jPasswordField1.getPassword());
 
     if (usuario.isEmpty() || contrasena.isEmpty()) {
         JOptionPane.showMessageDialog(this,
@@ -119,7 +119,7 @@ public class LoginFrame extends javax.swing.JFrame {
     } else {
         new MecanicoFrame(sistema, u.getMecanico()).setVisible(true);
     }
-    this.dispose();//se supone quecierra el login
+        this.dispose();//se supone quecierra el login
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
