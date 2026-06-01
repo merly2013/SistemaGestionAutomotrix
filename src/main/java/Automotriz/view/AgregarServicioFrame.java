@@ -17,11 +17,11 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     public AgregarServicioFrame() {
         initComponents();
     }
-//******************AGREGADO POR LA LA CREECION AUTOMATICA***********************************
+//CONSTRUCTOR
     AgregarServicioFrame(SistemaController sistema, Orden orden, MecanicoFrame aThis) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-//*******************************************************************************************
+//*******************
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -138,6 +138,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
 
     private void serviciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviciosActionPerformed
         // TODO add your handling code here:
+        
         
     }//GEN-LAST:event_serviciosActionPerformed
 
