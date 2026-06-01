@@ -3,9 +3,10 @@ import Automotriz.controller.SistemaController;
 import Automotriz.modelo.Mecanico;
 import javax.swing.JOptionPane;
 import Automotriz.modelo.Orden;
+import Automotriz.modelo.Usuario;
 /**
  *
- * @author 57300
+ * @author Merlin Landero y Claude
  */
 public class MecanicoFrame extends javax.swing.JFrame {
     
@@ -258,7 +259,6 @@ public class MecanicoFrame extends javax.swing.JFrame {
 
     private void btnCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContrasenaActionPerformed
         // TODO add your handling code here:
-        private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         String nuevaContrasena = JOptionPane.showInputDialog(this,
                 "Ingrese su nueva contraseña:",
                 "Cambiar Contraseña",
@@ -284,7 +284,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
                 break;
             }
         }
-    }
+    
     }//GEN-LAST:event_btnCambiarContrasenaActionPerformed
 
     /**
