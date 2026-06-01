@@ -14,6 +14,7 @@ import Automotriz.controller.ClienteService;
 import Automotriz.controller.MecanicoService;
 import Automotriz.controller.OrdenService;
 import Automotriz.controller.VehiculoService;
+import Automotriz.modelo.Cliente;
 import Automotriz.modelo.Inventario;
 import Automotriz.persistencia.ArchivoUtil;
 import javax.swing.JOptionPane;
@@ -674,18 +675,27 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         
+        JOptionPane.showMessageDialog(this, "¡El botón de eliminar sí responde!");
         int filaSeleccionada = jTable1.getSelectedRow();
+        System.out.println("Fila seleccionada detectada: " + filaSeleccionada);
         
         if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente para eliminar.");
         return;
     }
+        
+        System.out.println("Intentando leer datos de la fila...");
+        
+        int idCliente = Integer.parseInt(jTable1.getValueAt(filaSeleccionada, 0).toString());
+        String nombre = jTable1.getValueAt(filaSeleccionada, 1).toString();
+        
             int confirmar = JOptionPane.showConfirmDialog(this, 
             "¿Está seguro de que desea eliminar el cliente seleccionado?", 
             "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             
             if (confirmar == JOptionPane.YES_OPTION) {
             // Aquí irá tu línea de backend: clienteService.eliminar(...);
+            clienteService.eliminar(idCliente);
             JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación ejecutada.");
     }
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -987,6 +997,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarDatosClientes() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        modeloTabla.setRowCount(0); 
+    
+    
+    for (Cliente c : clienteService.consultar()) {
+        modeloTabla.addRow(new Object[]{
+            c.getId(),       
+            c.getNombre(),   
+            c.getTelefono(), 
+            c.getCorreo()    
+        });
+    }
     }
 }
