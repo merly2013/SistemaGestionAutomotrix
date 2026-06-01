@@ -19,7 +19,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     }
 //CONSTRUCTOR
     AgregarServicioFrame(SistemaController sistema, Orden orden, MecanicoFrame aThis) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
         servicios.removeAllItems();
         servicios.addItem("Cambio de Aceite");
         servicios.addItem("Revision de Frenos");

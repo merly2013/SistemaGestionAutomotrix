@@ -127,13 +127,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Agregar");
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Modificar");
 
-        jButton4.setText("jButton4");
+        jButton4.setText("Eliminar");
 
-        jButton5.setText("jButton5");
+        jButton5.setText("Buscar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -258,9 +258,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTable4);
 
-        jButton14.setText("jButton2");
+        jButton14.setText("Agregar");
+        jButton14.addActionListener(this::jButton14ActionPerformed);
 
-        jButton15.setText("jButton3");
+        jButton15.setText("Nombre");
 
         jButton16.setText("jButton4");
 
@@ -416,6 +417,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton14ActionPerformed
 
     /**
      * @param args the command line arguments
