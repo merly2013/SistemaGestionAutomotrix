@@ -74,12 +74,8 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel2.setText("Bienvenido, X Recepcionista");
+        jLabel2.setText("sistema gestion");
 
-        jButton1.setBackground(new java.awt.Color(68, 87, 117));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Cerrar sesion");
         jButton1.setBorderPainted(false);
         jButton1.addActionListener(this::jButton1ActionPerformed);
@@ -95,7 +91,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(31, 31, 31))
+                .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,19 +102,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-<<<<<<< HEAD
-                        .addGap(0, 27, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton1))
-                        .addGap(38, 38, 38))))
-=======
                         .addGap(0, 24, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
                             .addComponent(jLabel2))
                         .addGap(41, 41, 41))))
->>>>>>> e618d6ebd4a1a54cc086d0273ec8d41577325898
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(180, 195, 219));
@@ -134,31 +122,18 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Telefono", "Correo"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setBackground(new java.awt.Color(68, 87, 117));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Agregar");
-        jButton2.setBorderPainted(false);
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jButton2.setText("jButton2");
 
-        jButton3.setBackground(new java.awt.Color(68, 87, 117));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Eliminar");
-        jButton3.setBorderPainted(false);
+        jButton3.setText("jButton3");
 
-        jButton4.setBackground(new java.awt.Color(68, 87, 117));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Modificar");
-        jButton4.setBorderPainted(false);
+        jButton4.setText("jButton4");
 
-        jButton5.setBackground(new java.awt.Color(68, 87, 117));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Buscar");
-        jButton5.setBorderPainted(false);
+        jButton5.setText("jButton5");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -193,42 +168,30 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Cliente", jPanel2);
+        jTabbedPane1.addTab("tab1", jPanel2);
 
         jPanel7.setBackground(new java.awt.Color(180, 195, 219));
 
         jTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Placa", "Modelo", "Marca"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane5.setViewportView(jTable5);
 
-        jButton18.setBackground(new java.awt.Color(68, 87, 117));
-        jButton18.setForeground(new java.awt.Color(255, 255, 255));
-        jButton18.setText("Agregar");
-        jButton18.setBorderPainted(false);
+        jButton18.setText("jButton2");
 
-        jButton19.setBackground(new java.awt.Color(68, 87, 117));
-        jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Eliminar");
-        jButton19.setBorderPainted(false);
+        jButton19.setText("jButton3");
 
-        jButton20.setBackground(new java.awt.Color(68, 87, 117));
-        jButton20.setForeground(new java.awt.Color(255, 255, 255));
-        jButton20.setText("Modificar");
-        jButton20.setBorderPainted(false);
+        jButton20.setText("jButton4");
 
-        jButton21.setBackground(new java.awt.Color(68, 87, 117));
-        jButton21.setForeground(new java.awt.Color(255, 255, 255));
-        jButton21.setText("Buscar");
-        jButton21.setBorderPainted(false);
+        jButton21.setText("jButton5");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -278,7 +241,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Vehiculo", jPanel3);
+        jTabbedPane1.addTab("tab2", jPanel3);
 
         jPanel6.setBackground(new java.awt.Color(180, 195, 219));
 
@@ -290,30 +253,18 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Max. Ordenes", "Disponible"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane4.setViewportView(jTable4);
 
-        jButton14.setBackground(new java.awt.Color(68, 87, 117));
-        jButton14.setForeground(new java.awt.Color(255, 255, 255));
-        jButton14.setText("Agregar");
-        jButton14.setBorderPainted(false);
+        jButton14.setText("jButton2");
 
-        jButton15.setBackground(new java.awt.Color(68, 87, 117));
-        jButton15.setForeground(new java.awt.Color(255, 255, 255));
-        jButton15.setText("Eliminar");
-        jButton15.setBorderPainted(false);
+        jButton15.setText("jButton3");
 
-        jButton16.setBackground(new java.awt.Color(68, 87, 117));
-        jButton16.setForeground(new java.awt.Color(255, 255, 255));
-        jButton16.setText("Modificar");
-        jButton16.setBorderPainted(false);
+        jButton16.setText("jButton4");
 
-        jButton17.setBackground(new java.awt.Color(68, 87, 117));
-        jButton17.setForeground(new java.awt.Color(255, 255, 255));
-        jButton17.setText("Buscar");
-        jButton17.setBorderPainted(false);
+        jButton17.setText("jButton5");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -365,7 +316,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Mecanicos", jPanel4);
+        jTabbedPane1.addTab("tab3", jPanel4);
 
         jPanel9.setBackground(new java.awt.Color(180, 195, 219));
 
@@ -377,30 +328,18 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Precio", "Cantidad"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane6.setViewportView(jTable6);
 
-        jButton22.setBackground(new java.awt.Color(68, 87, 117));
-        jButton22.setForeground(new java.awt.Color(255, 255, 255));
-        jButton22.setText("Agregar");
-        jButton22.setBorderPainted(false);
+        jButton22.setText("jButton2");
 
-        jButton23.setBackground(new java.awt.Color(68, 87, 117));
-        jButton23.setForeground(new java.awt.Color(255, 255, 255));
-        jButton23.setText("Eliminar");
-        jButton23.setBorderPainted(false);
+        jButton23.setText("jButton3");
 
-        jButton24.setBackground(new java.awt.Color(68, 87, 117));
-        jButton24.setForeground(new java.awt.Color(255, 255, 255));
-        jButton24.setText("Modificar");
-        jButton24.setBorderPainted(false);
+        jButton24.setText("jButton4");
 
-        jButton25.setBackground(new java.awt.Color(68, 87, 117));
-        jButton25.setForeground(new java.awt.Color(255, 255, 255));
-        jButton25.setText("Buscar");
-        jButton25.setBorderPainted(false);
+        jButton25.setText("jButton5");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -450,7 +389,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Inventario", jPanel8);
+        jTabbedPane1.addTab("tab4", jPanel8);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -477,10 +416,6 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

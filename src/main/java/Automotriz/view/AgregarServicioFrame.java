@@ -160,8 +160,33 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     private void serviciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviciosActionPerformed
         // TODO add your handling code here:
         String seleccion = (String) servicios.getSelectedItem();
-        // por ahora solo muestra en consola
-        System.out.println("Seleccionado: " + seleccion);
+        panelExtra.removeAll(); // limpia el panel
+
+        switch (seleccion) {
+            case "Cambio de Aceite":
+                panelExtra.add(new javax.swing.JLabel("Tipo de aceite:"));
+                panelExtra.add(new javax.swing.JTextField(15));
+                panelExtra.add(new javax.swing.JLabel("Viscosidad:"));
+                panelExtra.add(new javax.swing.JTextField(15));
+                break;
+            case "Revision de Frenos":
+                panelExtra.add(new javax.swing.JLabel("Estado pastillas:"));
+                panelExtra.add(new javax.swing.JTextField(15));
+                panelExtra.add(new javax.swing.JLabel("Estado disco:"));
+                panelExtra.add(new javax.swing.JTextField(15));
+                break;
+            case "Revision General":
+                panelExtra.add(new javax.swing.JLabel("Observaciones:"));
+                panelExtra.add(new javax.swing.JTextArea(3, 15));
+                break;
+            case "Cambio de Repuesto":
+                panelExtra.add(new javax.swing.JLabel("Código repuesto:"));
+                panelExtra.add(new javax.swing.JTextField(15));
+                break;
+        }
+
+        panelExtra.revalidate(); // actualiza el panel
+        panelExtra.repaint();
         
     }//GEN-LAST:event_serviciosActionPerformed
 
