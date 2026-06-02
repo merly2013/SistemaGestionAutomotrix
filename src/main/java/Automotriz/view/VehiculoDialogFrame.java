@@ -1,21 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Automotriz.view;
 
 /**
  *
- * @author HUBER
+ * @author 57300
  */
-public class BuscarMecanicoFrame extends javax.swing.JFrame {
+public class VehiculoDialogFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuscarMecanicoFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VehiculoDialogFrame.class.getName());
 
     /**
-     * Creates new form BuscarMecanicoFrame
+     * Creates new form VehiculoDialogFrame
      */
-    public BuscarMecanicoFrame() {
+    public VehiculoDialogFrame() {
         initComponents();
     }
 
@@ -66,7 +62,7 @@ public class BuscarMecanicoFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new BuscarMecanicoFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new VehiculoDialogFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

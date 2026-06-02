@@ -29,7 +29,6 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RecepcionistaFrame.class.getName());
 
     
-    private ClienteService clienteService = new ClienteService(); 
     private DefaultTableModel modeloTabla;
     private VehiculoService vehiculoService = new VehiculoService();
     private DefaultTableModel modeloTablaVehiculos;
@@ -46,13 +45,14 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     public RecepcionistaFrame() {
         initComponents();
   
-        modeloTabla = (DefaultTableModel) jTable1.getModel(); 
+        modeloTabla = (DefaultTableModel) tablaClientes.getModel(); 
         cargarDatosClientes();
     }
         private SistemaController sistema;
     //  constructor
-    RecepcionistaFrame(SistemaController sistema) {
+    public RecepcionistaFrame(SistemaController sistema) {
         initComponents();
+        this.sistema = sistema;
         jTabbedPane1.addChangeListener(e -> {
             int selected = jTabbedPane1.getSelectedIndex();
 
@@ -77,45 +77,45 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
+        lbBienvenido = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        tablaClientes = new javax.swing.JTable();
+        addClientes = new javax.swing.JButton();
+        modClientes = new javax.swing.JButton();
+        delClientes = new javax.swing.JButton();
+        bClientes = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
-        jButton18 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
+        tablaVehiculo = new javax.swing.JTable();
+        addVehiculo = new javax.swing.JButton();
+        modVehiculo = new javax.swing.JButton();
+        delVehiculo = new javax.swing.JButton();
+        bVehiculo = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
-        jButton16 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
+        tablaMecanico = new javax.swing.JTable();
+        addMecanico = new javax.swing.JButton();
+        modMecanico = new javax.swing.JButton();
+        delMecanico = new javax.swing.JButton();
+        bMecanico = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable6 = new javax.swing.JTable();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
+        tablaOrden = new javax.swing.JTable();
+        addOrden = new javax.swing.JButton();
+        modOrden = new javax.swing.JButton();
+        delOrden = new javax.swing.JButton();
+        bOrden = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable7 = new javax.swing.JTable();
+        tablaInventario = new javax.swing.JTable();
         jButton26 = new javax.swing.JButton();
         jButton27 = new javax.swing.JButton();
         jButton28 = new javax.swing.JButton();
@@ -126,11 +126,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(180, 195, 219));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(25, 41, 66));
-        jLabel2.setText("Bienvenido al Sistema de Gestion del Taller");
+        lbBienvenido.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        lbBienvenido.setForeground(new java.awt.Color(25, 41, 66));
+        lbBienvenido.setText("Bienvenido al Sistema de Gestion del Taller");
 
         btnCerrarSesion.setBackground(new java.awt.Color(68, 87, 117));
         btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -147,9 +147,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(logo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCerrarSesion)
                 .addGap(31, 31, 31))
@@ -158,13 +158,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(lbBienvenido)
                 .addGap(32, 32, 32))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnCerrarSesion)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 9, Short.MAX_VALUE))
         );
 
@@ -175,7 +175,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(180, 195, 219));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -186,31 +186,31 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 "Cedula", "Nombre", "Telefono", "Correo"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaClientes);
 
-        jButton2.setBackground(new java.awt.Color(68, 87, 117));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Agregar");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        addClientes.setBackground(new java.awt.Color(68, 87, 117));
+        addClientes.setForeground(new java.awt.Color(255, 255, 255));
+        addClientes.setText("Agregar");
+        addClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addClientes.addActionListener(this::addClientesActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(68, 87, 117));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Modificar");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        modClientes.setBackground(new java.awt.Color(68, 87, 117));
+        modClientes.setForeground(new java.awt.Color(255, 255, 255));
+        modClientes.setText("Modificar");
+        modClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        modClientes.addActionListener(this::modClientesActionPerformed);
 
-        jButton4.setBackground(new java.awt.Color(68, 87, 117));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Eliminar");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        delClientes.setBackground(new java.awt.Color(68, 87, 117));
+        delClientes.setForeground(new java.awt.Color(255, 255, 255));
+        delClientes.setText("Eliminar");
+        delClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        delClientes.addActionListener(this::delClientesActionPerformed);
 
-        jButton5.setBackground(new java.awt.Color(68, 87, 117));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Buscar");
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton5.addActionListener(this::jButton5ActionPerformed);
+        bClientes.setBackground(new java.awt.Color(68, 87, 117));
+        bClientes.setForeground(new java.awt.Color(255, 255, 255));
+        bClientes.setText("Buscar");
+        bClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bClientes.addActionListener(this::bClientesActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -221,13 +221,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(addClientes)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(modClientes)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)
+                        .addComponent(delClientes)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)
+                        .addComponent(bClientes)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -238,10 +238,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(addClientes)
+                    .addComponent(modClientes)
+                    .addComponent(delClientes)
+                    .addComponent(bClientes))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -249,7 +249,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(180, 195, 219));
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+        tablaVehiculo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -260,31 +260,31 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 "Placa", "Marca", "Modelo"
             }
         ));
-        jScrollPane5.setViewportView(jTable5);
+        jScrollPane5.setViewportView(tablaVehiculo);
 
-        jButton18.setBackground(new java.awt.Color(68, 87, 117));
-        jButton18.setForeground(new java.awt.Color(255, 255, 255));
-        jButton18.setText("Agregar");
-        jButton18.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton18.addActionListener(this::jButton18ActionPerformed);
+        addVehiculo.setBackground(new java.awt.Color(68, 87, 117));
+        addVehiculo.setForeground(new java.awt.Color(255, 255, 255));
+        addVehiculo.setText("Agregar");
+        addVehiculo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addVehiculo.addActionListener(this::addVehiculoActionPerformed);
 
-        jButton19.setBackground(new java.awt.Color(68, 87, 117));
-        jButton19.setForeground(new java.awt.Color(255, 255, 255));
-        jButton19.setText("Modificar");
-        jButton19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton19.addActionListener(this::jButton19ActionPerformed);
+        modVehiculo.setBackground(new java.awt.Color(68, 87, 117));
+        modVehiculo.setForeground(new java.awt.Color(255, 255, 255));
+        modVehiculo.setText("Modificar");
+        modVehiculo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        modVehiculo.addActionListener(this::modVehiculoActionPerformed);
 
-        jButton20.setBackground(new java.awt.Color(68, 87, 117));
-        jButton20.setForeground(new java.awt.Color(255, 255, 255));
-        jButton20.setText("Eliminar");
-        jButton20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton20.addActionListener(this::jButton20ActionPerformed);
+        delVehiculo.setBackground(new java.awt.Color(68, 87, 117));
+        delVehiculo.setForeground(new java.awt.Color(255, 255, 255));
+        delVehiculo.setText("Eliminar");
+        delVehiculo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        delVehiculo.addActionListener(this::delVehiculoActionPerformed);
 
-        jButton21.setBackground(new java.awt.Color(68, 87, 117));
-        jButton21.setForeground(new java.awt.Color(255, 255, 255));
-        jButton21.setText("Buscar");
-        jButton21.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton21.addActionListener(this::jButton21ActionPerformed);
+        bVehiculo.setBackground(new java.awt.Color(68, 87, 117));
+        bVehiculo.setForeground(new java.awt.Color(255, 255, 255));
+        bVehiculo.setText("Buscar");
+        bVehiculo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bVehiculo.addActionListener(this::bVehiculoActionPerformed);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -295,13 +295,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton18)
+                        .addComponent(addVehiculo)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton19)
+                        .addComponent(modVehiculo)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton20)
+                        .addComponent(delVehiculo)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton21)
+                        .addComponent(bVehiculo)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -312,10 +312,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton18)
-                    .addComponent(jButton19)
-                    .addComponent(jButton20)
-                    .addComponent(jButton21))
+                    .addComponent(addVehiculo)
+                    .addComponent(modVehiculo)
+                    .addComponent(delVehiculo)
+                    .addComponent(bVehiculo))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -338,7 +338,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(180, 195, 219));
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMecanico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -349,31 +349,31 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 "Cedula", "Nombre", "Max ordenes", "Disponible"
             }
         ));
-        jScrollPane4.setViewportView(jTable4);
+        jScrollPane4.setViewportView(tablaMecanico);
 
-        jButton14.setBackground(new java.awt.Color(68, 87, 117));
-        jButton14.setForeground(new java.awt.Color(255, 255, 255));
-        jButton14.setText("Agregar");
-        jButton14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton14.addActionListener(this::jButton14ActionPerformed);
+        addMecanico.setBackground(new java.awt.Color(68, 87, 117));
+        addMecanico.setForeground(new java.awt.Color(255, 255, 255));
+        addMecanico.setText("Agregar");
+        addMecanico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addMecanico.addActionListener(this::addMecanicoActionPerformed);
 
-        jButton15.setBackground(new java.awt.Color(68, 87, 117));
-        jButton15.setForeground(new java.awt.Color(255, 255, 255));
-        jButton15.setText("Modificar");
-        jButton15.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton15.addActionListener(this::jButton15ActionPerformed);
+        modMecanico.setBackground(new java.awt.Color(68, 87, 117));
+        modMecanico.setForeground(new java.awt.Color(255, 255, 255));
+        modMecanico.setText("Modificar");
+        modMecanico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        modMecanico.addActionListener(this::modMecanicoActionPerformed);
 
-        jButton16.setBackground(new java.awt.Color(68, 87, 117));
-        jButton16.setForeground(new java.awt.Color(255, 255, 255));
-        jButton16.setText("Eliminar");
-        jButton16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton16.addActionListener(this::jButton16ActionPerformed);
+        delMecanico.setBackground(new java.awt.Color(68, 87, 117));
+        delMecanico.setForeground(new java.awt.Color(255, 255, 255));
+        delMecanico.setText("Eliminar");
+        delMecanico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        delMecanico.addActionListener(this::delMecanicoActionPerformed);
 
-        jButton17.setBackground(new java.awt.Color(68, 87, 117));
-        jButton17.setForeground(new java.awt.Color(255, 255, 255));
-        jButton17.setText("Buscar");
-        jButton17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton17.addActionListener(this::jButton17ActionPerformed);
+        bMecanico.setBackground(new java.awt.Color(68, 87, 117));
+        bMecanico.setForeground(new java.awt.Color(255, 255, 255));
+        bMecanico.setText("Buscar");
+        bMecanico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bMecanico.addActionListener(this::bMecanicoActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -384,13 +384,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jButton14)
+                        .addComponent(addMecanico)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton15)
+                        .addComponent(modMecanico)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton16)
+                        .addComponent(delMecanico)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton17)
+                        .addComponent(bMecanico)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -401,10 +401,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton14)
-                    .addComponent(jButton15)
-                    .addComponent(jButton16)
-                    .addComponent(jButton17))
+                    .addComponent(addMecanico)
+                    .addComponent(modMecanico)
+                    .addComponent(delMecanico)
+                    .addComponent(bMecanico))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -427,7 +427,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jPanel9.setBackground(new java.awt.Color(180, 195, 219));
 
-        jTable6.setModel(new javax.swing.table.DefaultTableModel(
+        tablaOrden.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -438,31 +438,31 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 "Fecha", "ID", "Estado"
             }
         ));
-        jScrollPane6.setViewportView(jTable6);
+        jScrollPane6.setViewportView(tablaOrden);
 
-        jButton22.setBackground(new java.awt.Color(68, 87, 117));
-        jButton22.setForeground(new java.awt.Color(255, 255, 255));
-        jButton22.setText("Agregar");
-        jButton22.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton22.addActionListener(this::jButton22ActionPerformed);
+        addOrden.setBackground(new java.awt.Color(68, 87, 117));
+        addOrden.setForeground(new java.awt.Color(255, 255, 255));
+        addOrden.setText("Agregar");
+        addOrden.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addOrden.addActionListener(this::addOrdenActionPerformed);
 
-        jButton23.setBackground(new java.awt.Color(68, 87, 117));
-        jButton23.setForeground(new java.awt.Color(255, 255, 255));
-        jButton23.setText("Modificar");
-        jButton23.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton23.addActionListener(this::jButton23ActionPerformed);
+        modOrden.setBackground(new java.awt.Color(68, 87, 117));
+        modOrden.setForeground(new java.awt.Color(255, 255, 255));
+        modOrden.setText("Modificar");
+        modOrden.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        modOrden.addActionListener(this::modOrdenActionPerformed);
 
-        jButton24.setBackground(new java.awt.Color(68, 87, 117));
-        jButton24.setForeground(new java.awt.Color(255, 255, 255));
-        jButton24.setText("Eliminar");
-        jButton24.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton24.addActionListener(this::jButton24ActionPerformed);
+        delOrden.setBackground(new java.awt.Color(68, 87, 117));
+        delOrden.setForeground(new java.awt.Color(255, 255, 255));
+        delOrden.setText("Eliminar");
+        delOrden.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        delOrden.addActionListener(this::delOrdenActionPerformed);
 
-        jButton25.setBackground(new java.awt.Color(68, 87, 117));
-        jButton25.setForeground(new java.awt.Color(255, 255, 255));
-        jButton25.setText("Buscar");
-        jButton25.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton25.addActionListener(this::jButton25ActionPerformed);
+        bOrden.setBackground(new java.awt.Color(68, 87, 117));
+        bOrden.setForeground(new java.awt.Color(255, 255, 255));
+        bOrden.setText("Buscar");
+        bOrden.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bOrden.addActionListener(this::bOrdenActionPerformed);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -473,13 +473,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jButton22)
+                        .addComponent(addOrden)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton23)
+                        .addComponent(modOrden)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton24)
+                        .addComponent(delOrden)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton25)
+                        .addComponent(bOrden)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -490,10 +490,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton22)
-                    .addComponent(jButton23)
-                    .addComponent(jButton24)
-                    .addComponent(jButton25))
+                    .addComponent(addOrden)
+                    .addComponent(modOrden)
+                    .addComponent(delOrden)
+                    .addComponent(bOrden))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -516,7 +516,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(180, 195, 219));
 
-        jTable7.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -527,7 +527,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 "Codigo", "Nombre", "Costo", "Cantidad"
             }
         ));
-        jScrollPane7.setViewportView(jTable7);
+        jScrollPane7.setViewportView(tablaInventario);
 
         jButton26.setBackground(new java.awt.Color(68, 87, 117));
         jButton26.setForeground(new java.awt.Color(255, 255, 255));
@@ -635,48 +635,48 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+    private void addMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMecanicoActionPerformed
         // TODO add your handling code here:
         
-        AgregarMecanicoFrame ventanaAgregarMecanico = new AgregarMecanicoFrame();
+        /*AgregarMecanicoFrame ventanaAgregarMecanico = new AgregarMecanicoFrame();
         ventanaAgregarMecanico.setLocationRelativeTo(this);
         ventanaAgregarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarMecanico.setVisible(true);
+        ventanaAgregarMecanico.setVisible(true);*/
         
-    }//GEN-LAST:event_jButton14ActionPerformed
+    }//GEN-LAST:event_addMecanicoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientesActionPerformed
         // TODO add your handling code here:
-        AgregarClienteFrame ventanaAgregar = new AgregarClienteFrame();
-        
-        ventanaAgregar.setLocationRelativeTo(this); 
-        ventanaAgregar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE); // Solo cierra esta ventana, no todo el programa
-    
-        ventanaAgregar.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema,"AGREGAR",new Cliente("", 0, 0, ""));
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        cargarDatosClientes();
+
+    }//GEN-LAST:event_addClientesActionPerformed
+
+    private void modClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modClientesActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = jTable1.getSelectedRow();
+        int fila = tablaClientes.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+            return;
+        }
+        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
+        Cliente c = sistema.getClienteService().buscar(id);
+        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "MODIFICAR", c);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosClientes();
         
-        if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente de la tabla.");
-        return;
-    }
-        
-        ModificarClienteFrame ventanaModificar = new ModificarClienteFrame();
-        ventanaModificar.setLocationRelativeTo(this);
-        ventanaModificar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaModificar.setVisible(true);
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_modClientesActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void delClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delClientesActionPerformed
         // TODO add your handling code here:
         
         JOptionPane.showMessageDialog(this, "¡El botón de eliminar sí responde!");
-        int filaSeleccionada = jTable1.getSelectedRow();
+        int filaSeleccionada = tablaClientes.getSelectedRow();
         System.out.println("Fila seleccionada detectada: " + filaSeleccionada);
         
         if (filaSeleccionada == -1) {
@@ -686,8 +686,8 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         
         System.out.println("Intentando leer datos de la fila...");
         
-        int idCliente = Integer.parseInt(jTable1.getValueAt(filaSeleccionada, 0).toString());
-        String nombre = jTable1.getValueAt(filaSeleccionada, 1).toString();
+        int idCliente = Integer.parseInt(tablaClientes.getValueAt(filaSeleccionada, 0).toString());
+        String nombre = tablaClientes.getValueAt(filaSeleccionada, 1).toString();
         
             int confirmar = JOptionPane.showConfirmDialog(this, 
             "¿Está seguro de que desea eliminar el cliente seleccionado?", 
@@ -695,52 +695,67 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             
             if (confirmar == JOptionPane.YES_OPTION) {
             // Aquí irá tu línea de backend: clienteService.eliminar(...);
-            clienteService.eliminar(idCliente);
+                sistema.getClienteService().eliminar(idCliente);
+                cargarDatosClientes();
             JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación ejecutada.");
     }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_delClientesActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void bClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClientesActionPerformed
         // TODO add your handling code here:
-        
-        BuscarClienteFrame ventanaBuscar = new BuscarClienteFrame();
-        ventanaBuscar.setLocationRelativeTo(this);
-        ventanaBuscar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscar.setVisible(true);
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
+    String busqueda = JOptionPane.showInputDialog(this, "Ingrese la cédula:");
 
-    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+    if (busqueda == null || busqueda.isBlank()) return;
+
+    Cliente c = sistema.getClienteService().buscar(Integer.parseInt(busqueda));
+
+    DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
+    modelo.setRowCount(0);
+
+    if (c != null) {
+        modelo.addRow(new Object[]{
+            c.getId(),
+            c.getNombre(),
+            c.getTelefono(),
+            c.getCorreo()
+        });
+    } else {
+        JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+    }
+
+    }//GEN-LAST:event_bClientesActionPerformed
+
+    private void addVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehiculoActionPerformed
         // TODO add your handling code here:
-        AgregarVehiculoFrame ventanaAgregarVehiculo = new AgregarVehiculoFrame();
+        /*AgregarVehiculoFrame ventanaAgregarVehiculo = new AgregarVehiculoFrame();
         ventanaAgregarVehiculo.setLocationRelativeTo(this);
         ventanaAgregarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarVehiculo.setVisible(true);
+        ventanaAgregarVehiculo.setVisible(true);*/
         
-    }//GEN-LAST:event_jButton18ActionPerformed
+    }//GEN-LAST:event_addVehiculoActionPerformed
 
-    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+    private void modVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modVehiculoActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = jTable5.getSelectedRow();
+        int filaSeleccionada = tablaVehiculo.getSelectedRow();
         
         if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione un vehículo de la tabla.");
-        return;
+       // JOptionPane.showMessageDialog(this, "Por favor, seleccione un vehículo de la tabla.");
+        //return;
     }
         
-        ModificarVehiculoFrame ventanaModificarVehiculo = new ModificarVehiculoFrame();
+       /* ModificarVehiculoFrame ventanaModificarVehiculo = new ModificarVehiculoFrame();
         ventanaModificarVehiculo.setLocationRelativeTo(this);
         ventanaModificarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaModificarVehiculo.setVisible(true);
+        ventanaModificarVehiculo.setVisible(true);*/
         
         
         
-    }//GEN-LAST:event_jButton19ActionPerformed
+    }//GEN-LAST:event_modVehiculoActionPerformed
 
-    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+    private void delVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delVehiculoActionPerformed
         // TODO add your handling code here:
-        int filaSeleccionada = jTable5.getSelectedRow();
+        int filaSeleccionada = tablaVehiculo.getSelectedRow();
     
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo para eliminar.");
@@ -757,37 +772,37 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     }
         
         
-    }//GEN-LAST:event_jButton20ActionPerformed
+    }//GEN-LAST:event_delVehiculoActionPerformed
 
-    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+    private void bVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVehiculoActionPerformed
         // TODO add your handling code here:
         
-        BuscarVehiculoFrame ventanaBuscarVehiculo = new BuscarVehiculoFrame();
+        /*BuscarVehiculoFrame ventanaBuscarVehiculo = new BuscarVehiculoFrame();
         ventanaBuscarVehiculo.setLocationRelativeTo(this);
         ventanaBuscarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarVehiculo.setVisible(true);
-    }//GEN-LAST:event_jButton21ActionPerformed
+        ventanaBuscarVehiculo.setVisible(true);*/
+    }//GEN-LAST:event_bVehiculoActionPerformed
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+    private void modMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modMecanicoActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = jTable4.getSelectedRow(); 
+        int filaSeleccionada = tablaMecanico.getSelectedRow(); 
     
         if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Por favor, seleccione un mecánico de la tabla.");
         return;
         }
     
-        ModificarMecanicoFrame ventanaModificarMecanico = new ModificarMecanicoFrame();
+        /*ModificarMecanicoFrame ventanaModificarMecanico = new ModificarMecanicoFrame();
         ventanaModificarMecanico.setLocationRelativeTo(this);
         ventanaModificarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaModificarMecanico.setVisible(true);
-    }//GEN-LAST:event_jButton15ActionPerformed
+        ventanaModificarMecanico.setVisible(true);*/
+    }//GEN-LAST:event_modMecanicoActionPerformed
 
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+    private void delMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delMecanicoActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = jTable4.getSelectedRow();
+        int filaSeleccionada = tablaMecanico.getSelectedRow();
     
         if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Debe seleccionar un mecánico para eliminar.");
@@ -802,46 +817,46 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         // Aquí conectarás tu servicio: mecanicoService.eliminar(...);
         JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de mecánico ejecutada.");
         }
-    }//GEN-LAST:event_jButton16ActionPerformed
+    }//GEN-LAST:event_delMecanicoActionPerformed
 
-    private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
+    private void bMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMecanicoActionPerformed
         // TODO add your handling code here:
         
-        BuscarMecanicoFrame ventanaBuscarMecanico = new BuscarMecanicoFrame();
+        /*BuscarMecanicoFrame ventanaBuscarMecanico = new BuscarMecanicoFrame();
         ventanaBuscarMecanico.setLocationRelativeTo(this);
         ventanaBuscarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarMecanico.setVisible(true);
-    }//GEN-LAST:event_jButton17ActionPerformed
+        ventanaBuscarMecanico.setVisible(true);*/
+    }//GEN-LAST:event_bMecanicoActionPerformed
 
-    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+    private void addOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrdenActionPerformed
         // TODO add your handling code here:
-        
+     /*   
         AgregarOrdenFrame ventanaAgregarOrden = new AgregarOrdenFrame();
         ventanaAgregarOrden.setLocationRelativeTo(this);
         ventanaAgregarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarOrden.setVisible(true);
-    }//GEN-LAST:event_jButton22ActionPerformed
+        ventanaAgregarOrden.setVisible(true);*/
+    }//GEN-LAST:event_addOrdenActionPerformed
 
-    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+    private void modOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modOrdenActionPerformed
         // TODO add your handling code here:
         
-    int filaSeleccionada = jTable6.getSelectedRow(); 
+    int filaSeleccionada = tablaOrden.getSelectedRow(); 
     
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Por favor, seleccione una orden de la tabla.");
         return;
     }
-    
+    /*
     ModificarOrdenFrame ventanaModificarOrden = new ModificarOrdenFrame();
     ventanaModificarOrden.setLocationRelativeTo(this);
     ventanaModificarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    ventanaModificarOrden.setVisible(true);
-    }//GEN-LAST:event_jButton23ActionPerformed
+    ventanaModificarOrden.setVisible(true);*/
+    }//GEN-LAST:event_modOrdenActionPerformed
 
-    private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
+    private void delOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delOrdenActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = jTable4.getSelectedRow();
+        int filaSeleccionada = tablaMecanico.getSelectedRow();
     
     if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Debe seleccionar una orden para eliminar.");
@@ -857,48 +872,48 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de orden ejecutada.");
         
     }
-    }//GEN-LAST:event_jButton24ActionPerformed
+    }//GEN-LAST:event_delOrdenActionPerformed
 
-    private void jButton25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton25ActionPerformed
+    private void bOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrdenActionPerformed
         // TODO add your handling code here:
-        
+        /*
         BuscarOrdenFrame ventanaBuscarOrden = new BuscarOrdenFrame();
         ventanaBuscarOrden.setLocationRelativeTo(this);
         ventanaBuscarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarOrden.setVisible(true);
+        ventanaBuscarOrden.setVisible(true);*/
         
         
-    }//GEN-LAST:event_jButton25ActionPerformed
+    }//GEN-LAST:event_bOrdenActionPerformed
 
     private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
         // TODO add your handling code here:
-        AgregarInventarioFrame ventanaAgregarInv = new AgregarInventarioFrame();
+        /*AgregarInventarioFrame ventanaAgregarInv = new AgregarInventarioFrame();
         ventanaAgregarInv.setLocationRelativeTo(this);
         ventanaAgregarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarInv.setVisible(true);
+        ventanaAgregarInv.setVisible(true);*/
     }//GEN-LAST:event_jButton26ActionPerformed
 
     private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = jTable7.getSelectedRow(); 
+        int filaSeleccionada = tablaInventario.getSelectedRow(); 
     
         if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Por favor, seleccione un artículo de la tabla.");
         return;
         }
-    
+    /*
         ModificarInventarioFrame ventanaModificarInv = new ModificarInventarioFrame();
         ventanaModificarInv.setLocationRelativeTo(this);
         ventanaModificarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         ventanaModificarInv.setVisible(true);
-
+*/
     }//GEN-LAST:event_jButton27ActionPerformed
 
     private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = jTable5.getSelectedRow();
+        int filaSeleccionada = tablaVehiculo.getSelectedRow();
     
         if (filaSeleccionada == -1) {
         JOptionPane.showMessageDialog(this, "Debe seleccionar un artículo para eliminar.");
@@ -917,11 +932,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
         // TODO add your handling code here:
-        
+        /*
         BuscarInventarioFrame ventanaBuscarInv = new BuscarInventarioFrame();
         ventanaBuscarInv.setLocationRelativeTo(this);
         ventanaBuscarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarInv.setVisible(true);
+        ventanaBuscarInv.setVisible(true);*/
     }//GEN-LAST:event_jButton29ActionPerformed
 
     /**
@@ -946,33 +961,28 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new RecepcionistaFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+    SistemaController sistema = new SistemaController();new RecepcionistaFrame(sistema).setVisible(true);});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addClientes;
+    private javax.swing.JButton addMecanico;
+    private javax.swing.JButton addOrden;
+    private javax.swing.JButton addVehiculo;
+    private javax.swing.JButton bClientes;
+    private javax.swing.JButton bMecanico;
+    private javax.swing.JButton bOrden;
+    private javax.swing.JButton bVehiculo;
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton16;
-    private javax.swing.JButton jButton17;
-    private javax.swing.JButton jButton18;
-    private javax.swing.JButton jButton19;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton20;
-    private javax.swing.JButton jButton21;
-    private javax.swing.JButton jButton22;
-    private javax.swing.JButton jButton23;
-    private javax.swing.JButton jButton24;
-    private javax.swing.JButton jButton25;
+    private javax.swing.JButton delClientes;
+    private javax.swing.JButton delMecanico;
+    private javax.swing.JButton delOrden;
+    private javax.swing.JButton delVehiculo;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton28;
     private javax.swing.JButton jButton29;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -989,24 +999,31 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
-    private javax.swing.JTable jTable6;
-    private javax.swing.JTable jTable7;
+    private javax.swing.JLabel lbBienvenido;
+    private javax.swing.JLabel logo;
+    private javax.swing.JButton modClientes;
+    private javax.swing.JButton modMecanico;
+    private javax.swing.JButton modOrden;
+    private javax.swing.JButton modVehiculo;
+    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaInventario;
+    private javax.swing.JTable tablaMecanico;
+    private javax.swing.JTable tablaOrden;
+    private javax.swing.JTable tablaVehiculo;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarDatosClientes() {
-        modeloTabla.setRowCount(0); 
-    
-    
-    for (Cliente c : clienteService.consultar()) {
-        modeloTabla.addRow(new Object[]{
-            c.getId(),       
-            c.getNombre(),   
-            c.getTelefono(), 
-            c.getCorreo()    
+   private void cargarDatosClientes() {
+    DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
+    modelo.setRowCount(0);
+
+    for (Cliente c : sistema.getClienteService().consultar()) {
+        modelo.addRow(new Object[]{
+            c.getId(),
+            c.getNombre(),
+            c.getTelefono(),
+            c.getCorreo()
         });
     }
-    }
-}
+}}
+
+

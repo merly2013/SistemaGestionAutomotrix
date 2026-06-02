@@ -1,21 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Automotriz.view;
 
 /**
  *
- * @author HUBER
+ * @author 57300
  */
-public class AgregarOrdenFrame extends javax.swing.JFrame {
+public class MecanicoDialogFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AgregarOrdenFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MecanicoDialogFrame.class.getName());
 
     /**
-     * Creates new form AgregarOrdenFrame
+     * Creates new form MecanicoDialogFrame
      */
-    public AgregarOrdenFrame() {
+    public MecanicoDialogFrame() {
         initComponents();
     }
 
@@ -66,7 +62,7 @@ public class AgregarOrdenFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new AgregarOrdenFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new MecanicoDialogFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

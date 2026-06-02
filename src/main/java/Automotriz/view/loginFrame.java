@@ -13,12 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class LoginFrame extends javax.swing.JFrame {
     
-    private SistemaController sistema;
-
-    public LoginFrame(SistemaController sistema) {
-        initComponents();
-        this.sistema = sistema;
-    }
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginFrame.class.getName());
 
@@ -27,6 +22,13 @@ public class LoginFrame extends javax.swing.JFrame {
      */
     public LoginFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+    }
+    private SistemaController sistema;
+
+    public LoginFrame(SistemaController sistema) {
+        initComponents();
+        this.sistema = sistema;
     }
 
     /**

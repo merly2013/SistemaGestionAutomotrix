@@ -1,21 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Automotriz.view;
 
 /**
  *
- * @author HUBER
+ * @author 57300
  */
-public class ModificarClienteFrame extends javax.swing.JFrame {
+public class InventarioDialogFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ModificarClienteFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InventarioDialogFrame.class.getName());
 
     /**
-     * Creates new form ModificarClienteFrame
+     * Creates new form InventarioDialogFrame
      */
-    public ModificarClienteFrame() {
+    public InventarioDialogFrame() {
         initComponents();
     }
 
@@ -66,7 +62,7 @@ public class ModificarClienteFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new ModificarClienteFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new InventarioDialogFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

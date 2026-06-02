@@ -1,21 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Automotriz.view;
 
 /**
  *
- * @author HUBER
+ * @author 57300
  */
-public class BuscarOrdenFrame extends javax.swing.JFrame {
+public class OrdenDialogFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BuscarOrdenFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(OrdenDialogFrame.class.getName());
 
     /**
-     * Creates new form BuscarOrdenFrame
+     * Creates new form OrdenDialogFrame
      */
-    public BuscarOrdenFrame() {
+    public OrdenDialogFrame() {
         initComponents();
     }
 
@@ -66,7 +62,7 @@ public class BuscarOrdenFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new BuscarOrdenFrame().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new OrdenDialogFrame().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
