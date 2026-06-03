@@ -16,6 +16,7 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
     private SistemaController sistema;
     private String modo;
     private Cliente clienteActual;
+    private RecepcionistaFrame recepcionistaFrame;
     
     public ClienteDialogFrame() {
         initComponents();
@@ -216,6 +217,9 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
             sistema.getClienteService().modificar(clienteActual);
             JOptionPane.showMessageDialog(this, "Cliente modificado exitosamente");
         }
+       /* if (recepcionistaFrame != null) {
+           recepcionistaFrame.cargarDatosClientes();
+        }*/
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 

@@ -4,6 +4,7 @@ import Automotriz.modelo.Mecanico;
 import javax.swing.JOptionPane;
 import Automotriz.modelo.Orden;
 import Automotriz.modelo.Usuario;
+import Automotriz.modelo.Servicio;
 /**
  *
  * @author Merlin Landero y Claude
@@ -22,7 +23,21 @@ public class MecanicoFrame extends javax.swing.JFrame {
         cargarOrdenes();
     }
     private void cargarOrdenes() {
-    // aquí llenaremos la tabla con las órdenes del mecánico
+        javax.swing.table.DefaultTableModel modelo
+                = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+
+        for (Orden o : sistema.getOrdenService().consultar()) {
+            if (o.getMecanico() != null
+                    && o.getMecanico().getId() == mecanico.getId()) {
+                modelo.addRow(new Object[]{
+                    o.getId(),
+                    o.getFecha(),
+                    o.getVehiculo().getPlaca(),
+                    o.getEstado()
+                });
+            }
+        }
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MecanicoFrame.class.getName());
@@ -169,9 +184,9 @@ public class MecanicoFrame extends javax.swing.JFrame {
                     .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnVerDetalles)
-                        .addGap(27, 27, 27)
+                        .addGap(65, 65, 65)
                         .addComponent(btnAgregarServicios)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(275, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,23 +238,28 @@ public class MecanicoFrame extends javax.swing.JFrame {
     private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
         // TODO add your handling code here:
          int fila = jTable1.getSelectedRow();
-    if (fila == -1) {
-        JOptionPane.showMessageDialog(this,
-                "Seleccione una orden de la tabla",
-                "Aviso",
-                JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    String idOrden = jTable1.getValueAt(fila, 0).toString();
-    Orden orden = sistema.getOrdenService().buscar(idOrden);
-    // por ahora mostramos los datos en un mensaje
-    JOptionPane.showMessageDialog(this,
-            "Orden: " + orden.getId() + "\n" +
-            "Fecha: " + orden.getFecha() + "\n" +
-            "Estado: " + orden.getEstado() + "\n" +
-            "Total: $" + orden.calcularTotal(),
-            "Detalle de Orden",
-            JOptionPane.INFORMATION_MESSAGE);
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
+        }
+        String idOrden = jTable1.getValueAt(fila, 0).toString();
+        Orden orden = sistema.getOrdenService().buscar(idOrden);
+
+        StringBuilder detalles = new StringBuilder();
+        detalles.append("ID: ").append(orden.getId()).append("\n");
+        detalles.append("Fecha: ").append(orden.getFecha()).append("\n");
+        detalles.append("Estado: ").append(orden.getEstado()).append("\n");
+        detalles.append("Cliente: ").append(orden.getCliente().getNombre()).append("\n");
+        detalles.append("Vehículo: ").append(orden.getVehiculo().getPlaca()).append("\n");
+        detalles.append("Servicios:\n");
+        for (Servicio s : orden.getServicios()) {
+            detalles.append("  - ").append(s.getDescripcion())
+                    .append(": $").append(s.getCosto()).append("\n");
+        }
+        detalles.append("Total: $").append(orden.calcularTotal());
+
+        JOptionPane.showMessageDialog(this, detalles.toString(),
+                "Detalle de Orden", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnVerDetallesActionPerformed
 
     private void btnAgregarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarServiciosActionPerformed
@@ -269,6 +289,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
         AgregarServicioFrame ventana = new AgregarServicioFrame(sistema, orden, this);
         ventana.setLocationRelativeTo(this);
         ventana.setVisible(true);
+        cargarOrdenes();
     }//GEN-LAST:event_btnAgregarServiciosActionPerformed
 
     private void btnCambiarContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarContrasenaActionPerformed
