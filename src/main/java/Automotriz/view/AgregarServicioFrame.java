@@ -46,6 +46,8 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         servicios.addItem("Revision General");
         servicios.addItem("Cambio de Repuesto");
         panelExtra.setLayout(new java.awt.FlowLayout());
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 //*******************
     /**
@@ -90,11 +92,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
 
         jButton2.setText("Cancelar");
 
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
+        jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
         javax.swing.GroupLayout panelExtraLayout = new javax.swing.GroupLayout(panelExtra);
         panelExtra.setLayout(panelExtraLayout);
@@ -210,6 +208,10 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         panelExtra.repaint();
         
     }//GEN-LAST:event_serviciosActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

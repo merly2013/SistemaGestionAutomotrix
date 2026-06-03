@@ -26,9 +26,11 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame(SistemaController sistema) {
         initComponents();
         this.sistema = sistema;
-        setSize(550, 420);
+        setSize(1000, 620);
         setLocationRelativeTo(null); // centra en pantalla
-        setResizable(false); // no se puede redimensionar
+        
+        
+        //setResizable(false); // no se puede redimensionar
     }
 
     /**
@@ -48,13 +50,18 @@ public class LoginFrame extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema Gestión Automotriz - Login");
+        setMinimumSize(new java.awt.Dimension(410, 360));
+        setPreferredSize(new java.awt.Dimension(800, 650));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(180, 195, 219));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(68, 87, 117)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(25, 41, 66)));
         jPanel1.setForeground(new java.awt.Color(25, 41, 66));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -88,7 +95,14 @@ public class LoginFrame extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 170, 50));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 390));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 560, 390));
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fondoLogin.png"))); // NOI18N
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1000, 630));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -163,7 +177,9 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables

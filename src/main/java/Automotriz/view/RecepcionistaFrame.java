@@ -624,6 +624,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION);
 
         if (confirmar == JOptionPane.YES_OPTION) {
+            for (java.awt.Window w : java.awt.Window.getWindows()) {
+            if (w != this) w.dispose();
+            }
             new LoginFrame(sistema).setVisible(true);
             this.dispose();
         }
