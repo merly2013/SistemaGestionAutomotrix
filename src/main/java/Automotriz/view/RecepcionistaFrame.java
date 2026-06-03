@@ -28,15 +28,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RecepcionistaFrame.class.getName());
 
-    
+    private SistemaController sistema;
     private DefaultTableModel modeloTabla;
-    private VehiculoService vehiculoService = new VehiculoService();
     private DefaultTableModel modeloTablaVehiculos;
-    private MecanicoService mecanicoService = new MecanicoService(ArchivoUtil.cargarDatos("usuarios.dat"));
     private DefaultTableModel modeloTablaMecanicos;
-    private OrdenService ordenService = new OrdenService(); 
     private DefaultTableModel modeloTablaOrdenes;
-    private Inventario inventarioService = new Inventario(); 
     private DefaultTableModel modeloTablaInventario;
     
     /**
@@ -44,11 +40,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
      */
     public RecepcionistaFrame() {
         initComponents();
-  
-        modeloTabla = (DefaultTableModel) tablaClientes.getModel(); 
+        this.sistema = new SistemaController();
+        modeloTabla = (DefaultTableModel) tablaClientes.getModel();
         cargarDatosClientes();
     }
-        private SistemaController sistema;
+      
     //  constructor
     public RecepcionistaFrame(SistemaController sistema) {
         initComponents();
@@ -116,10 +112,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaInventario = new javax.swing.JTable();
-        jButton26 = new javax.swing.JButton();
-        jButton27 = new javax.swing.JButton();
-        jButton28 = new javax.swing.JButton();
-        jButton29 = new javax.swing.JButton();
+        addInventario = new javax.swing.JButton();
+        modInventario = new javax.swing.JButton();
+        delInventario = new javax.swing.JButton();
+        bInventario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(180, 195, 219));
@@ -529,26 +525,26 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         ));
         jScrollPane7.setViewportView(tablaInventario);
 
-        jButton26.setBackground(new java.awt.Color(68, 87, 117));
-        jButton26.setForeground(new java.awt.Color(255, 255, 255));
-        jButton26.setText("Agregar");
-        jButton26.addActionListener(this::jButton26ActionPerformed);
+        addInventario.setBackground(new java.awt.Color(68, 87, 117));
+        addInventario.setForeground(new java.awt.Color(255, 255, 255));
+        addInventario.setText("Agregar");
+        addInventario.addActionListener(this::addInventarioActionPerformed);
 
-        jButton27.setBackground(new java.awt.Color(68, 87, 117));
-        jButton27.setForeground(new java.awt.Color(255, 255, 255));
-        jButton27.setText("Modificar");
-        jButton27.addActionListener(this::jButton27ActionPerformed);
+        modInventario.setBackground(new java.awt.Color(68, 87, 117));
+        modInventario.setForeground(new java.awt.Color(255, 255, 255));
+        modInventario.setText("Modificar");
+        modInventario.addActionListener(this::modInventarioActionPerformed);
 
-        jButton28.setBackground(new java.awt.Color(68, 87, 117));
-        jButton28.setForeground(new java.awt.Color(255, 255, 255));
-        jButton28.setText("Eliminar");
-        jButton28.addActionListener(this::jButton28ActionPerformed);
+        delInventario.setBackground(new java.awt.Color(68, 87, 117));
+        delInventario.setForeground(new java.awt.Color(255, 255, 255));
+        delInventario.setText("Eliminar");
+        delInventario.addActionListener(this::delInventarioActionPerformed);
 
-        jButton29.setBackground(new java.awt.Color(68, 87, 117));
-        jButton29.setForeground(new java.awt.Color(255, 255, 255));
-        jButton29.setText("Buscar");
-        jButton29.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton29.addActionListener(this::jButton29ActionPerformed);
+        bInventario.setBackground(new java.awt.Color(68, 87, 117));
+        bInventario.setForeground(new java.awt.Color(255, 255, 255));
+        bInventario.setText("Buscar");
+        bInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        bInventario.addActionListener(this::bInventarioActionPerformed);
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -559,13 +555,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jButton26)
+                        .addComponent(addInventario)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton27)
+                        .addComponent(modInventario)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton28)
+                        .addComponent(delInventario)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton29)
+                        .addComponent(bInventario)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -576,10 +572,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton26)
-                    .addComponent(jButton27)
-                    .addComponent(jButton28)
-                    .addComponent(jButton29))
+                    .addComponent(addInventario)
+                    .addComponent(modInventario)
+                    .addComponent(delInventario)
+                    .addComponent(bInventario))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -885,15 +881,15 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_bOrdenActionPerformed
 
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
+    private void addInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventarioActionPerformed
         // TODO add your handling code here:
         /*AgregarInventarioFrame ventanaAgregarInv = new AgregarInventarioFrame();
         ventanaAgregarInv.setLocationRelativeTo(this);
         ventanaAgregarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         ventanaAgregarInv.setVisible(true);*/
-    }//GEN-LAST:event_jButton26ActionPerformed
+    }//GEN-LAST:event_addInventarioActionPerformed
 
-    private void jButton27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton27ActionPerformed
+    private void modInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modInventarioActionPerformed
         // TODO add your handling code here:
         
         int filaSeleccionada = tablaInventario.getSelectedRow(); 
@@ -908,9 +904,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         ventanaModificarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         ventanaModificarInv.setVisible(true);
 */
-    }//GEN-LAST:event_jButton27ActionPerformed
+    }//GEN-LAST:event_modInventarioActionPerformed
 
-    private void jButton28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton28ActionPerformed
+    private void delInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delInventarioActionPerformed
         // TODO add your handling code here:
         
         int filaSeleccionada = tablaVehiculo.getSelectedRow();
@@ -928,16 +924,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             // Aquí conectarás tu servicio: inventarioService.eliminar(...);
             JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de inventario ejecutada.");
         }
-    }//GEN-LAST:event_jButton28ActionPerformed
+    }//GEN-LAST:event_delInventarioActionPerformed
 
-    private void jButton29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton29ActionPerformed
+    private void bInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInventarioActionPerformed
         // TODO add your handling code here:
         /*
         BuscarInventarioFrame ventanaBuscarInv = new BuscarInventarioFrame();
         ventanaBuscarInv.setLocationRelativeTo(this);
         ventanaBuscarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         ventanaBuscarInv.setVisible(true);*/
-    }//GEN-LAST:event_jButton29ActionPerformed
+    }//GEN-LAST:event_bInventarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -967,22 +963,21 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addClientes;
+    private javax.swing.JButton addInventario;
     private javax.swing.JButton addMecanico;
     private javax.swing.JButton addOrden;
     private javax.swing.JButton addVehiculo;
     private javax.swing.JButton bClientes;
+    private javax.swing.JButton bInventario;
     private javax.swing.JButton bMecanico;
     private javax.swing.JButton bOrden;
     private javax.swing.JButton bVehiculo;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton delClientes;
+    private javax.swing.JButton delInventario;
     private javax.swing.JButton delMecanico;
     private javax.swing.JButton delOrden;
     private javax.swing.JButton delVehiculo;
-    private javax.swing.JButton jButton26;
-    private javax.swing.JButton jButton27;
-    private javax.swing.JButton jButton28;
-    private javax.swing.JButton jButton29;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -1002,6 +997,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbBienvenido;
     private javax.swing.JLabel logo;
     private javax.swing.JButton modClientes;
+    private javax.swing.JButton modInventario;
     private javax.swing.JButton modMecanico;
     private javax.swing.JButton modOrden;
     private javax.swing.JButton modVehiculo;
