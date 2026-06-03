@@ -23,9 +23,13 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
     
     public VehiculoDialogFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
     public VehiculoDialogFrame(SistemaController sistema, String modo, Vehiculo vehiculo) {
     initComponents();
+    setLocationRelativeTo(null);
+    setResizable(false);
     this.sistema = sistema;
     this.modo = modo;
     this.vehiculoActual = vehiculo;

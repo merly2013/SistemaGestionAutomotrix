@@ -19,6 +19,8 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
     
     public MecanicoDialogFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
     public MecanicoDialogFrame(SistemaController sistema, String modo, Mecanico mecanico) {
         initComponents();
@@ -35,6 +37,7 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
             txtNombre.setText(mecanico.getNombre());
             txtMaxOrdenes.setText(String.valueOf(mecanico.getMaxOrdenes()));
         }
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

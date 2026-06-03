@@ -19,11 +19,15 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
     
     public ClienteDialogFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     
     public ClienteDialogFrame(SistemaController sistema, String modo, Cliente cliente) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.sistema = sistema;
         this.modo = modo;
         this.clienteActual = cliente;
@@ -39,6 +43,7 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
             txtTelefono.setText(String.valueOf(cliente.getTelefono()));
             txtCorreo.setText(cliente.getCorreo());
         }
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**

@@ -1,7 +1,8 @@
 package Automotriz.view;
 import Automotriz.controller.SistemaController;
-import Automotriz.modelo.Cliente;
+import Automotriz.modelo.Repuesto;
 import javax.swing.JOptionPane;
+import Automotriz.modelo.Inventario;
 /**
  *
  * @author 57300
@@ -13,9 +14,35 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
     /**
      * Creates new form InventarioDialogFrame
      */
+    private SistemaController sistema;
+    private String modo;
+    private Repuesto repuestoActual;
+    
     public InventarioDialogFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
+    public InventarioDialogFrame(SistemaController sistema, String modo, Repuesto repuesto) {
+    initComponents();
+    setLocationRelativeTo(null);
+    setResizable(false);
+    this.sistema = sistema;
+    this.modo = modo;
+    this.repuestoActual = repuesto;
+    
+    if (modo.equals("AGREGAR")) {
+        setTitle("Agregar Repuesto");
+    } else {
+        setTitle("Modificar Repuesto");
+        txtCodigo.setText(repuesto.getId());
+        txtCodigo.setEditable(false);
+        txtNombre.setText(repuesto.getNombre());
+        txtPrecio.setText(String.valueOf(repuesto.getPrecio()));
+        txtCantidad.setText(String.valueOf(repuesto.getCantidad())); 
+    }
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,10 +60,10 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtCedula = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -62,15 +89,15 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jLabel2.setText("Cedula :");
+        jLabel2.setText("Codigo :");
 
         jLabel3.setText("Nombre :");
 
-        jLabel4.setText("Telefono :");
+        jLabel4.setText("Precio :");
 
         jLabel5.setText("Correo :");
 
-        txtCedula.addActionListener(this::txtCedulaActionPerformed);
+        txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
@@ -84,26 +111,20 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(45, 45, 45)
-                            .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addGap(32, 32, 32)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNombre)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtNombre)
+                        .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                        .addComponent(txtCodigo)))
+                .addGap(19, 33, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(70, Short.MAX_VALUE)
                 .addComponent(btnGuardar)
                 .addGap(73, 73, 73)
                 .addComponent(btnCancelar)
@@ -115,7 +136,7 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -123,11 +144,11 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
@@ -159,34 +180,33 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaActionPerformed
+    }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         if (txtNombre.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
-            return;
-        }
-
-        if (modo.equals("AGREGAR")) {
-            Cliente nuevo = new Cliente(
-                txtNombre.getText(),
-                Integer.parseInt(txtCedula.getText()),
-                Long.parseLong(txtTelefono.getText()),
-                txtCorreo.getText()
-            );
-            sistema.getClienteService().crear(nuevo);
-            JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
-        } else {
-            clienteActual.setNombre(txtNombre.getText());
-            clienteActual.setTelefono(Long.parseLong(txtTelefono.getText()));
-            clienteActual.setCorreo(txtCorreo.getText());
-            sistema.getClienteService().modificar(clienteActual);
-            JOptionPane.showMessageDialog(this, "Cliente modificado exitosamente");
-        }
-        this.dispose();
+        JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
+        return;
+    }
+    if (modo.equals("AGREGAR")) {
+        Repuesto nuevo = new Repuesto(
+            txtCodigo.getText(),
+            txtNombre.getText(),
+            Double.parseDouble(txtPrecio.getText()),
+            Integer.parseInt(txtCantidad.getText())
+        );
+        sistema.getInventario().crear(nuevo);
+        JOptionPane.showMessageDialog(this, "Repuesto agregado exitosamente");
+    } else {
+        repuestoActual.setNombre(txtNombre.getText());
+        repuestoActual.setPrecio(Double.parseDouble(txtPrecio.getText()));
+        repuestoActual.setCantidad(Integer.parseInt(txtCantidad.getText()));
+        sistema.getInventario().modificar(repuestoActual);
+        JOptionPane.showMessageDialog(this, "Repuesto modificado exitosamente");
+    }
+    this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
@@ -224,9 +244,9 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel tituloAccion;
-    private javax.swing.JTextField txtCedula;
-    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

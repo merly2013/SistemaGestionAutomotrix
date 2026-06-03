@@ -1,22 +1,13 @@
 package Automotriz.view;
 
-import Automotriz.controller.ClienteService;
 import Automotriz.controller.SistemaController;
 import java.awt.Color;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.Color;
-import javax.swing.JOptionPane;
-
-
-import Automotriz.controller.ClienteService;
-import Automotriz.controller.MecanicoService;
-import Automotriz.controller.OrdenService;
-import Automotriz.controller.VehiculoService;
 import Automotriz.modelo.Cliente;
+import Automotriz.modelo.Repuesto;
+import Automotriz.modelo.Vehiculo;
+import Automotriz.modelo.Mecanico;
+import Automotriz.modelo.Orden;
 import Automotriz.modelo.Inventario;
-import Automotriz.persistencia.ArchivoUtil;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,7 +39,14 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     //  constructor
     public RecepcionistaFrame(SistemaController sistema) {
         initComponents();
+        
         this.sistema = sistema;
+        cargarDatosClientes();
+        cargarDatosMecanicos();
+        cargarDatosVehiculos();
+        cargarDatosOrdenes();
+        cargarDatosInventario();
+        
         jTabbedPane1.addChangeListener(e -> {
             int selected = jTabbedPane1.getSelectedIndex();
 
@@ -634,11 +632,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void addMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMecanicoActionPerformed
         // TODO add your handling code here:
         
-        /*AgregarMecanicoFrame ventanaAgregarMecanico = new AgregarMecanicoFrame();
-        ventanaAgregarMecanico.setLocationRelativeTo(this);
-        ventanaAgregarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarMecanico.setVisible(true);*/
-        
+        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "AGREGAR", null);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosMecanicos();
     }//GEN-LAST:event_addMecanicoActionPerformed
 
     private void addClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientesActionPerformed
@@ -723,27 +720,28 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void addVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehiculoActionPerformed
         // TODO add your handling code here:
-        /*AgregarVehiculoFrame ventanaAgregarVehiculo = new AgregarVehiculoFrame();
-        ventanaAgregarVehiculo.setLocationRelativeTo(this);
-        ventanaAgregarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarVehiculo.setVisible(true);*/
+        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "AGREGAR", null);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosVehiculos();
         
     }//GEN-LAST:event_addVehiculoActionPerformed
 
     private void modVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modVehiculoActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = tablaVehiculo.getSelectedRow();
+        int fila = tablaVehiculo.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un vehículo");
+            return;
+        }
         
-        if (filaSeleccionada == -1) {
-       // JOptionPane.showMessageDialog(this, "Por favor, seleccione un vehículo de la tabla.");
-        //return;
-    }
-        
-       /* ModificarVehiculoFrame ventanaModificarVehiculo = new ModificarVehiculoFrame();
-        ventanaModificarVehiculo.setLocationRelativeTo(this);
-        ventanaModificarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaModificarVehiculo.setVisible(true);*/
+        String placa = tablaVehiculo.getValueAt(fila, 0).toString();
+        Vehiculo v = sistema.getVehiculoService().buscar(placa);
+        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "MODIFICAR", v);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosVehiculos();
         
         
         
@@ -751,48 +749,49 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void delVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delVehiculoActionPerformed
         // TODO add your handling code here:
-        int filaSeleccionada = tablaVehiculo.getSelectedRow();
-    
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un vehículo para eliminar.");
-        return;
-    }
-    
-    int confirmar = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar el vehículo seleccionado?", 
-            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            
-    if (confirmar == JOptionPane.YES_OPTION) {
-        // Aquí conectarás tu servicio: vehiculoService.eliminar(...);
-        JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de vehículo ejecutada.");
-    }
-        
-        
+         int fila = tablaVehiculo.getSelectedRow();
+         if (fila == -1) {
+             JOptionPane.showMessageDialog(this, "Seleccione un vehículo");
+             return;
+         }
+         String placa = tablaVehiculo.getValueAt(fila, 0).toString();
+         int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar vehículo?", "Confirmar", JOptionPane.YES_NO_OPTION);
+         if (confirmar == JOptionPane.YES_OPTION) {
+             sistema.getVehiculoService().eliminar(placa);
+             cargarDatosVehiculos();
+         }
     }//GEN-LAST:event_delVehiculoActionPerformed
 
     private void bVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVehiculoActionPerformed
         // TODO add your handling code here:
         
-        /*BuscarVehiculoFrame ventanaBuscarVehiculo = new BuscarVehiculoFrame();
-        ventanaBuscarVehiculo.setLocationRelativeTo(this);
-        ventanaBuscarVehiculo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarVehiculo.setVisible(true);*/
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese la placa:");
+        if (busqueda == null || busqueda.isBlank()) {
+            return;
+        }
+        Vehiculo v = sistema.getVehiculoService().buscar(busqueda);
+        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
+        modelo.setRowCount(0);
+        if (v != null) {
+            modelo.addRow(new Object[]{v.getPlaca(), v.getMarca(), v.getModelo()});
+        } else {
+            JOptionPane.showMessageDialog(this, "Vehículo no encontrado");
+        }
     }//GEN-LAST:event_bVehiculoActionPerformed
 
     private void modMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modMecanicoActionPerformed
         // TODO add your handling code here:
-        
-        int filaSeleccionada = tablaMecanico.getSelectedRow(); 
-    
-        if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione un mecánico de la tabla.");
-        return;
+        int fila = tablaMecanico.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un mecánico");
+            return;
         }
-    
-        /*ModificarMecanicoFrame ventanaModificarMecanico = new ModificarMecanicoFrame();
-        ventanaModificarMecanico.setLocationRelativeTo(this);
-        ventanaModificarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaModificarMecanico.setVisible(true);*/
+        int id = Integer.parseInt(tablaMecanico.getValueAt(fila, 0).toString());
+        Mecanico m = sistema.getMecanicoService().buscar(id);
+        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "MODIFICAR", m);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosMecanicos();
     }//GEN-LAST:event_modMecanicoActionPerformed
 
     private void delMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delMecanicoActionPerformed
@@ -826,113 +825,114 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void addOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrdenActionPerformed
         // TODO add your handling code here:
-     /*   
-        AgregarOrdenFrame ventanaAgregarOrden = new AgregarOrdenFrame();
-        ventanaAgregarOrden.setLocationRelativeTo(this);
-        ventanaAgregarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarOrden.setVisible(true);*/
+        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "AGREGAR", null);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosOrdenes();
     }//GEN-LAST:event_addOrdenActionPerformed
 
     private void modOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modOrdenActionPerformed
         // TODO add your handling code here:
         
-    int filaSeleccionada = tablaOrden.getSelectedRow(); 
-    
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione una orden de la tabla.");
-        return;
-    }
-    /*
-    ModificarOrdenFrame ventanaModificarOrden = new ModificarOrdenFrame();
-    ventanaModificarOrden.setLocationRelativeTo(this);
-    ventanaModificarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    ventanaModificarOrden.setVisible(true);*/
+        int fila = tablaOrden.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
+        }
+        String id = tablaOrden.getValueAt(fila, 1).toString();
+        Orden o = sistema.getOrdenService().buscar(id);
+        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "MODIFICAR", o);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosOrdenes();
     }//GEN-LAST:event_modOrdenActionPerformed
 
     private void delOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delOrdenActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = tablaMecanico.getSelectedRow();
-    
-    if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar una orden para eliminar.");
-        return;
-    }
-    
-    int confirmar = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar la orden seleccionada?", 
-            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            
-    if (confirmar == JOptionPane.YES_OPTION) {
-        // Aquí conectarás tu servicio: ordenService.eliminar(...);
-        JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de orden ejecutada.");
-        
-    }
+        int fila = tablaOrden.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
+        }
+        String id = tablaOrden.getValueAt(fila, 1).toString();
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar orden?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            sistema.getOrdenService().eliminar(id);
+            cargarDatosOrdenes();
+        }
     }//GEN-LAST:event_delOrdenActionPerformed
 
     private void bOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrdenActionPerformed
         // TODO add your handling code here:
-        /*
-        BuscarOrdenFrame ventanaBuscarOrden = new BuscarOrdenFrame();
-        ventanaBuscarOrden.setLocationRelativeTo(this);
-        ventanaBuscarOrden.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarOrden.setVisible(true);*/
-        
-        
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese el ID de la orden:");
+        if (busqueda == null || busqueda.isBlank()) {
+            return;
+        }
+        Orden o = sistema.getOrdenService().buscar(busqueda);
+        DefaultTableModel modelo = (DefaultTableModel) tablaOrden.getModel();
+        modelo.setRowCount(0);
+        if (o != null) {
+            modelo.addRow(new Object[]{o.getFecha(), o.getId(), o.getEstado()});
+        } else {
+            JOptionPane.showMessageDialog(this, "Orden no encontrada");
+        }
     }//GEN-LAST:event_bOrdenActionPerformed
 
     private void addInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventarioActionPerformed
         // TODO add your handling code here:
-        /*AgregarInventarioFrame ventanaAgregarInv = new AgregarInventarioFrame();
-        ventanaAgregarInv.setLocationRelativeTo(this);
-        ventanaAgregarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaAgregarInv.setVisible(true);*/
+        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "AGREGAR", null);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosInventario();
     }//GEN-LAST:event_addInventarioActionPerformed
 
     private void modInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modInventarioActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = tablaInventario.getSelectedRow(); 
-    
-        if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione un artículo de la tabla.");
-        return;
+        int fila = tablaInventario.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un repuesto");
+            return;
         }
-    /*
-        ModificarInventarioFrame ventanaModificarInv = new ModificarInventarioFrame();
-        ventanaModificarInv.setLocationRelativeTo(this);
-        ventanaModificarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaModificarInv.setVisible(true);
-*/
+        String codigo = tablaInventario.getValueAt(fila, 0).toString();
+        Repuesto r = sistema.getInventario().buscar(codigo);
+        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "MODIFICAR", r);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosInventario();
     }//GEN-LAST:event_modInventarioActionPerformed
 
     private void delInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delInventarioActionPerformed
         // TODO add your handling code here:
         
-        int filaSeleccionada = tablaVehiculo.getSelectedRow();
-    
-        if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un artículo para eliminar.");
-        return;
+        int fila = tablaInventario.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un repuesto");
+            return;
         }
-    
-        int confirmar = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar el artículo seleccionado del inventario?", 
-            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            
+        String codigo = tablaInventario.getValueAt(fila, 0).toString();
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar repuesto?", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirmar == JOptionPane.YES_OPTION) {
-            // Aquí conectarás tu servicio: inventarioService.eliminar(...);
-            JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de inventario ejecutada.");
+            sistema.getInventario().eliminar(codigo);
+            cargarDatosInventario();
         }
     }//GEN-LAST:event_delInventarioActionPerformed
 
     private void bInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInventarioActionPerformed
         // TODO add your handling code here:
-        /*
-        BuscarInventarioFrame ventanaBuscarInv = new BuscarInventarioFrame();
-        ventanaBuscarInv.setLocationRelativeTo(this);
-        ventanaBuscarInv.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarInv.setVisible(true);*/
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese el código del repuesto:");
+        if (busqueda == null || busqueda.isBlank()) {
+            return;
+        }
+        Repuesto r = sistema.getInventario().buscar(busqueda);
+        DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
+        modelo.setRowCount(0);
+        if (r != null) {
+            modelo.addRow(new Object[]{r.getId(), r.getNombre(), r.getPrecio(), r.getCantidad()});
+        } else {
+            JOptionPane.showMessageDialog(this, "Repuesto no encontrado");
+        }
     }//GEN-LAST:event_bInventarioActionPerformed
 
     /**
@@ -1008,18 +1008,53 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JTable tablaVehiculo;
     // End of variables declaration//GEN-END:variables
 
-   private void cargarDatosClientes() {
-    DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
-    modelo.setRowCount(0);
+    //METODOS PARA LLENAR TABLAS
+    private void cargarDatosClientes() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
+        modelo.setRowCount(0);
 
-    for (Cliente c : sistema.getClienteService().consultar()) {
-        modelo.addRow(new Object[]{
-            c.getId(),
-            c.getNombre(),
-            c.getTelefono(),
-            c.getCorreo()
-        });
+        for (Cliente c : sistema.getClienteService().consultar()) {
+            modelo.addRow(new Object[]{
+                c.getId(),
+                c.getNombre(),
+                c.getTelefono(),
+                c.getCorreo()
+            });
+        }
     }
-}}
+    private void cargarDatosMecanicos() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaMecanico.getModel();
+        modelo.setRowCount(0);
+        for (Mecanico m : sistema.getMecanicoService().consultar()) {
+            modelo.addRow(new Object[]{m.getId(), m.getNombre(), m.getMaxOrdenes(), m.isDisponible()});
+        }
+    }
+
+    private void cargarDatosVehiculos() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
+        modelo.setRowCount(0);
+        for (Vehiculo v : sistema.getVehiculoService().consultar()) {
+            modelo.addRow(new Object[]{v.getPlaca(), v.getMarca(), v.getModelo()});
+        }
+    }
+
+    private void cargarDatosOrdenes() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaOrden.getModel();
+        modelo.setRowCount(0);
+        for (Orden o : sistema.getOrdenService().consultar()) {
+            modelo.addRow(new Object[]{o.getFecha(), o.getId(), o.getEstado()});
+        }
+    }
+
+    private void cargarDatosInventario() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
+        modelo.setRowCount(0);
+        for (Repuesto r : sistema.getInventario().consultar()) {
+            modelo.addRow(new Object[]{r.getId(), r.getNombre(), r.getPrecio(), r.getCantidad()});
+        }
+    }
+}
+
+
 
 

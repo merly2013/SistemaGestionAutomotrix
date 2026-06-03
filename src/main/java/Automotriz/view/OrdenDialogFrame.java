@@ -1,5 +1,10 @@
 package Automotriz.view;
-
+import Automotriz.controller.SistemaController;
+import Automotriz.modelo.Orden;
+import Automotriz.modelo.Vehiculo;
+import Automotriz.modelo.Cliente;
+import Automotriz.modelo.Mecanico;
+import javax.swing.JOptionPane;
 /**
  *
  * @author 57300
@@ -11,8 +16,43 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
     /**
      * Creates new form OrdenDialogFrame
      */
+    private SistemaController sistema;
+    private String modo;
+    private Orden ordenActual;
+    
     public OrdenDialogFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+    }
+    public OrdenDialogFrame(SistemaController sistema, String modo, Orden orden) {
+        initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        this.sistema = sistema;
+        this.modo = modo;
+        this.ordenActual = orden;
+
+        // llenar comboboxes con datos reales
+        for (Cliente c : sistema.getClienteService().consultar()) {
+            cmbCliente.addItem(c.getNombre() + " - " + c.getId());
+        }
+        for (Mecanico m : sistema.getMecanicoService().consultar()) {
+            cmbMecanico.addItem(m.getNombre() + " - " + m.getId());
+        }
+        for (Vehiculo v : sistema.getVehiculoService().consultar()) {
+            cmbVehiculo.addItem(v.getPlaca() + " - " + v.getMarca());
+        }
+
+        if (modo.equals("AGREGAR")) {
+            setTitle("Crear Orden");
+            txtFecha.setText(java.time.LocalDate.now().toString());
+            txtEstado.setText("Abierta");
+        } else {
+            setTitle("Modificar Orden");
+            txtEstado.setText(orden.getEstado());
+        }
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -31,12 +71,14 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtCedula = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
+        txtEstado = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        cmbCliente = new javax.swing.JComboBox<>();
+        cmbMecanico = new javax.swing.JComboBox<>();
+        cmbVehiculo = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        txtFecha = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,23 +99,29 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(tituloAccion)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jLabel2.setText("Cedula :");
+        jLabel2.setText("Cliente :");
 
         jLabel3.setText("Nombre :");
 
         jLabel4.setText("Telefono :");
 
-        jLabel5.setText("Correo :");
-
-        txtCedula.addActionListener(this::txtCedulaActionPerformed);
+        jLabel5.setText("Estado :");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
+
+        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbMecanico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel6.setText("Fecha :");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -82,51 +130,56 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 43, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)
+                        .addGap(73, 73, 73)
+                        .addComponent(btnCancelar)
+                        .addGap(67, 67, 67))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addGap(45, 45, 45)
-                            .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addGap(32, 32, 32)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtNombre)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar)
-                .addGap(73, 73, 73)
-                .addComponent(btnCancelar)
-                .addGap(67, 67, 67))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(53, 53, 53)
+                                .addComponent(txtFecha))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5))
+                                .addGap(32, 32, 32)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtEstado)
+                                    .addComponent(cmbCliente, 0, 226, Short.MAX_VALUE)
+                                    .addComponent(cmbMecanico, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbVehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(15, 15, 15)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(cmbMecanico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addComponent(cmbVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar))
@@ -149,40 +202,41 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCedulaActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (txtNombre.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
-            return;
-        }
-
         if (modo.equals("AGREGAR")) {
-            Cliente nuevo = new Cliente(
-                txtNombre.getText(),
-                Integer.parseInt(txtCedula.getText()),
-                Long.parseLong(txtTelefono.getText()),
-                txtCorreo.getText()
-            );
-            sistema.getClienteService().crear(nuevo);
-            JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente");
+            // obtener cliente seleccionado del combobox
+            int indexCliente = cmbCliente.getSelectedIndex();
+            int indexMecanico = cmbMecanico.getSelectedIndex();
+            int indexVehiculo = cmbVehiculo.getSelectedIndex();
+
+            if (indexCliente == -1 || indexMecanico == -1 || indexVehiculo == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione cliente, mecánico y vehículo");
+                return;
+            }
+
+            Cliente cliente = sistema.getClienteService().consultar().get(indexCliente);
+            Mecanico mecanico = sistema.getMecanicoService().consultar().get(indexMecanico);
+            Vehiculo vehiculo = sistema.getVehiculoService().consultar().get(indexVehiculo);
+
+            String id = "ORD-" + System.currentTimeMillis(); // id único
+            String fecha = java.time.LocalDate.now().toString();
+
+            Orden nueva = new Orden(id, fecha, "Abierta", cliente, mecanico, vehiculo);
+            sistema.getOrdenService().crear(nueva);
+            JOptionPane.showMessageDialog(this, "Orden creada exitosamente");
         } else {
-            clienteActual.setNombre(txtNombre.getText());
-            clienteActual.setTelefono(Long.parseLong(txtTelefono.getText()));
-            clienteActual.setCorreo(txtCorreo.getText());
-            sistema.getClienteService().modificar(clienteActual);
-            JOptionPane.showMessageDialog(this, "Cliente modificado exitosamente");
+            ordenActual.setEstado(txtEstado.getText());
+            sistema.getOrdenService().modificar(ordenActual);
+            JOptionPane.showMessageDialog(this, "Orden modificada exitosamente");
         }
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -215,16 +269,18 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JComboBox<String> cmbCliente;
+    private javax.swing.JComboBox<String> cmbMecanico;
+    private javax.swing.JComboBox<String> cmbVehiculo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel tituloAccion;
-    private javax.swing.JTextField txtCedula;
-    private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtEstado;
+    private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

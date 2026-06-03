@@ -20,15 +20,15 @@ public class LoginFrame extends javax.swing.JFrame {
     /**
      * Creates new form loginFrame
      */
-    public LoginFrame() {
-        initComponents();
-        setLocationRelativeTo(null);
-    }
+  
     private SistemaController sistema;
 
     public LoginFrame(SistemaController sistema) {
         initComponents();
         this.sistema = sistema;
+        setSize(550, 420);
+        setLocationRelativeTo(null); // centra en pantalla
+        setResizable(false); // no se puede redimensionar
     }
 
     /**
