@@ -17,6 +17,8 @@ public class MecanicoFrame extends javax.swing.JFrame {
     public MecanicoFrame(SistemaController sistema, Mecanico mecanico) {
         initComponents();
         
+        setLocationRelativeTo(null); // centra en pantalla
+        
         this.sistema = sistema;
         this.mecanico = mecanico;
         jLabelBienvenido.setText("Bienvenido, " + mecanico.getNombre());

@@ -36,6 +36,8 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         cmbCliente.removeAllItems();
         cmbMecanico.removeAllItems();
         cmbVehiculo.removeAllItems();
+        cmbEstado.removeAllItems();
+        
         cmbEstado.addItem("Abierta");
         cmbEstado.addItem("En proceso");
         cmbEstado.addItem("Finalizada");

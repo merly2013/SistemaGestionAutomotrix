@@ -31,6 +31,8 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
      */
     public RecepcionistaFrame() {
         initComponents();
+        setLocationRelativeTo(null); // centra en pantalla
+        
         this.sistema = new SistemaController();
         modeloTabla = (DefaultTableModel) tablaClientes.getModel();
         cargarDatosClientes();
@@ -39,6 +41,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     //  constructor
     public RecepcionistaFrame(SistemaController sistema) {
         initComponents();
+        setLocationRelativeTo(null); // centra en pantalla
         
         this.sistema = sistema;
         cargarDatosClientes();
