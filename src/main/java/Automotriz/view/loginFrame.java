@@ -30,6 +30,7 @@ public class LoginFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null); // centra en pantalla
         
         
+        
         //setResizable(false); // no se puede redimensionar
     }
 
