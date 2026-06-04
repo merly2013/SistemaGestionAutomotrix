@@ -196,11 +196,62 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        
+    String cedulaTexto = txtCedula.getText().trim();
+    String nombreTexto = txtNombre.getText().trim();
+    String telefonoTexto = txtTelefono.getText().trim();
+    String correoTexto = txtCorreo.getText().trim();
+    
+    
           if (txtNombre.getText().isBlank()) {
             JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
             return;
         }
-
+          
+    if (cedulaTexto.isEmpty() || nombreTexto.isEmpty() || telefonoTexto.isEmpty() || correoTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return; // Detiene la ejecución
+    }
+    
+    
+    if (!nombreTexto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+        JOptionPane.showMessageDialog(this, "El nombre solo debe contener letras.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    int cedulaValida;
+    try {
+        cedulaValida = Integer.parseInt(cedulaTexto);
+        if (cedulaValida <= 0) {
+            JOptionPane.showMessageDialog(this, "La cédula debe ser un número positivo.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "La cédula debe ser un número válido sin puntos ni comas.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    long telefonoValido;
+    try {
+        telefonoValido = Long.parseLong(telefonoTexto);
+        // Opcional: puedes limitar que tenga una longitud real, ej. entre 7 y 10 dígitos
+        if (telefonoTexto.length() < 7 || telefonoTexto.length() > 10) {
+            JOptionPane.showMessageDialog(this, "El teléfono debe tener entre 7 y 10 dígitos.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El teléfono debe contener únicamente números.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    String regexCorreo = "^[A-Za-z0-9+_.-]+@(.+)$";
+    if (!correoTexto.matches(regexCorreo)) {
+        JOptionPane.showMessageDialog(this, "El correo electrónico no tiene un formato válido (ejemplo@dominio.com).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    
+          
         if (modo.equals("AGREGAR")) {
             Cliente nuevo = new Cliente(
                     txtNombre.getText(),
