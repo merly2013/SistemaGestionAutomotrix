@@ -95,7 +95,7 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Precio :");
 
-        jLabel5.setText("Correo :");
+        jLabel5.setText("Cantidad :");
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
@@ -123,7 +123,7 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
                         .addComponent(txtNombre)
                         .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                         .addComponent(txtCodigo)))
-                .addGap(19, 33, Short.MAX_VALUE))
+                .addGap(19, 29, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(70, Short.MAX_VALUE)
                 .addComponent(btnGuardar)

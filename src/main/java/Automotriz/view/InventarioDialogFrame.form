@@ -101,7 +101,7 @@
                           <Component id="txtCodigo" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="19" pref="33" max="32767" attributes="0"/>
+                  <EmptySpace min="19" pref="29" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace pref="70" max="32767" attributes="0"/>
@@ -163,7 +163,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Correo :"/>
+            <Property name="text" type="java.lang.String" value="Cantidad :"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCodigo">
