@@ -187,16 +187,64 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+        String codigoTexto = txtCodigo.getText().trim().toUpperCase(); 
+        String nombreTexto = txtNombre.getText().trim();
+        String precioTexto = txtPrecio.getText().trim();
+        String cantidadTexto = txtCantidad.getText().trim();
+        
         if (txtNombre.getText().isBlank()) {
         JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
         return;
     }
+        
+        if (codigoTexto.isEmpty() || nombreTexto.isEmpty() || precioTexto.isEmpty() || cantidadTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
+       int codigoValido;
+    try {
+        codigoValido = Integer.parseInt(codigoTexto);
+        if (codigoValido <= 0) {
+            JOptionPane.showMessageDialog(this, "El código del repuesto debe ser un número positivo.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El código debe contener únicamente números (sin letras, puntos ni guiones).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
+        double precioValido;
+    try {
+        precioValido = Double.parseDouble(precioTexto);
+        if (precioValido <= 0) {
+            JOptionPane.showMessageDialog(this, "El precio debe ser un valor mayor a cero.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El precio debe ser un número válido (use el punto para decimales, ej: 1500.50).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    int cantidadValida;
+    try {
+        cantidadValida = Integer.parseInt(cantidadTexto);
+        if (cantidadValida < 0) {
+            JOptionPane.showMessageDialog(this, "La cantidad en inventario no puede ser negativa.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "La cantidad debe ser un número entero válido (sin letras ni decimales).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    
     if (modo.equals("AGREGAR")) {
         Repuesto nuevo = new Repuesto(
-            txtCodigo.getText(),
-            txtNombre.getText(),
-            Double.parseDouble(txtPrecio.getText()),
-            Integer.parseInt(txtCantidad.getText())
+            codigoTexto,      
+            nombreTexto,
+            precioValido,    
+            cantidadValida   
         );
         sistema.getInventario().crear(nuevo);
         JOptionPane.showMessageDialog(this, "Repuesto agregado exitosamente");
