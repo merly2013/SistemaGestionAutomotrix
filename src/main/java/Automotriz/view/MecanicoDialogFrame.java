@@ -172,15 +172,46 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (txtNombre.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
-            return;
-        }
-
-        if (txtNombre.getText().isBlank()) {
-        JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío");
+        
+        String cedulaTexto = txtCedula.getText().trim();
+        String nombreTexto = txtNombre.getText().trim();
+        String maxOrdenesTexto = txtMaxOrdenes.getText().trim();
+        
+        if (cedulaTexto.isEmpty() || nombreTexto.isEmpty() || maxOrdenesTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
         return;
     }
+
+        if (!nombreTexto.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
+        JOptionPane.showMessageDialog(this, "El nombre solo debe contener letras.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
+        int cedulaValida;
+    try {
+        cedulaValida = Integer.parseInt(cedulaTexto);
+        if (cedulaValida <= 0) {
+            JOptionPane.showMessageDialog(this, "La cédula debe ser un número positivo.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "La cédula debe ser un número válido sin puntos ni comas.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    int maxOrdenesValido;
+    try {
+        maxOrdenesValido = Integer.parseInt(maxOrdenesTexto);
+        
+        if (maxOrdenesValido <= 0 || maxOrdenesValido > 5) {
+            JOptionPane.showMessageDialog(this, "El número máximo de órdenes debe estar entre 1 y 5.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "La cantidad de órdenes máximas debe ser un número entero válido.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        
     if (modo.equals("AGREGAR")) {
         Mecanico nuevo = new Mecanico(
             txtNombre.getText(),

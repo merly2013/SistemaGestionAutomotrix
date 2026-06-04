@@ -201,10 +201,40 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (txtPlaca.getText().isBlank()) {
-        JOptionPane.showMessageDialog(this, "La placa no puede estar vacía");
+        
+        String placaTexto = txtPlaca.getText().trim().toUpperCase(); 
+        String marcaTexto = txtMarca.getText().trim();
+        String modeloTexto = txtModelo.getText().trim();
+        
+       if (placaTexto.isEmpty() || marcaTexto.isEmpty() || modeloTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
         return;
     }
+       
+       if (!placaTexto.matches("^[A-Z0-9]{5,7}$")) {
+        JOptionPane.showMessageDialog(this, "La placa debe ser alfanumérica (solo letras y números) y tener entre 5 y 7 caracteres.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+       
+       if (!marcaTexto.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$")) {
+        JOptionPane.showMessageDialog(this, "La marca no debe contener caracteres especiales.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+       
+       int modeloValido;
+    try {
+        modeloValido = Integer.parseInt(modeloTexto);
+        
+        // Rango lógico para un año de vehículo (ej. entre 1900 y 2027)
+        if (modeloValido < 1900 || modeloValido > 2027) {
+            JOptionPane.showMessageDialog(this, "El modelo (año) debe estar entre 1900 y 2027.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El modelo debe ser un año numérico válido (ej: 2018).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+       
     if (modo.equals("AGREGAR")) {
         String tipo = (String) cmbTipo.getSelectedItem();
         Vehiculo nuevo;
