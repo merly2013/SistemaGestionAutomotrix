@@ -7,6 +7,7 @@ public abstract class Vehiculo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
+    private int idCliente;
     protected String placa;
     protected String marca;
     protected String modelo;
@@ -16,7 +17,10 @@ public abstract class Vehiculo implements Serializable {
         this.marca = marca;
         this.modelo = modelo;
     }
-
+    
+   
+    public int getIdCliente() { return idCliente; }
+    public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
     public String getPlaca() {return placa;}
     public String getMarca() {return marca;}
     public String getModelo() {return modelo;}

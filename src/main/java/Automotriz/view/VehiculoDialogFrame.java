@@ -77,10 +77,7 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(180, 195, 219));
-
         tituloAccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        tituloAccion.setForeground(new java.awt.Color(25, 41, 66));
         tituloAccion.setText("Agregar Vehiculo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -100,28 +97,20 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        jLabel2.setForeground(new java.awt.Color(25, 41, 66));
         jLabel2.setText("Placa :");
 
-        jLabel3.setForeground(new java.awt.Color(25, 41, 66));
         jLabel3.setText("Marca :");
 
-        jLabel4.setForeground(new java.awt.Color(25, 41, 66));
         jLabel4.setText("Modelo :");
 
         txtPlaca.addActionListener(this::txtPlacaActionPerformed);
 
-        btnGuardar.setBackground(new java.awt.Color(25, 41, 66));
-        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
-        btnCancelar.setBackground(new java.awt.Color(25, 41, 66));
-        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        jLabel6.setForeground(new java.awt.Color(25, 41, 66));
         jLabel6.setText("Correo :");
 
         cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -131,26 +120,30 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
+                        .addGap(52, 52, 52)
                         .addComponent(btnGuardar)
                         .addGap(63, 63, 63)
                         .addComponent(btnCancelar))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel6))
-                        .addGap(32, 32, 32)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel2))
+                                .addGap(32, 32, 32))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(41, 41, 41)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtPlaca)
                             .addComponent(txtMarca, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                             .addComponent(cmbTipo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,40 +201,10 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        
-        String placaTexto = txtPlaca.getText().trim().toUpperCase(); 
-        String marcaTexto = txtMarca.getText().trim();
-        String modeloTexto = txtModelo.getText().trim();
-        
-       if (placaTexto.isEmpty() || marcaTexto.isEmpty() || modeloTexto.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
+        if (txtPlaca.getText().isBlank()) {
+        JOptionPane.showMessageDialog(this, "La placa no puede estar vacía");
         return;
     }
-       
-       if (!placaTexto.matches("^[A-Z0-9]{5,7}$")) {
-        JOptionPane.showMessageDialog(this, "La placa debe ser alfanumérica (solo letras y números) y tener entre 5 y 7 caracteres.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-       
-       if (!marcaTexto.matches("^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$")) {
-        JOptionPane.showMessageDialog(this, "La marca no debe contener caracteres especiales.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-       
-       int modeloValido;
-    try {
-        modeloValido = Integer.parseInt(modeloTexto);
-        
-        // Rango lógico para un año de vehículo (ej. entre 1900 y 2027)
-        if (modeloValido < 1900 || modeloValido > 2027) {
-            JOptionPane.showMessageDialog(this, "El modelo (año) debe estar entre 1900 y 2027.", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "El modelo debe ser un año numérico válido (ej: 2018).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-       
     if (modo.equals("AGREGAR")) {
         String tipo = (String) cmbTipo.getSelectedItem();
         Vehiculo nuevo;

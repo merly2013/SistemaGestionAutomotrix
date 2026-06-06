@@ -19,6 +19,7 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
     private SistemaController sistema;
     private String modo;
     private Orden ordenActual;
+    private Cliente clienteSeleccionado;
     
     public OrdenDialogFrame() {
         initComponents();
@@ -33,7 +34,6 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         this.modo = modo;
         this.ordenActual = orden;
         
-        cmbCliente.removeAllItems();
         cmbMecanico.removeAllItems();
         cmbVehiculo.removeAllItems();
         cmbEstado.removeAllItems();
@@ -43,11 +43,19 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         cmbEstado.addItem("Finalizada");
 
         // llenar comboboxes con datos reales
-        for (Cliente c : sistema.getClienteService().consultar()) {
-            cmbCliente.addItem(c.getNombre() + " - " + c.getId());
-        }
+        
         for (Mecanico m : sistema.getMecanicoService().consultar()) {
-            cmbMecanico.addItem(m.getNombre() + " - " + m.getId());
+            // contar órdenes asignadas
+            long ordenesAsignadas = sistema.getOrdenService().consultar()
+                    .stream()
+                    .filter(o -> o.getMecanico() != null
+                    && o.getMecanico().getId() == m.getId()
+                    && !o.getEstado().equals("Finalizada"))
+                    .count();
+
+            if (ordenesAsignadas < m.getMaxOrdenes()) {
+                cmbMecanico.addItem(m.getNombre() + " - " + m.getId());
+            }
         }
         for (Vehiculo v : sistema.getVehiculoService().consultar()) {
             cmbVehiculo.addItem(v.getPlaca() + " - " + v.getMarca());
@@ -82,14 +90,14 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        cmbCliente = new javax.swing.JComboBox<>();
         cmbMecanico = new javax.swing.JComboBox<>();
         cmbVehiculo = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
         cmbEstado = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        BuscarCliente = new javax.swing.JButton();
+        lblClienteEncontrado = new javax.swing.JLabel();
+        txtCedulaCliente = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -97,6 +105,7 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(131, 145, 168)));
 
         tituloAccion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tituloAccion.setForeground(new java.awt.Color(25, 41, 66));
         tituloAccion.setText("Agregar Orden");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -140,35 +149,44 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
+        btnGuardar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setBackground(new java.awt.Color(68, 87, 117));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
-        cmbCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         cmbMecanico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbMecanico.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         cmbVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbVehiculo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
 
         jLabel6.setBackground(new java.awt.Color(25, 41, 66));
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(25, 41, 66));
         jLabel6.setText("Fecha :");
 
+        txtFecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtFecha.addActionListener(this::txtFechaActionPerformed);
 
         cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEstado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         cmbEstado.addActionListener(this::cmbEstadoActionPerformed);
 
-        jLabel7.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel7.setText("Buscar cliente");
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(68, 87, 117)));
+        BuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Lupa-.png"))); // NOI18N
+        BuscarCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        BuscarCliente.addActionListener(this::BuscarClienteActionPerformed);
 
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        lblClienteEncontrado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        txtCedulaCliente.setForeground(new java.awt.Color(153, 153, 153));
+        txtCedulaCliente.setText("Buscar cliente");
+        txtCedulaCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtCedulaCliente.addActionListener(this::txtCedulaClienteActionPerformed);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -179,9 +197,9 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(73, 73, 73)
-                        .addComponent(btnGuardar)
-                        .addGap(80, 80, 80)
-                        .addComponent(btnCancelar))
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -197,11 +215,11 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
                             .addComponent(cmbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtFecha)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCedulaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cmbCliente, 0, 294, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(BuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblClienteEncontrado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,16 +229,16 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BuscarCliente)
+                    .addComponent(txtCedulaCliente))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel2)
+                    .addComponent(lblClienteEncontrado, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(cmbCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(cmbMecanico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -232,11 +250,12 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(101, 101, 101))
+                        .addGap(1, 1, 1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(183, 183, 183)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGuardar)
-                            .addComponent(btnCancelar))
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36))))
         );
 
@@ -307,9 +326,38 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void BuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String cedula = txtCedulaCliente.getText().trim();
+        if (cedula.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingrese una cédula");
+            return;
+        }
+        Cliente c = sistema.getClienteService().buscar(Integer.parseInt(cedula));
+        if (c == null) {
+            JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+            lblClienteEncontrado.setText("No encontrado");
+            clienteSeleccionado = null;
+        } else {
+            clienteSeleccionado = c;
+            lblClienteEncontrado.setText(c.getNombre());
+            // cargar vehículos del cliente
+            cargarVehiculosCliente(c);
+        }
+    }//GEN-LAST:event_BuscarClienteActionPerformed
+
+    //METODOO
+    private void cargarVehiculosCliente(Cliente c) {
+        cmbVehiculo.removeAllItems();
+        for (Vehiculo v : sistema.getVehiculoService().consultar()) {
+            if (v.getIdCliente() == c.getId()) {
+                cmbVehiculo.addItem(v.getPlaca() + " - " + v.getMarca());
+            }
+        }
+    }
+    private void txtCedulaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCedulaClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -337,22 +385,22 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BuscarCliente;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbMecanico;
     private javax.swing.JComboBox<String> cmbVehiculo;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblClienteEncontrado;
     private javax.swing.JLabel tituloAccion;
+    private javax.swing.JTextField txtCedulaCliente;
     private javax.swing.JTextField txtFecha;
     // End of variables declaration//GEN-END:variables
 }

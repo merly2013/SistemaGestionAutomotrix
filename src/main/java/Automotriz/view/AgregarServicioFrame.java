@@ -2,7 +2,7 @@ package Automotriz.view;
 
 import Automotriz.controller.SistemaController;
 import Automotriz.modelo.Orden;
-
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,20 +34,20 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     //CONSTRUCTOR
     AgregarServicioFrame(SistemaController sistema, Orden orden, MecanicoFrame mecanicoFrame) {
         initComponents();
-        this.sistema = sistema;
-        this.orden = orden;
-        this.mecanicoFrame = mecanicoFrame;
-        // título con el id de la orden
-        jLabel1.setText("Agregar Servicio a Orden: " + orden.getId());
-        // llenar combobox
-        servicios.removeAllItems();
-        servicios.addItem("Cambio de Aceite");
-        servicios.addItem("Revision de Frenos");
-        servicios.addItem("Revision General");
-        servicios.addItem("Cambio de Repuesto");
-        panelExtra.setLayout(new java.awt.FlowLayout());
-        
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    this.sistema = sistema;
+    this.orden = orden;
+    this.mecanicoFrame = mecanicoFrame;
+    
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setLocationRelativeTo(null);
+    panelExtra.setLayout(new java.awt.FlowLayout());
+    
+    jLabel1.setText("Agregar Servicio a Orden: " + orden.getId());
+    servicios.removeAllItems();
+    servicios.addItem("Cambio de Aceite");
+    servicios.addItem("Revision de Frenos");
+    servicios.addItem("Revision General");
+    servicios.addItem("Cambio de Repuesto");
     }
 //*******************
     /**
@@ -98,6 +98,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(25, 41, 66));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Aceptar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setBackground(new java.awt.Color(25, 41, 66));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -158,8 +159,8 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(servicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,7 +178,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -223,6 +224,53 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String tipo = (String) servicios.getSelectedItem();
+        String descripcion = jTextField1.getText();
+        double costo;
+        int duracion;
+
+        try {
+            costo = Double.parseDouble(jTextField2.getText());
+            duracion = Integer.parseInt(jTextField3.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Costo y duración deben ser números");
+            return;
+        }
+
+        Servicio servicio;
+        switch (tipo) {
+            case "Cambio de Aceite":
+                String tipoAceite = ((javax.swing.JTextField) panelExtra.getComponent(1)).getText();
+                String viscosidad = ((javax.swing.JTextField) panelExtra.getComponent(3)).getText();
+                servicio = new CambioAceite(tipoAceite, viscosidad, 4.0, "General", false, descripcion, costo, duracion);
+                break;
+            case "Revision de Frenos":
+                String pastillas = ((javax.swing.JTextField) panelExtra.getComponent(1)).getText();
+                String disco = ((javax.swing.JTextField) panelExtra.getComponent(3)).getText();
+                servicio = new RevisionFrenos(pastillas, disco, false, descripcion, costo, duracion);
+                break;
+            case "Revision General":
+                servicio = new RevisionGeneral(false, descripcion, descripcion, costo, duracion);
+                break;
+            default: // Cambio de Repuesto
+                String codigoRep = ((javax.swing.JTextField) panelExtra.getComponent(1)).getText();
+                Repuesto rep = sistema.getInventario().buscar(codigoRep);
+                if (rep == null) {
+                    JOptionPane.showMessageDialog(this, "Repuesto no encontrado en inventario");
+                    return;
+                }
+                servicio = new CambioDeRepuesto(rep, sistema.getInventario(), 6, descripcion, costo, duracion);
+                break;
+        }
+
+        orden.agregarServicio(servicio);
+        sistema.getOrdenService().modificar(orden);
+        JOptionPane.showMessageDialog(this, "Servicio agregado exitosamente");
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
