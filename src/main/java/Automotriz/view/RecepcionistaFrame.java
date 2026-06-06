@@ -10,6 +10,7 @@ import Automotriz.modelo.Orden;
 import Automotriz.modelo.Inventario;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Automotriz.modelo.Factura;
 
 /**
  *
@@ -109,6 +110,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         modOrden = new javax.swing.JButton();
         delOrden = new javax.swing.JButton();
         bOrden = new javax.swing.JButton();
+        btnGenararFactura = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
@@ -461,6 +463,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         bOrden.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         bOrden.addActionListener(this::bOrdenActionPerformed);
 
+        btnGenararFactura.setBackground(new java.awt.Color(25, 41, 66));
+        btnGenararFactura.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        btnGenararFactura.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenararFactura.setText("Generar Fcatura");
+        btnGenararFactura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnGenararFactura.addActionListener(this::btnGenararFacturaActionPerformed);
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -468,7 +477,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(addOrden)
                         .addGap(18, 18, 18)
@@ -477,8 +488,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                         .addComponent(delOrden)
                         .addGap(18, 18, 18)
                         .addComponent(bOrden)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGenararFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -490,8 +502,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                     .addComponent(addOrden)
                     .addComponent(modOrden)
                     .addComponent(delOrden)
-                    .addComponent(bOrden))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(bOrden)
+                    .addComponent(btnGenararFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -816,7 +829,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             
         if (confirmar == JOptionPane.YES_OPTION) {
         // Aquí conectarás tu servicio: mecanicoService.eliminar(...);
-        JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación de mecánico ejecutada.");
+        JOptionPane.showMessageDialog(this, "Eliminado con exito");
         }
     }//GEN-LAST:event_delMecanicoActionPerformed
 
@@ -941,6 +954,28 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bInventarioActionPerformed
 
+    private void btnGenararFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenararFacturaActionPerformed
+        // TODO add your handling code here:
+        int fila = tablaOrden.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
+        }
+        String id = tablaOrden.getValueAt(fila, 1).toString();
+        Orden orden = sistema.getOrdenService().buscar(id);
+
+        if (!orden.getEstado().equals("Finalizada")) {
+            JOptionPane.showMessageDialog(this,
+                    "Solo se puede generar factura de órdenes Finalizadas");
+            return;
+        }
+
+        Factura factura = orden.generarFactura();
+        FacturaFrame ventana = new FacturaFrame(factura);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnGenararFacturaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -979,6 +1014,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JButton bOrden;
     private javax.swing.JButton bVehiculo;
     private javax.swing.JButton btnCerrarSesion;
+    private javax.swing.JButton btnGenararFactura;
     private javax.swing.JButton delClientes;
     private javax.swing.JButton delInventario;
     private javax.swing.JButton delMecanico;

@@ -23,7 +23,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
         jLabelBienvenido.setText("Bienvenido, " + mecanico.getNombre());
         cargarOrdenes();
     }
-    private void cargarOrdenes() {
+    public void cargarOrdenes() {
         javax.swing.table.DefaultTableModel modelo
                 = (javax.swing.table.DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);

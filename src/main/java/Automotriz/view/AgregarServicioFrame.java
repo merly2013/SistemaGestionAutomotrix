@@ -3,6 +3,12 @@ package Automotriz.view;
 import Automotriz.controller.SistemaController;
 import Automotriz.modelo.Orden;
 import javax.swing.JOptionPane;
+import Automotriz.modelo.Servicio;
+import Automotriz.modelo.CambioAceite;
+import Automotriz.modelo.RevisionFrenos;
+import Automotriz.modelo.RevisionGeneral;
+import Automotriz.modelo.CambioDeRepuesto;
+import Automotriz.modelo.Repuesto;
 
 /**
  *
@@ -17,13 +23,6 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
      */
     public AgregarServicioFrame() {
         initComponents();
-        // llenar combobox
-        servicios.removeAllItems();
-        servicios.addItem("Cambio de Aceite");
-        servicios.addItem("Revision de Frenos");
-        servicios.addItem("Revision General");
-        servicios.addItem("Cambio de Repuesto");
-        panelExtra.setLayout(new java.awt.FlowLayout());
     }
     
     //atributos
@@ -34,20 +33,20 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     //CONSTRUCTOR
     AgregarServicioFrame(SistemaController sistema, Orden orden, MecanicoFrame mecanicoFrame) {
         initComponents();
-    this.sistema = sistema;
-    this.orden = orden;
-    this.mecanicoFrame = mecanicoFrame;
-    
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    setLocationRelativeTo(null);
-    panelExtra.setLayout(new java.awt.FlowLayout());
-    
-    jLabel1.setText("Agregar Servicio a Orden: " + orden.getId());
-    servicios.removeAllItems();
-    servicios.addItem("Cambio de Aceite");
-    servicios.addItem("Revision de Frenos");
-    servicios.addItem("Revision General");
-    servicios.addItem("Cambio de Repuesto");
+        this.sistema = sistema;
+        this.orden = orden;
+        this.mecanicoFrame = mecanicoFrame;
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        panelExtra.setLayout(new java.awt.FlowLayout());
+
+        jLabel1.setText("Agregar Servicio a Orden: " + orden.getId());
+        servicios.removeAllItems();
+        servicios.addItem("Cambio de Aceite");
+        servicios.addItem("Revision de Frenos");
+        servicios.addItem("Revision General");
+        servicios.addItem("Cambio de Repuesto");
     }
 //*******************
     /**
@@ -65,7 +64,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -95,10 +94,10 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(25, 41, 66));
         jLabel5.setText("Duracion: ");
 
-        jButton1.setBackground(new java.awt.Color(25, 41, 66));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Aceptar");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnAgregar.setBackground(new java.awt.Color(25, 41, 66));
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setText("Aceptar");
+        btnAgregar.addActionListener(this::btnAgregarActionPerformed);
 
         jButton2.setBackground(new java.awt.Color(25, 41, 66));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,7 +129,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(68, 68, 68)
-                                .addComponent(jButton1)
+                                .addComponent(btnAgregar)
                                 .addGap(116, 116, 116)
                                 .addComponent(jButton2))
                             .addGroup(layout.createSequentialGroup()
@@ -180,7 +179,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                 .addComponent(panelExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnAgregar)
                     .addComponent(jButton2))
                 .addGap(19, 19, 19))
         );
@@ -225,7 +224,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         String tipo = (String) servicios.getSelectedItem();
         String descripcion = jTextField1.getText();
@@ -269,8 +268,9 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         orden.agregarServicio(servicio);
         sistema.getOrdenService().modificar(orden);
         JOptionPane.showMessageDialog(this, "Servicio agregado exitosamente");
+        mecanicoFrame.cargarOrdenes();
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,7 +298,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -177,7 +177,7 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
         cmbEstado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         cmbEstado.addActionListener(this::cmbEstadoActionPerformed);
 
-        BuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Lupa-.png"))); // NOI18N
+        BuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Lupa_.png"))); // NOI18N
         BuscarCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         BuscarCliente.addActionListener(this::BuscarClienteActionPerformed);
 
@@ -230,8 +230,8 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BuscarCliente)
-                    .addComponent(txtCedulaCliente))
+                    .addComponent(txtCedulaCliente)
+                    .addComponent(BuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -285,26 +285,42 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         if (modo.equals("AGREGAR")) {
-            // obtener cliente seleccionado del combobox
-            int indexCliente = cmbCliente.getSelectedIndex();
-            int indexMecanico = cmbMecanico.getSelectedIndex();
-            int indexVehiculo = cmbVehiculo.getSelectedIndex();
 
-            if (indexCliente == -1 || indexMecanico == -1 || indexVehiculo == -1) {
-                JOptionPane.showMessageDialog(this, "Seleccione cliente, mecánico y vehículo");
+            // validar que se haya buscado y encontrado el cliente
+            if (clienteSeleccionado == null) {
+                JOptionPane.showMessageDialog(this, "Busque y seleccione un cliente primero");
                 return;
             }
 
-            Cliente cliente = sistema.getClienteService().consultar().get(indexCliente);
-            Mecanico mecanico = sistema.getMecanicoService().consultar().get(indexMecanico);
-            Vehiculo vehiculo = sistema.getVehiculoService().consultar().get(indexVehiculo);
+            // validar mecánico
+            if (cmbMecanico.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un mecánico");
+                return;
+            }
 
-            String id = "ORD-" + System.currentTimeMillis(); // id único
+            // validar vehículo
+            if (cmbVehiculo.getSelectedIndex() == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un vehículo");
+                return;
+            }
+
+            // obtener mecánico seleccionado
+            String mecanicoItem = cmbMecanico.getSelectedItem().toString();
+            int idMecanico = Integer.parseInt(mecanicoItem.split(" - ")[1]);
+            Mecanico mecanico = sistema.getMecanicoService().buscar(idMecanico);
+
+            // obtener vehículo seleccionado
+            String vehiculoItem = cmbVehiculo.getSelectedItem().toString();
+            String placa = vehiculoItem.split(" - ")[0];
+            Vehiculo vehiculo = sistema.getVehiculoService().buscar(placa);
+
+            String id = "ORD-" + System.currentTimeMillis();
             String fecha = java.time.LocalDate.now().toString();
 
-            Orden nueva = new Orden(id, fecha, "Abierta", cliente, mecanico, vehiculo);
+            Orden nueva = new Orden(id, fecha, "Abierta", clienteSeleccionado, mecanico, vehiculo);
             sistema.getOrdenService().crear(nueva);
             JOptionPane.showMessageDialog(this, "Orden creada exitosamente");
+
         } else {
             ordenActual.setEstado(cmbEstado.getSelectedItem().toString());
             sistema.getOrdenService().modificar(ordenActual);

@@ -2,6 +2,7 @@ package Automotriz.view;
 import Automotriz.controller.SistemaController;
 import Automotriz.modelo.Usuario;
 import javax.swing.JOptionPane;
+import Automotriz.persistencia.ArchivoUtil;
 
 /**
                     Color(25, 41, 66)    // #192942 
@@ -28,7 +29,8 @@ public class LoginFrame extends javax.swing.JFrame {
         this.sistema = sistema;
         setSize(1000, 620);
         setLocationRelativeTo(null); // centra en pantalla
-        
+        jTextField1.addActionListener(e -> jPasswordField1.requestFocus());
+        jPasswordField1.addActionListener(e -> btnIngresarActionPerformed(null));
         
         
         //setResizable(false); // no se puede redimensionar
@@ -50,14 +52,13 @@ public class LoginFrame extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        btnIngresar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema Gestión Automotriz - Login");
         setMinimumSize(new java.awt.Dimension(410, 360));
-        setPreferredSize(new java.awt.Dimension(800, 650));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -87,14 +88,14 @@ public class LoginFrame extends javax.swing.JFrame {
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 250, 30, 30));
         jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 270, 32));
 
-        jButton1.setBackground(new java.awt.Color(25, 41, 66));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Ingresar");
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 170, 50));
+        btnIngresar.setBackground(new java.awt.Color(25, 41, 66));
+        btnIngresar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnIngresar.setText("Ingresar");
+        btnIngresar.setBorderPainted(false);
+        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnIngresar.addActionListener(this::btnIngresarActionPerformed);
+        jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 170, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 560, 390));
 
@@ -108,7 +109,7 @@ public class LoginFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
         String usuario = jTextField1.getText();
         String contrasena = new String(jPasswordField1.getPassword());
@@ -122,6 +123,21 @@ public class LoginFrame extends javax.swing.JFrame {
     }
 
     Usuario u = sistema.getLoginController().login(usuario, contrasena);
+        if (u != null && u.isPrimerLogin()) {
+            // forzar cambio de contraseña
+            String nueva = JOptionPane.showInputDialog(this,
+                    "Es tu primer ingreso. Debes cambiar tu contraseña:",
+                    "Cambiar contraseña", JOptionPane.WARNING_MESSAGE);
+
+            if (nueva == null || nueva.isBlank()) {
+                JOptionPane.showMessageDialog(this,
+                        "Debes cambiar la contraseña para continuar");
+                return; // no deja pasar
+            }
+            u.cambiarContrasena(nueva);
+            ArchivoUtil.guardarDatos(sistema.getLoginController().getUsuarios(), "usuarios.dat");
+            JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente");
+        }
 
     if (u == null) {
         JOptionPane.showMessageDialog(this,
@@ -137,7 +153,7 @@ public class LoginFrame extends javax.swing.JFrame {
         new MecanicoFrame(sistema, u.getMecanico()).setVisible(true);
     }
         this.dispose();//se supone quecierra el login
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -173,7 +189,7 @@ public class LoginFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnIngresar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

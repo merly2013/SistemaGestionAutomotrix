@@ -71,10 +71,9 @@ public class MecanicoService implements GestionMecanico {
 
             mecanicos.remove(m);
 
-            usuarios.removeIf(u ->
-                    u.getMecanico() != null &&
-                    u.getMecanico().getId() == id);
-
+            usuarios.removeIf(u -> u.getMecanico() != null && u.getMecanico().getId() == id);
+            
+            ArchivoUtil.guardarDatos(usuarios, "usuarios.dat");
             ArchivoUtil.guardarDatos(mecanicos, ARCHIVO);
             ArchivoUtil.guardarDatos(usuarios, ARCHIVO_USUARIOS);
         }
