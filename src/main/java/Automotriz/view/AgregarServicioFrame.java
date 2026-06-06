@@ -73,23 +73,34 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         panelExtra = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(180, 195, 219));
 
+        jLabel1.setBackground(new java.awt.Color(180, 195, 219));
+        jLabel1.setForeground(new java.awt.Color(25, 41, 66));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Agregar Servicio a orden x");
 
         servicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         servicios.addActionListener(this::serviciosActionPerformed);
 
+        jLabel2.setForeground(new java.awt.Color(25, 41, 66));
         jLabel2.setText("Tipo de servicio:");
 
+        jLabel3.setForeground(new java.awt.Color(25, 41, 66));
         jLabel3.setText("Descripcion: ");
 
+        jLabel4.setForeground(new java.awt.Color(25, 41, 66));
         jLabel4.setText("Costo :");
 
+        jLabel5.setForeground(new java.awt.Color(25, 41, 66));
         jLabel5.setText("Duracion: ");
 
+        jButton1.setBackground(new java.awt.Color(25, 41, 66));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Aceptar");
 
+        jButton2.setBackground(new java.awt.Color(25, 41, 66));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cancelar");
 
         jTextField1.addActionListener(this::jTextField1ActionPerformed);

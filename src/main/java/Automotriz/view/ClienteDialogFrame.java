@@ -72,6 +72,9 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(180, 195, 219));
+        jPanel1.setForeground(new java.awt.Color(25, 41, 66));
+
         tituloAccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tituloAccion.setText("Agregar Cliente");
 
@@ -92,19 +95,27 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
+        jLabel2.setForeground(new java.awt.Color(25, 41, 66));
         jLabel2.setText("Cedula :");
 
+        jLabel3.setForeground(new java.awt.Color(25, 41, 66));
         jLabel3.setText("Nombre :");
 
+        jLabel4.setForeground(new java.awt.Color(25, 41, 66));
         jLabel4.setText("Telefono :");
 
+        jLabel5.setForeground(new java.awt.Color(25, 41, 66));
         jLabel5.setText("Correo :");
 
         txtCedula.addActionListener(this::txtCedulaActionPerformed);
 
+        btnGuardar.setBackground(new java.awt.Color(25, 41, 66));
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
+        btnCancelar.setBackground(new java.awt.Color(25, 41, 66));
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
