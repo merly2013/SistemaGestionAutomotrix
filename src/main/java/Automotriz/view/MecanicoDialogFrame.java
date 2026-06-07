@@ -16,17 +16,22 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
     private SistemaController sistema;
     private String modo;
     private Mecanico mecanicoActual;
+    private RecepcionistaFrame recepcionistaFrame;
+    private RecepcionistaFrame padre;
     
     public MecanicoDialogFrame() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
     }
-    public MecanicoDialogFrame(SistemaController sistema, String modo, Mecanico mecanico) {
+    public MecanicoDialogFrame(SistemaController sistema, String modo, Mecanico mecanico,RecepcionistaFrame padre) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.sistema = sistema;
         this.modo = modo;
         this.mecanicoActual = mecanico;
+        this.padre = padre;
 
         if (modo.equals("AGREGAR")) {
             setTitle("Agregar Mecánico");
@@ -238,6 +243,7 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
         sistema.getMecanicoService().modificar(mecanicoActual);
         JOptionPane.showMessageDialog(this, "Mecánico modificado exitosamente");
     }
+    if (recepcionistaFrame != null) {recepcionistaFrame.cargarDatosMecanicos();}
     this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 

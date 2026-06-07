@@ -1,6 +1,8 @@
 
 package Automotriz.controller;
 import Automotriz.modelo.Inventario;
+import Automotriz.modelo.Orden;
+import java.util.List;
 
 public class SistemaController {
     private ClienteService clienteService;
@@ -43,5 +45,8 @@ public class SistemaController {
     public void setPrecioServicio(String tipo, double precio) {
         preciosServicios.put(tipo, precio);
     }
-
+    
+    public List<Orden> getOrdenes() {
+        return ordenService.consultar();
+    }
 }

@@ -20,19 +20,22 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
     private String modo;
     private Orden ordenActual;
     private Cliente clienteSeleccionado;
+    private RecepcionistaFrame recepcionistaFrame;
+    private RecepcionistaFrame padre;
     
     public OrdenDialogFrame() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
     }
-    public OrdenDialogFrame(SistemaController sistema, String modo, Orden orden) {
+    public OrdenDialogFrame(SistemaController sistema, String modo, Orden orden,RecepcionistaFrame padre) {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         this.sistema = sistema;
         this.modo = modo;
         this.ordenActual = orden;
+        this.padre = padre;
         
         cmbMecanico.removeAllItems();
         cmbVehiculo.removeAllItems();
@@ -326,6 +329,8 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
             sistema.getOrdenService().modificar(ordenActual);
             JOptionPane.showMessageDialog(this, "Orden modificada exitosamente");
         }
+        if (recepcionistaFrame != null) {recepcionistaFrame.cargarDatosOrdenes();
+        }
         this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -364,7 +369,7 @@ public class OrdenDialogFrame extends javax.swing.JFrame {
 
     //METODOO
     private void cargarVehiculosCliente(Cliente c) {
-        cmbVehiculo.removeAllItems();
+           cmbVehiculo.removeAllItems();
         for (Vehiculo v : sistema.getVehiculoService().consultar()) {
             if (v.getIdCliente() == c.getId()) {
                 cmbVehiculo.addItem(v.getPlaca() + " - " + v.getMarca());

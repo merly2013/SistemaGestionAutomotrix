@@ -4,6 +4,8 @@ import Automotriz.modelo.Mecanico;
 import Automotriz.modelo.Usuario;
 import Automotriz.persistencia.ArchivoUtil;
 import java.util.ArrayList;
+import Automotriz.modelo.Orden;
+import javax.swing.JOptionPane;
 
 public class MecanicoService implements GestionMecanico {
 
@@ -12,6 +14,7 @@ public class MecanicoService implements GestionMecanico {
 
     private ArrayList<Mecanico> mecanicos;
     private ArrayList<Usuario> usuarios;
+    private SistemaController sistema;
 
     public MecanicoService(ArrayList<Usuario> usuarios) {
 
@@ -69,11 +72,31 @@ public class MecanicoService implements GestionMecanico {
 
         if (m != null) {
 
+            boolean tieneOrdenActiva = false;
+
+            for (Orden o : sistema.getOrdenes()) {
+                if (o.getMecanico() != null
+                        && o.getMecanico().getId() == id
+                        && !o.getEstado().equals("Finalizada")) {
+
+                    tieneOrdenActiva = true;
+                    break;
+                }
+            }
+
+            if (tieneOrdenActiva) {
+                JOptionPane.showMessageDialog(null,
+                        "No se puede eliminar el mecánico porque tiene órdenes activas");
+                return;
+            }
+
             mecanicos.remove(m);
 
-            usuarios.removeIf(u -> u.getMecanico() != null && u.getMecanico().getId() == id);
-            
-            ArchivoUtil.guardarDatos(usuarios, "usuarios.dat");
+            usuarios.removeIf(u
+                    -> u.getMecanico() != null
+                    && u.getMecanico().getId() == id
+            );
+
             ArchivoUtil.guardarDatos(mecanicos, ARCHIVO);
             ArchivoUtil.guardarDatos(usuarios, ARCHIVO_USUARIOS);
         }

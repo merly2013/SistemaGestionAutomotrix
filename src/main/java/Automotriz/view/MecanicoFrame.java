@@ -11,9 +11,19 @@ import Automotriz.modelo.Servicio;
  */
 public class MecanicoFrame extends javax.swing.JFrame {
     
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MecanicoFrame.class.getName());
+
+    /**
+     * Creates new form MecanicoFrame
+     */
+    
     private SistemaController sistema;
     private Mecanico mecanico;
-
+    
+    public MecanicoFrame() {
+        initComponents();
+    }
+    
     public MecanicoFrame(SistemaController sistema, Mecanico mecanico) {
         initComponents();
         setLocationRelativeTo(null); // centra en pantalla
@@ -41,15 +51,6 @@ public class MecanicoFrame extends javax.swing.JFrame {
         }
     }
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MecanicoFrame.class.getName());
-
-    /**
-     * Creates new form MecanicoFrame
-     */
-    public MecanicoFrame() {
-        initComponents();
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -238,7 +239,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
 
     private void btnVerDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerDetallesActionPerformed
         // TODO add your handling code here:
-         int fila = jTable1.getSelectedRow();
+        int fila = jTable1.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione una orden");
             return;

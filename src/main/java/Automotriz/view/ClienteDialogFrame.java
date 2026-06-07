@@ -17,6 +17,7 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
     private String modo;
     private Cliente clienteActual;
     private RecepcionistaFrame recepcionistaFrame;
+    private RecepcionistaFrame padre;
     
     public ClienteDialogFrame() {
         initComponents();
@@ -25,13 +26,14 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
     }
 
     
-    public ClienteDialogFrame(SistemaController sistema, String modo, Cliente cliente) {
+    public ClienteDialogFrame(SistemaController sistema, String modo, Cliente cliente,RecepcionistaFrame padre) {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         this.sistema = sistema;
         this.modo = modo;
         this.clienteActual = cliente;
+        this.padre = padre;
         
         if (modo.equals("AGREGAR")) {
             setTitle("Agregar Cliente");
@@ -257,9 +259,7 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "El correo electrónico no tiene un formato válido (ejemplo@dominio.com).", "Error de Validación", JOptionPane.WARNING_MESSAGE);
         return;
     }
-    
-    
-          
+         
         if (modo.equals("AGREGAR")) {
             Cliente nuevo = new Cliente(
                     txtNombre.getText(),
@@ -276,10 +276,8 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
             sistema.getClienteService().modificar(clienteActual);
             JOptionPane.showMessageDialog(this, "Cliente modificado exitosamente");
         }
-       /* if (recepcionistaFrame != null) {
-           recepcionistaFrame.cargarDatosClientes();
-        }*/
-        this.dispose();
+       if (padre != null) {padre.cargarDatosClientes();}
+       this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

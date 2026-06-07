@@ -20,19 +20,21 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
     private SistemaController sistema;
     private String modo;
     private Vehiculo vehiculoActual;
+    private RecepcionistaFrame padre;
     
     public VehiculoDialogFrame() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
     }
-    public VehiculoDialogFrame(SistemaController sistema, String modo, Vehiculo vehiculo) {
+    public VehiculoDialogFrame(SistemaController sistema, String modo, Vehiculo vehiculo,RecepcionistaFrame padre) {
     initComponents();
     setLocationRelativeTo(null);
     setResizable(false);
     this.sistema = sistema;
     this.modo = modo;
     this.vehiculoActual = vehiculo;
+    this.padre = padre;
     
     // llenar combobox tipo
     cmbTipo.removeAllItems();
@@ -50,6 +52,7 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
         txtMarca.setText(vehiculo.getMarca());
         txtModelo.setText(vehiculo.getModelo());
     }
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 }
 
     /**
@@ -232,6 +235,7 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
         sistema.getVehiculoService().modificar(vehiculoActual);
         JOptionPane.showMessageDialog(this, "Vehículo modificado exitosamente");
     }
+    if (padre != null) padre.cargarDatosVehiculos();
     this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 

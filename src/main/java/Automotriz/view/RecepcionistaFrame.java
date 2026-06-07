@@ -651,7 +651,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void addMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMecanicoActionPerformed
         // TODO add your handling code here:
         
-        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "AGREGAR", null);
+        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "AGREGAR", null,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosMecanicos();
@@ -659,11 +659,10 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void addClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientesActionPerformed
         // TODO add your handling code here:
-        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema,"AGREGAR",new Cliente("", 0, 0, ""));
+        
+        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "AGREGAR", null, this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
-
-        cargarDatosClientes();
 
     }//GEN-LAST:event_addClientesActionPerformed
 
@@ -677,7 +676,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
         int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
         Cliente c = sistema.getClienteService().buscar(id);
-        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "MODIFICAR", c);
+        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "MODIFICAR", c,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosClientes();
@@ -739,7 +738,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void addVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehiculoActionPerformed
         // TODO add your handling code here:
-        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "AGREGAR", null);
+        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "AGREGAR", null,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosVehiculos();
@@ -757,7 +756,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         
         String placa = tablaVehiculo.getValueAt(fila, 0).toString();
         Vehiculo v = sistema.getVehiculoService().buscar(placa);
-        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "MODIFICAR", v);
+        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "MODIFICAR", v,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosVehiculos();
@@ -807,7 +806,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
         int id = Integer.parseInt(tablaMecanico.getValueAt(fila, 0).toString());
         Mecanico m = sistema.getMecanicoService().buscar(id);
-        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "MODIFICAR", m);
+        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "MODIFICAR", m,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosMecanicos();
@@ -844,7 +843,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void addOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrdenActionPerformed
         // TODO add your handling code here:
-        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "AGREGAR", null);
+        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "AGREGAR", null,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosOrdenes();
@@ -860,7 +859,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
         String id = tablaOrden.getValueAt(fila, 1).toString();
         Orden o = sistema.getOrdenService().buscar(id);
-        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "MODIFICAR", o);
+        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "MODIFICAR", o,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosOrdenes();
@@ -900,7 +899,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void addInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventarioActionPerformed
         // TODO add your handling code here:
-        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "AGREGAR", null);
+        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "AGREGAR", null,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosInventario();
@@ -916,7 +915,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
         String codigo = tablaInventario.getValueAt(fila, 0).toString();
         Repuesto r = sistema.getInventario().buscar(codigo);
-        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "MODIFICAR", r);
+        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "MODIFICAR", r,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosInventario();
@@ -1051,7 +1050,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //METODOS PARA LLENAR TABLAS
-    private void cargarDatosClientes() {
+    public void cargarDatosClientes() {
         DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
         modelo.setRowCount(0);
 
@@ -1064,7 +1063,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             });
         }
     }
-    private void cargarDatosMecanicos() {
+    public void cargarDatosMecanicos() {
         DefaultTableModel modelo = (DefaultTableModel) tablaMecanico.getModel();
         modelo.setRowCount(0);
         for (Mecanico m : sistema.getMecanicoService().consultar()) {
@@ -1072,7 +1071,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
     }
 
-    private void cargarDatosVehiculos() {
+    public void cargarDatosVehiculos() {
         DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
         modelo.setRowCount(0);
         for (Vehiculo v : sistema.getVehiculoService().consultar()) {
@@ -1080,7 +1079,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
     }
 
-    private void cargarDatosOrdenes() {
+    public void cargarDatosOrdenes() {
         DefaultTableModel modelo = (DefaultTableModel) tablaOrden.getModel();
         modelo.setRowCount(0);
         for (Orden o : sistema.getOrdenService().consultar()) {
@@ -1088,7 +1087,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
     }
 
-    private void cargarDatosInventario() {
+    public void cargarDatosInventario() {
         DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
         modelo.setRowCount(0);
         for (Repuesto r : sistema.getInventario().consultar()) {

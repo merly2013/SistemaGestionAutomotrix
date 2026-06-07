@@ -10,26 +10,29 @@ import Automotriz.modelo.Inventario;
 public class InventarioDialogFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InventarioDialogFrame.class.getName());
-
+    
     /**
      * Creates new form InventarioDialogFrame
      */
     private SistemaController sistema;
     private String modo;
     private Repuesto repuestoActual;
+    private RecepcionistaFrame padre;
     
     public InventarioDialogFrame() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        
     }
-    public InventarioDialogFrame(SistemaController sistema, String modo, Repuesto repuesto) {
+    public InventarioDialogFrame(SistemaController sistema, String modo, Repuesto repuesto,RecepcionistaFrame padre) {
     initComponents();
     setLocationRelativeTo(null);
     setResizable(false);
     this.sistema = sistema;
     this.modo = modo;
     this.repuestoActual = repuesto;
+    this.padre = padre;
     
     if (modo.equals("AGREGAR")) {
         setTitle("Agregar Repuesto");
@@ -266,6 +269,7 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
         sistema.getInventario().modificar(repuestoActual);
         JOptionPane.showMessageDialog(this, "Repuesto modificado exitosamente");
     }
+    if (padre != null) padre.cargarDatosInventario();
     this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
