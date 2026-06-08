@@ -91,9 +91,9 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(180, 195, 219));
 
-        tituloAccion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tituloAccion.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         tituloAccion.setForeground(new java.awt.Color(25, 41, 66));
-        tituloAccion.setText("Agregar Vehiculo");
+        tituloAccion.setText("Vehiculo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -156,7 +156,6 @@ public class VehiculoDialogFrame extends javax.swing.JFrame {
 
         lblClienteEncontrado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 102)));
 
-        txtCedulaCliente.setText("jTextField1");
         txtCedulaCliente.addActionListener(this::txtCedulaClienteActionPerformed);
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/lupa.png"))); // NOI18N

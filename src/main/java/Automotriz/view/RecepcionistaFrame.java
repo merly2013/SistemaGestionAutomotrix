@@ -714,30 +714,26 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void delClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delClientesActionPerformed
         // TODO add your handling code here:
         
-        JOptionPane.showMessageDialog(this, "¡El botón de eliminar sí responde!");
-        int filaSeleccionada = tablaClientes.getSelectedRow();
-        System.out.println("Fila seleccionada detectada: " + filaSeleccionada);
-        
-        if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un cliente para eliminar.");
-        return;
-    }
-        
-        System.out.println("Intentando leer datos de la fila...");
-        
-        int idCliente = Integer.parseInt(tablaClientes.getValueAt(filaSeleccionada, 0).toString());
-        String nombre = tablaClientes.getValueAt(filaSeleccionada, 1).toString();
-        
-            int confirmar = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar el cliente seleccionado?", 
-            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            
-            if (confirmar == JOptionPane.YES_OPTION) {
-            // Aquí irá tu línea de backend: clienteService.eliminar(...);
-                sistema.getClienteService().eliminar(idCliente);
-                cargarDatosClientes();
-            JOptionPane.showMessageDialog(this, "Funcionalidad de eliminación ejecutada.");
-    }
+        int fila = tablaClientes.getSelectedRow();
+
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+            return;
+        }
+
+        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
+
+        int confirmar = JOptionPane.showConfirmDialog(
+                this,
+                "¿Eliminar cliente?",
+                "Confirmar",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            sistema.getClienteService().eliminar(id);
+            cargarDatosClientes();
+        }
     }//GEN-LAST:event_delClientesActionPerformed
 
     private void bClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClientesActionPerformed
@@ -877,8 +873,36 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
     private void bMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMecanicoActionPerformed
         // TODO add your handling code here:
-        
-        
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese el ID del mecánico:");
+
+        if (busqueda == null || busqueda.isBlank()) {
+            return;
+        }
+
+        int id;
+
+        try {
+            id = Integer.parseInt(busqueda);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "ID inválido");
+            return;
+        }
+
+        Mecanico m = sistema.getMecanicoService().buscar(id);
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaMecanico.getModel();
+        modelo.setRowCount(0);
+
+        if (m != null) {
+            modelo.addRow(new Object[]{
+                m.getId(),
+                m.getNombre(),
+                m.isDisponible()
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "Mecánico no encontrado");
+        }
+
     }//GEN-LAST:event_bMecanicoActionPerformed
 
     private void addOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrdenActionPerformed
