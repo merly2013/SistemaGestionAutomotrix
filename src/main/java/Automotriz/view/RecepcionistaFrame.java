@@ -11,6 +11,8 @@ import Automotriz.modelo.Inventario;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Automotriz.modelo.Factura;
+import Automotriz.modelo.Usuario;
+import Automotriz.persistencia.ArchivoUtil;
 
 /**
  *
@@ -32,7 +34,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
      */
     public RecepcionistaFrame() {
         initComponents();
-        setLocationRelativeTo(null); // centra en pantalla
+        setLocationRelativeTo(null); 
         
         this.sistema = new SistemaController();
         modeloTabla = (DefaultTableModel) tablaClientes.getModel();
@@ -43,7 +45,11 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     public RecepcionistaFrame(SistemaController sistema) {
         initComponents();
         setLocationRelativeTo(null); // centra en pantalla
-        
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
+        tablaVehiculo.getTableHeader().setReorderingAllowed(false);
+        tablaMecanico.getTableHeader().setReorderingAllowed(false);
+        tablaOrden.getTableHeader().setReorderingAllowed(false);
+        tablaInventario.getTableHeader().setReorderingAllowed(false);
         this.sistema = sistema;
         cargarDatosClientes();
         cargarDatosMecanicos();
@@ -78,6 +84,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         logo = new javax.swing.JLabel();
         lbBienvenido = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -131,7 +138,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         lbBienvenido.setForeground(new java.awt.Color(25, 41, 66));
         lbBienvenido.setText("Bienvenido al Sistema de Gestion del Taller");
 
-        btnCerrarSesion.setBackground(new java.awt.Color(68, 87, 117));
+        btnCerrarSesion.setBackground(new java.awt.Color(25, 41, 66));
         btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         btnCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
         btnCerrarSesion.setText("Cerrar sesion");
@@ -140,6 +147,14 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         btnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnCerrarSesion.addActionListener(this::btnCerrarSesionActionPerformed);
 
+        jButton1.setBackground(new java.awt.Color(68, 87, 117));
+        jButton1.setForeground(new java.awt.Color(180, 195, 219));
+        jButton1.setText("Cambiar contraseña");
+        jButton1.setMaximumSize(new java.awt.Dimension(162, 29));
+        jButton1.setMinimumSize(new java.awt.Dimension(162, 29));
+        jButton1.setPreferredSize(new java.awt.Dimension(162, 29));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -147,11 +162,17 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(logo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCerrarSesion)
-                .addGap(31, 31, 31))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCerrarSesion)
+                        .addGap(25, 25, 25))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,10 +182,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addGap(32, 32, 32))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnCerrarSesion)
-                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 9, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))))
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(180, 195, 219));
@@ -652,15 +679,16 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "AGREGAR", null,this);
+        dialogo.setAlwaysOnTop(true);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
-        cargarDatosMecanicos();
     }//GEN-LAST:event_addMecanicoActionPerformed
 
     private void addClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientesActionPerformed
         // TODO add your handling code here:
         
         ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "AGREGAR", null, this);
+        dialogo.setAlwaysOnTop(true);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
 
@@ -739,6 +767,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void addVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehiculoActionPerformed
         // TODO add your handling code here:
         VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "AGREGAR", null,this);
+        dialogo.setAlwaysOnTop(true);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosVehiculos();
@@ -827,26 +856,37 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             
         if (confirmar == JOptionPane.YES_OPTION) {
-        // Aquí conectarás tu servicio: mecanicoService.eliminar(...);
-        JOptionPane.showMessageDialog(this, "Eliminado con exito");
+            int id = Integer.parseInt(tablaMecanico.getValueAt(filaSeleccionada, 0).toString());
+            boolean tieneOrdenes = sistema.getOrdenService().consultar()
+                    .stream()
+                    .anyMatch(o -> o.getMecanico() != null
+                    && o.getMecanico().getId() == id
+                    && !o.getEstado().equals("Finalizada"));
+
+            if (tieneOrdenes) {
+                JOptionPane.showMessageDialog(this,
+                        "No se puede eliminar un mecánico con órdenes activas");
+                return;
+            }
+
+            sistema.getMecanicoService().eliminar(id);
+            JOptionPane.showMessageDialog(this, "Eliminado con éxito");
+            cargarDatosMecanicos();
         }
     }//GEN-LAST:event_delMecanicoActionPerformed
 
     private void bMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMecanicoActionPerformed
         // TODO add your handling code here:
         
-        /*BuscarMecanicoFrame ventanaBuscarMecanico = new BuscarMecanicoFrame();
-        ventanaBuscarMecanico.setLocationRelativeTo(this);
-        ventanaBuscarMecanico.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        ventanaBuscarMecanico.setVisible(true);*/
+        
     }//GEN-LAST:event_bMecanicoActionPerformed
 
     private void addOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrdenActionPerformed
         // TODO add your handling code here:
         OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "AGREGAR", null,this);
+        dialogo.setAlwaysOnTop(true);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
-        cargarDatosOrdenes();
     }//GEN-LAST:event_addOrdenActionPerformed
 
     private void modOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modOrdenActionPerformed
@@ -900,6 +940,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private void addInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventarioActionPerformed
         // TODO add your handling code here:
         InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "AGREGAR", null,this);
+        dialogo.setAlwaysOnTop(true);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
         cargarDatosInventario();
@@ -971,9 +1012,33 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
 
         Factura factura = orden.generarFactura();
         FacturaFrame ventana = new FacturaFrame(factura);
+        ventana.setAlwaysOnTop(true);
         ventana.setLocationRelativeTo(this);
         ventana.setVisible(true);
     }//GEN-LAST:event_btnGenararFacturaActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String actual = JOptionPane.showInputDialog(this, "Ingrese su contraseña actual:");
+        if (actual == null) {
+            return;
+        }
+
+        Usuario u = sistema.getLoginController().login("recepcionista", actual);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
+            return;
+        }
+
+        String nueva = JOptionPane.showInputDialog(this, "Ingrese la nueva contraseña:");
+        if (nueva == null || nueva.isBlank()) {
+            return;
+        }
+
+        u.cambiarContrasena(nueva);
+        ArchivoUtil.guardarDatos(sistema.getLoginController().getUsuarios(), "usuarios.dat");
+        JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1019,6 +1084,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JButton delMecanico;
     private javax.swing.JButton delOrden;
     private javax.swing.JButton delVehiculo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;

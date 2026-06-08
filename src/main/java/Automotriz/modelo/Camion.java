@@ -5,9 +5,8 @@ public class Camion extends Vehiculo {
     
     private int capacidadCarga;
 
-    public Camion(String placa, String marca, String modelo, int capacidadCarga) {
-        super(placa, marca, modelo);
-        this.capacidadCarga = capacidadCarga;
+    public Camion(String placa, String marca, String modelo,int idCliente) {
+        super(placa, marca, modelo,idCliente);
     }
     
     public int getCapacidadCarga() {

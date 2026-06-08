@@ -31,6 +31,7 @@ public class LoginFrame extends javax.swing.JFrame {
         this.sistema = sistema;
         setSize(1000, 620);
         setLocationRelativeTo(null); // centra en pantalla
+        // en constructor de LoginFrame después de initComponents()
         jTextField1.addActionListener(e -> jPasswordField1.requestFocus());
         jPasswordField1.addActionListener(e -> btnIngresarActionPerformed(null));
         
@@ -76,21 +77,23 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel2.setText("Usuario:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel3.setText("Contraseña:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, -1, -1));
 
+        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 102)));
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 270, 32));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 260, 32));
 
-        btnMostrarClave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojito.png"))); // NOI18N
+        btnMostrarClave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojito1.png"))); // NOI18N
         btnMostrarClave.setContentAreaFilled(false);
         btnMostrarClave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMostrarClave.addActionListener(this::btnMostrarClaveActionPerformed);
-        jPanel1.add(btnMostrarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 30, 30));
+        jPanel1.add(btnMostrarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 30, 30));
 
+        jPasswordField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 102)));
         jPasswordField1.addActionListener(this::jPasswordField1ActionPerformed);
         jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 270, 32));
 
@@ -103,11 +106,11 @@ public class LoginFrame extends javax.swing.JFrame {
         btnIngresar.addActionListener(this::btnIngresarActionPerformed);
         jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 170, 50));
 
-        lbUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojito.png"))); // NOI18N
-        jPanel1.add(lbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 30, 30));
+        lbUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/user.png"))); // NOI18N
+        jPanel1.add(lbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 30, 30));
 
-        lbPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojito.png"))); // NOI18N
-        jPanel1.add(lbPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 30, 30));
+        lbPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/candadito.png"))); // NOI18N
+        jPanel1.add(lbPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 30, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 560, 390));
 
@@ -173,6 +176,15 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void btnMostrarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarClaveActionPerformed
         // TODO add your handling code here:
+        if (jPasswordField1.getEchoChar() == '•' || jPasswordField1.getEchoChar() != 0) {
+        jPasswordField1.setEchoChar((char) 0); // muestra contraseña
+        btnMostrarClave.setIcon(new javax.swing.ImageIcon(
+            getClass().getResource("/Imagenes/ojito2.png")));
+    } else {
+        jPasswordField1.setEchoChar('•'); // oculta contraseña
+        btnMostrarClave.setIcon(new javax.swing.ImageIcon(
+            getClass().getResource("/Imagenes/ojito1.png")));
+    }
     }//GEN-LAST:event_btnMostrarClaveActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed

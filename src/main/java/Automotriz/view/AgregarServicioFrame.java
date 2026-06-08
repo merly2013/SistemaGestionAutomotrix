@@ -75,22 +75,28 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         setBackground(new java.awt.Color(180, 195, 219));
 
         jLabel1.setBackground(new java.awt.Color(180, 195, 219));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(25, 41, 66));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Agregar Servicio a orden x");
 
         servicios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        servicios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 102)));
         servicios.addActionListener(this::serviciosActionPerformed);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(25, 41, 66));
         jLabel2.setText("Tipo de servicio:");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(25, 41, 66));
         jLabel3.setText("Descripcion: ");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(25, 41, 66));
         jLabel4.setText("Costo :");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(25, 41, 66));
         jLabel5.setText("Duracion: ");
 
@@ -103,7 +109,12 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Cancelar");
 
+        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 102)));
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
+
+        jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 102)));
+
+        jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 102)));
 
         javax.swing.GroupLayout panelExtraLayout = new javax.swing.GroupLayout(panelExtra);
         panelExtra.setLayout(panelExtraLayout);
@@ -128,9 +139,9 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(68, 68, 68)
+                                .addGap(122, 122, 122)
                                 .addComponent(btnAgregar)
-                                .addGap(116, 116, 116)
+                                .addGap(102, 102, 102)
                                 .addComponent(jButton2))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
@@ -147,7 +158,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 46, Short.MAX_VALUE)))
+                        .addGap(0, 42, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -177,11 +188,11 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
                     .addComponent(jButton2))
-                .addGap(19, 19, 19))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();

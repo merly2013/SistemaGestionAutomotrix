@@ -74,7 +74,7 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(180, 195, 219));
 
-        tituloAccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tituloAccion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         tituloAccion.setForeground(new java.awt.Color(25, 41, 66));
         tituloAccion.setText("Agregar Repuesto");
 
@@ -95,19 +95,30 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(25, 41, 66));
         jLabel2.setText("Codigo :");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(25, 41, 66));
         jLabel3.setText("Nombre :");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(25, 41, 66));
         jLabel4.setText("Precio :");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(25, 41, 66));
         jLabel5.setText("Cantidad :");
 
+        txtCodigo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
+
+        txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
+
+        txtPrecio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
+
+        txtCantidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
 
         btnGuardar.setBackground(new java.awt.Color(25, 41, 66));
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,7 +148,7 @@ public class InventarioDialogFrame extends javax.swing.JFrame {
                         .addComponent(txtNombre)
                         .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                         .addComponent(txtCodigo)))
-                .addGap(19, 29, Short.MAX_VALUE))
+                .addGap(19, 26, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(70, Short.MAX_VALUE)
                 .addComponent(btnGuardar)

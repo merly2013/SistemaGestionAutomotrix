@@ -20,14 +20,10 @@ public class Cliente extends Persona {
     }
 
     @Override
-    public String toString(){
-        return "Cliente:" +
-            "nombre: " + nombre + '\'' +
-            ", id: " + id +
-            ", telefono: " + telefono +
-            ", correo: " + correo + '\'' +
-            ' ';
+    public String toString() {
+        return id + " - " + nombre;
     }
+
 
     public void setTelefono(long telefono) {
         this.telefono = telefono;
@@ -40,4 +36,5 @@ public class Cliente extends Persona {
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
+
 }

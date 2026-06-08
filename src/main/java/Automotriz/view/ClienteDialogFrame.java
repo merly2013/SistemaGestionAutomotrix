@@ -46,6 +46,10 @@ public class ClienteDialogFrame extends javax.swing.JFrame {
             txtTelefono.setText(String.valueOf(cliente.getTelefono()));
             txtCorreo.setText(cliente.getCorreo());
         }
+        txtCedula.addActionListener(e -> txtNombre.requestFocus());
+        txtNombre.addActionListener(e -> txtTelefono.requestFocus());
+        txtTelefono.addActionListener(e -> txtCorreo.requestFocus());
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 

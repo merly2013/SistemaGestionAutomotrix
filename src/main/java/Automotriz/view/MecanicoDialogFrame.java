@@ -72,7 +72,8 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(25, 41, 66));
 
         tituloAccion.setBackground(new java.awt.Color(180, 195, 219));
-        tituloAccion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tituloAccion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tituloAccion.setForeground(new java.awt.Color(25, 41, 66));
         tituloAccion.setText("Agregar Mecanico");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -92,16 +93,24 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(25, 41, 66));
         jLabel2.setText("Cedula :");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(25, 41, 66));
         jLabel3.setText("Nombre :");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(25, 41, 66));
         jLabel4.setText("Max Ordenes :");
 
+        txtCedula.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
         txtCedula.addActionListener(this::txtCedulaActionPerformed);
+
+        txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
+
+        txtMaxOrdenes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(25, 41, 66)));
 
         btnGuardar.setBackground(new java.awt.Color(25, 41, 66));
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
@@ -243,7 +252,7 @@ public class MecanicoDialogFrame extends javax.swing.JFrame {
         sistema.getMecanicoService().modificar(mecanicoActual);
         JOptionPane.showMessageDialog(this, "Mecánico modificado exitosamente");
     }
-    if (recepcionistaFrame != null) {recepcionistaFrame.cargarDatosMecanicos();}
+    if (padre != null) {padre.cargarDatosMecanicos();}
     this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 

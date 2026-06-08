@@ -12,10 +12,11 @@ public abstract class Vehiculo implements Serializable {
     protected String marca;
     protected String modelo;
 
-    public Vehiculo(String placa, String marca, String modelo) {
+    public Vehiculo(String placa, String marca, String modelo, int idCliente) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
+        this.idCliente= idCliente;
     }
     
    

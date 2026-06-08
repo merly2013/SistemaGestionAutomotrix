@@ -66,41 +66,16 @@ public class MecanicoService implements GestionMecanico {
     }
 
     @Override
-    public void eliminar(int id) {
-
-        Mecanico m = buscar(id);
-
-        if (m != null) {
-
-            boolean tieneOrdenActiva = false;
-
-            for (Orden o : sistema.getOrdenes()) {
-                if (o.getMecanico() != null
-                        && o.getMecanico().getId() == id
-                        && !o.getEstado().equals("Finalizada")) {
-
-                    tieneOrdenActiva = true;
-                    break;
-                }
-            }
-
-            if (tieneOrdenActiva) {
-                JOptionPane.showMessageDialog(null,
-                        "No se puede eliminar el mecánico porque tiene órdenes activas");
-                return;
-            }
-
-            mecanicos.remove(m);
-
-            usuarios.removeIf(u
-                    -> u.getMecanico() != null
-                    && u.getMecanico().getId() == id
-            );
-
-            ArchivoUtil.guardarDatos(mecanicos, ARCHIVO);
-            ArchivoUtil.guardarDatos(usuarios, ARCHIVO_USUARIOS);
-        }
+public void eliminar(int id) {
+    Mecanico m = buscar(id);
+    if (m != null) {
+        mecanicos.remove(m);
+        usuarios.removeIf(u -> u.getMecanico() != null && 
+                          u.getMecanico().getId() == id);
+        ArchivoUtil.guardarDatos(mecanicos, ARCHIVO);
+        ArchivoUtil.guardarDatos(usuarios, ARCHIVO_USUARIOS);
     }
+}
 
     public void resetearContrasena(int idMecanico) {
 
