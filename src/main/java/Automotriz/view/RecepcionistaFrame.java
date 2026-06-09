@@ -44,6 +44,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     //  constructor
     public RecepcionistaFrame(SistemaController sistema) {
         initComponents();
+        this.sistema = new SistemaController();
         setLocationRelativeTo(null); // centra en pantalla
         setResizable(false); // no se puede redimensionar
         tablaClientes.getTableHeader().setReorderingAllowed(false);

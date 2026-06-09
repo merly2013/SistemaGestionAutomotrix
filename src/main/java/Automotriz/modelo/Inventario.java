@@ -6,9 +6,10 @@ package Automotriz.modelo;
 import Automotriz.modelo.Repuesto;
 import Automotriz.controller.GestionRepuesto;
 import Automotriz.persistencia.ArchivoUtil;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inventario implements GestionRepuesto {
+public class Inventario implements Serializable, GestionRepuesto {
 
     private static final String ARCHIVO = "repuestos.dat";
 
