@@ -1,6 +1,7 @@
 package Automotriz.view;
 import Automotriz.modelo.Servicio;
 import Automotriz.modelo.Factura;
+import javax.swing.JOptionPane;
 /**
  *
  * @author 57300
@@ -22,6 +23,18 @@ public class FacturaFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        // colores header
+        jPanel1.setBackground(new java.awt.Color(25, 41, 66));
+        lblTitulo.setForeground(java.awt.Color.WHITE);
+
+        // tabla servicios con header de color
+        tablaServicios.getTableHeader().setBackground(new java.awt.Color(68, 87, 117));
+        tablaServicios.getTableHeader().setForeground(java.awt.Color.WHITE);
+        tablaServicios.setGridColor(new java.awt.Color(180, 195, 219));
+
+        // total en negrita y más grande
+        lblTotal.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 16));
+        lblTotal.setForeground(new java.awt.Color(25, 41, 66));
 
         lblFecha.setText(factura.getFecha());
         lblOrden.setText(factura.getOrden().getId());
@@ -52,7 +65,7 @@ public class FacturaFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         Encabezado1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Orden = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -86,7 +99,7 @@ public class FacturaFrame extends javax.swing.JFrame {
 
         Encabezado1.setBackground(new java.awt.Color(180, 195, 219));
 
-        jLabel7.setText("FACTURA DE SERVICIO");
+        lblTitulo.setText("FACTURA DE SERVICIO");
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
 
@@ -97,14 +110,14 @@ public class FacturaFrame extends javax.swing.JFrame {
             .addGroup(Encabezado1Layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addGap(52, 52, 52)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         Encabezado1Layout.setVerticalGroup(
             Encabezado1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Encabezado1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel7)
+                .addComponent(lblTitulo)
                 .addContainerGap(35, Short.MAX_VALUE))
             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
@@ -297,6 +310,7 @@ public class FacturaFrame extends javax.swing.JFrame {
         Imprimir.setBackground(new java.awt.Color(25, 41, 66));
         Imprimir.setForeground(new java.awt.Color(255, 255, 255));
         Imprimir.setText("Imprimir");
+        Imprimir.addActionListener(this::ImprimirActionPerformed);
 
         Cerrar.setBackground(new java.awt.Color(25, 41, 66));
         Cerrar.setForeground(new java.awt.Color(255, 255, 255));
@@ -378,7 +392,27 @@ public class FacturaFrame extends javax.swing.JFrame {
 
     private void CerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CerrarActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_CerrarActionPerformed
+
+    private void ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimirActionPerformed
+        // TODO add your handling code here:
+         java.awt.print.PrinterJob job = java.awt.print.PrinterJob.getPrinterJob();
+    job.setPrintable((graphics, pageFormat, pageIndex) -> {
+        if (pageIndex > 0) return java.awt.print.Printable.NO_SUCH_PAGE;
+        graphics.translate((int) pageFormat.getImageableX(), 
+                          (int) pageFormat.getImageableY());
+        getContentPane().paint(graphics);
+        return java.awt.print.Printable.PAGE_EXISTS;
+    });
+    if (job.printDialog()) {
+        try {
+            job.print();
+        } catch (java.awt.print.PrinterException e) {
+            JOptionPane.showMessageDialog(this, "Error al imprimir");
+        }
+    }
+    }//GEN-LAST:event_ImprimirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -422,7 +456,6 @@ public class FacturaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel7;
@@ -434,6 +467,7 @@ public class FacturaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblMarca;
     private javax.swing.JLabel lblOrden;
     private javax.swing.JLabel lblPlaca;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel name;
     private javax.swing.JTable tablaServicios;

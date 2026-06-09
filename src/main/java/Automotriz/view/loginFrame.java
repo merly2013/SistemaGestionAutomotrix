@@ -31,12 +31,11 @@ public class LoginFrame extends javax.swing.JFrame {
         this.sistema = sistema;
         setSize(1000, 620);
         setLocationRelativeTo(null); // centra en pantalla
-        // en constructor de LoginFrame después de initComponents()
         jTextField1.addActionListener(e -> jPasswordField1.requestFocus());
         jPasswordField1.addActionListener(e -> btnIngresarActionPerformed(null));
         
         
-        //setResizable(false); // no se puede redimensionar
+        setResizable(false); // no se puede redimensionar
     }
 
     /**
@@ -49,11 +48,11 @@ public class LoginFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnMostrarClave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        btnMostrarClave = new javax.swing.JButton();
         jPasswordField1 = new javax.swing.JPasswordField();
         btnIngresar = new javax.swing.JButton();
         lbUser = new javax.swing.JLabel();
@@ -72,6 +71,12 @@ public class LoginFrame extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(25, 41, 66));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnMostrarClave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojito1.png"))); // NOI18N
+        btnMostrarClave.setContentAreaFilled(false);
+        btnMostrarClave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMostrarClave.addActionListener(this::btnMostrarClaveActionPerformed);
+        jPanel1.add(btnMostrarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, 20, 20));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 120, 120));
 
@@ -85,13 +90,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 102)));
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 260, 32));
-
-        btnMostrarClave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ojito1.png"))); // NOI18N
-        btnMostrarClave.setContentAreaFilled(false);
-        btnMostrarClave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMostrarClave.addActionListener(this::btnMostrarClaveActionPerformed);
-        jPanel1.add(btnMostrarClave, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 30, 30));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 270, 32));
 
         jPasswordField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 102)));
         jPasswordField1.addActionListener(this::jPasswordField1ActionPerformed);
@@ -107,7 +106,7 @@ public class LoginFrame extends javax.swing.JFrame {
         jPanel1.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 170, 50));
 
         lbUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/user.png"))); // NOI18N
-        jPanel1.add(lbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 30, 30));
+        jPanel1.add(lbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 30, 30));
 
         lbPassword.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/candadito.png"))); // NOI18N
         jPanel1.add(lbPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 30, 30));

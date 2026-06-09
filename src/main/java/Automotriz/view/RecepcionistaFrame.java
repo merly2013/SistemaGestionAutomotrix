@@ -28,14 +28,14 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private DefaultTableModel modeloTablaMecanicos;
     private DefaultTableModel modeloTablaOrdenes;
     private DefaultTableModel modeloTablaInventario;
+    private javax.swing.table.DefaultTableModel modeloServicios;
     
     /**
      * Creates new form RecepcionistaFrame
      */
     public RecepcionistaFrame() {
         initComponents();
-        setLocationRelativeTo(null); 
-        
+       
         this.sistema = new SistemaController();
         modeloTabla = (DefaultTableModel) tablaClientes.getModel();
         cargarDatosClientes();
@@ -45,11 +45,41 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     public RecepcionistaFrame(SistemaController sistema) {
         initComponents();
         setLocationRelativeTo(null); // centra en pantalla
+        setResizable(false); // no se puede redimensionar
         tablaClientes.getTableHeader().setReorderingAllowed(false);
         tablaVehiculo.getTableHeader().setReorderingAllowed(false);
         tablaMecanico.getTableHeader().setReorderingAllowed(false);
         tablaOrden.getTableHeader().setReorderingAllowed(false);
         tablaInventario.getTableHeader().setReorderingAllowed(false);
+        tablaServicios.getTableHeader().setReorderingAllowed(false);
+        // modelo editable solo en columna Costo
+        modeloServicios = new javax.swing.table.DefaultTableModel(
+        new String[]{"Servicio", "Costo"}, 0) {
+        @Override
+         public boolean isCellEditable(int row, int column) {
+        return column == 1;
+        }
+        };
+        tablaServicios.setModel(modeloServicios);
+
+        // listener para guardar cambios al editar
+        tablaServicios.getModel().addTableModelListener(e -> {
+            int fila = e.getFirstRow();
+            int columna = e.getColumn();
+            if (columna == 1 && fila >= 0) {
+                String servicio = tablaServicios.getValueAt(fila, 0).toString();
+                try {
+                    double nuevoPrecio = Double.parseDouble(
+                            tablaServicios.getValueAt(fila, 1).toString());
+                    sistema.setPrecioServicio(servicio, nuevoPrecio);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "El precio debe ser un número");
+                }
+            }
+        });
+
+        cargarDatosServicios();
+        
         this.sistema = sistema;
         cargarDatosClientes();
         cargarDatosMecanicos();
@@ -126,9 +156,12 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         modInventario = new javax.swing.JButton();
         delInventario = new javax.swing.JButton();
         bInventario = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaServicios = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(180, 195, 219));
+        setMinimumSize(new java.awt.Dimension(1030, 600));
 
         jPanel1.setBackground(new java.awt.Color(180, 195, 219));
 
@@ -162,42 +195,37 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(logo)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion)
-                        .addGap(25, 25, 25))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 337, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbBienvenido)
-                .addGap(32, 32, 32))
+                .addGap(36, 36, 36))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 9, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7))))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(180, 195, 219));
         jTabbedPane1.setForeground(new java.awt.Color(25, 41, 66));
         jTabbedPane1.setToolTipText("");
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(799, 400));
 
         jPanel2.setBackground(new java.awt.Color(180, 195, 219));
 
@@ -211,7 +239,15 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             new String [] {
                 "Cedula", "Nombre", "Telefono", "Correo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tablaClientes);
 
         addClientes.setBackground(new java.awt.Color(68, 87, 117));
@@ -245,7 +281,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(addClientes)
                         .addGap(18, 18, 18)
@@ -262,13 +298,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addClientes)
                     .addComponent(modClientes)
                     .addComponent(delClientes)
                     .addComponent(bClientes))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Clientes", jPanel2);
@@ -319,7 +355,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(addVehiculo)
                         .addGap(18, 18, 18)
@@ -336,26 +372,26 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addVehiculo)
                     .addComponent(modVehiculo)
                     .addComponent(delVehiculo)
                     .addComponent(bVehiculo))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
+            .addGap(0, 1003, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 335, Short.MAX_VALUE)
+            .addGap(0, 329, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -363,6 +399,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jTabbedPane1.addTab("Vehiculos", jPanel3);
 
         jPanel6.setBackground(new java.awt.Color(180, 195, 219));
+        jPanel6.setMaximumSize(new java.awt.Dimension(799, 330));
+        jPanel6.setMinimumSize(new java.awt.Dimension(799, 330));
+        jPanel6.setPreferredSize(new java.awt.Dimension(799, 330));
 
         tablaMecanico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -406,9 +445,9 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(addMecanico)
                         .addGap(18, 18, 18)
@@ -424,29 +463,24 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addMecanico)
                     .addComponent(modMecanico)
                     .addComponent(delMecanico)
-                    .addComponent(bMecanico))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(bMecanico)))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 1003, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 335, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Mecanicos", jPanel4);
@@ -505,7 +539,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(addOrden)
@@ -517,36 +551,34 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                         .addComponent(bOrden)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGenararFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))))
+                        .addGap(49, 49, 49))))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(15, 15, 15)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(18, 21, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addOrden)
                     .addComponent(modOrden)
                     .addComponent(delOrden)
                     .addComponent(bOrden)
                     .addComponent(btnGenararFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 335, Short.MAX_VALUE)
-            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Ordenes", jPanel8);
@@ -594,7 +626,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(addInventario)
                         .addGap(18, 18, 18)
@@ -611,48 +643,65 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addInventario)
                     .addComponent(modInventario)
                     .addComponent(delInventario)
                     .addComponent(bInventario))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
+            .addGap(0, 1003, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 335, Short.MAX_VALUE)
+            .addGap(0, 329, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Inventario", jPanel5);
 
+        tablaServicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Servicio", "Costo"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaServicios);
+
+        jTabbedPane1.addTab("Servicios", jScrollPane2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -675,201 +724,164 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void addMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMecanicoActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "AGREGAR", null,this);
-        dialogo.setAlwaysOnTop(true);
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
-    }//GEN-LAST:event_addMecanicoActionPerformed
-
-    private void addClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientesActionPerformed
-        // TODO add your handling code here:
-        
-        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "AGREGAR", null, this);
-        dialogo.setAlwaysOnTop(true);
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
-
-    }//GEN-LAST:event_addClientesActionPerformed
-
-    private void modClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modClientesActionPerformed
-        // TODO add your handling code here:
-        
-        int fila = tablaClientes.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
-            return;
-        }
-        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
-        Cliente c = sistema.getClienteService().buscar(id);
-        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "MODIFICAR", c,this);
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
-        cargarDatosClientes();
-        
-    }//GEN-LAST:event_modClientesActionPerformed
-
-    private void delClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delClientesActionPerformed
-        // TODO add your handling code here:
-        
-        int fila = tablaClientes.getSelectedRow();
-
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+        String actual = JOptionPane.showInputDialog(this, "Ingrese su contraseña actual:");
+        if (actual == null) {
             return;
         }
 
-        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
-
-        int confirmar = JOptionPane.showConfirmDialog(
-                this,
-                "¿Eliminar cliente?",
-                "Confirmar",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (confirmar == JOptionPane.YES_OPTION) {
-            sistema.getClienteService().eliminar(id);
-            cargarDatosClientes();
-        }
-    }//GEN-LAST:event_delClientesActionPerformed
-
-    private void bClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClientesActionPerformed
-        // TODO add your handling code here:
-    String busqueda = JOptionPane.showInputDialog(this, "Ingrese la cédula:");
-
-    if (busqueda == null || busqueda.isBlank()) return;
-
-    Cliente c = sistema.getClienteService().buscar(Integer.parseInt(busqueda));
-
-    DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
-    modelo.setRowCount(0);
-
-    if (c != null) {
-        modelo.addRow(new Object[]{
-            c.getId(),
-            c.getNombre(),
-            c.getTelefono(),
-            c.getCorreo()
-        });
-    } else {
-        JOptionPane.showMessageDialog(this, "Cliente no encontrado");
-    }
-
-    }//GEN-LAST:event_bClientesActionPerformed
-
-    private void addVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehiculoActionPerformed
-        // TODO add your handling code here:
-        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "AGREGAR", null,this);
-        dialogo.setAlwaysOnTop(true);
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
-        cargarDatosVehiculos();
-        
-    }//GEN-LAST:event_addVehiculoActionPerformed
-
-    private void modVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modVehiculoActionPerformed
-        // TODO add your handling code here:
-        
-        int fila = tablaVehiculo.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un vehículo");
+        Usuario u = sistema.getLoginController().login("recepcionista", actual);
+        if (u == null) {
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
             return;
         }
-        
-        String placa = tablaVehiculo.getValueAt(fila, 0).toString();
-        Vehiculo v = sistema.getVehiculoService().buscar(placa);
-        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "MODIFICAR", v,this);
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
-        cargarDatosVehiculos();
-        
-        
-        
-    }//GEN-LAST:event_modVehiculoActionPerformed
 
-    private void delVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delVehiculoActionPerformed
-        // TODO add your handling code here:
-         int fila = tablaVehiculo.getSelectedRow();
-         if (fila == -1) {
-             JOptionPane.showMessageDialog(this, "Seleccione un vehículo");
-             return;
-         }
-         String placa = tablaVehiculo.getValueAt(fila, 0).toString();
-         int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar vehículo?", "Confirmar", JOptionPane.YES_NO_OPTION);
-         if (confirmar == JOptionPane.YES_OPTION) {
-             sistema.getVehiculoService().eliminar(placa);
-             cargarDatosVehiculos();
-         }
-    }//GEN-LAST:event_delVehiculoActionPerformed
+        String nueva = JOptionPane.showInputDialog(this, "Ingrese la nueva contraseña:");
+        if (nueva == null || nueva.isBlank()) {
+            return;
+        }
 
-    private void bVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVehiculoActionPerformed
+        u.cambiarContrasena(nueva);
+        ArchivoUtil.guardarDatos(sistema.getLoginController().getUsuarios(), "usuarios.dat");
+        JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void bInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInventarioActionPerformed
         // TODO add your handling code here:
-        
-        String busqueda = JOptionPane.showInputDialog(this, "Ingrese la placa:");
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese el código del repuesto:");
         if (busqueda == null || busqueda.isBlank()) {
             return;
         }
-        Vehiculo v = sistema.getVehiculoService().buscar(busqueda);
-        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
+        Repuesto r = sistema.getInventario().buscar(busqueda);
+        DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
         modelo.setRowCount(0);
-        if (v != null) {
-            modelo.addRow(new Object[]{v.getPlaca(), v.getMarca(), v.getModelo()});
+        if (r != null) {
+            modelo.addRow(new Object[]{r.getId(), r.getNombre(), r.getPrecio(), r.getCantidad()});
         } else {
-            JOptionPane.showMessageDialog(this, "Vehículo no encontrado");
+            JOptionPane.showMessageDialog(this, "Repuesto no encontrado");
         }
-    }//GEN-LAST:event_bVehiculoActionPerformed
+    }//GEN-LAST:event_bInventarioActionPerformed
 
-    private void modMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modMecanicoActionPerformed
+    private void delInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delInventarioActionPerformed
         // TODO add your handling code here:
-        int fila = tablaMecanico.getSelectedRow();
+
+        int fila = tablaInventario.getSelectedRow();
         if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un mecánico");
+            JOptionPane.showMessageDialog(this, "Seleccione un repuesto");
             return;
         }
-        int id = Integer.parseInt(tablaMecanico.getValueAt(fila, 0).toString());
-        Mecanico m = sistema.getMecanicoService().buscar(id);
-        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "MODIFICAR", m,this);
+        String codigo = tablaInventario.getValueAt(fila, 0).toString();
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar repuesto?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            sistema.getInventario().eliminar(codigo);
+            cargarDatosInventario();
+        }
+    }//GEN-LAST:event_delInventarioActionPerformed
+
+    private void modInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modInventarioActionPerformed
+        // TODO add your handling code here:
+
+        int fila = tablaInventario.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un repuesto");
+            return;
+        }
+        String codigo = tablaInventario.getValueAt(fila, 0).toString();
+        Repuesto r = sistema.getInventario().buscar(codigo);
+        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "MODIFICAR", r,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
-        cargarDatosMecanicos();
-    }//GEN-LAST:event_modMecanicoActionPerformed
+        cargarDatosInventario();
+    }//GEN-LAST:event_modInventarioActionPerformed
 
-    private void delMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delMecanicoActionPerformed
+    private void addInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventarioActionPerformed
         // TODO add your handling code here:
-        
-        int filaSeleccionada = tablaMecanico.getSelectedRow();
-    
-        if (filaSeleccionada == -1) {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un mecánico para eliminar.");
-        return;
+        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "AGREGAR", null,this);
+        dialogo.setAlwaysOnTop(true);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosInventario();
+    }//GEN-LAST:event_addInventarioActionPerformed
+
+    private void btnGenararFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenararFacturaActionPerformed
+        // TODO add your handling code here:
+        int fila = tablaOrden.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
         }
-    
-        int confirmar = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea eliminar al mecánico seleccionado?", 
-            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-            
+        String id = tablaOrden.getValueAt(fila, 1).toString();
+        Orden orden = sistema.getOrdenService().buscar(id);
+
+        if (!orden.getEstado().equals("Finalizada")) {
+            JOptionPane.showMessageDialog(this,
+                "Solo se puede generar factura de órdenes Finalizadas");
+            return;
+        }
+
+        Factura factura = orden.generarFactura();
+        FacturaFrame ventana = new FacturaFrame(factura);
+        ventana.setAlwaysOnTop(true);
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+    }//GEN-LAST:event_btnGenararFacturaActionPerformed
+
+    private void bOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrdenActionPerformed
+        // TODO add your handling code here:
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese el ID de la orden:");
+        if (busqueda == null || busqueda.isBlank()) {
+            return;
+        }
+        Orden o = sistema.getOrdenService().buscar(busqueda);
+        DefaultTableModel modelo = (DefaultTableModel) tablaOrden.getModel();
+        modelo.setRowCount(0);
+        if (o != null) {
+            modelo.addRow(new Object[]{o.getFecha(), o.getId(), o.getEstado()});
+        } else {
+            JOptionPane.showMessageDialog(this, "Orden no encontrada");
+        }
+    }//GEN-LAST:event_bOrdenActionPerformed
+
+    private void delOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delOrdenActionPerformed
+        // TODO add your handling code here:
+
+        int fila = tablaOrden.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
+        }
+        String id = tablaOrden.getValueAt(fila, 1).toString();
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar orden?", "Confirmar", JOptionPane.YES_NO_OPTION);
         if (confirmar == JOptionPane.YES_OPTION) {
-            int id = Integer.parseInt(tablaMecanico.getValueAt(filaSeleccionada, 0).toString());
-            boolean tieneOrdenes = sistema.getOrdenService().consultar()
-                    .stream()
-                    .anyMatch(o -> o.getMecanico() != null
-                    && o.getMecanico().getId() == id
-                    && !o.getEstado().equals("Finalizada"));
-
-            if (tieneOrdenes) {
-                JOptionPane.showMessageDialog(this,
-                        "No se puede eliminar un mecánico con órdenes activas");
-                return;
-            }
-
-            sistema.getMecanicoService().eliminar(id);
-            JOptionPane.showMessageDialog(this, "Eliminado con éxito");
-            cargarDatosMecanicos();
+            sistema.getOrdenService().eliminar(id);
+            cargarDatosOrdenes();
         }
-    }//GEN-LAST:event_delMecanicoActionPerformed
+    }//GEN-LAST:event_delOrdenActionPerformed
+
+    private void modOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modOrdenActionPerformed
+        // TODO add your handling code here:
+
+        int fila = tablaOrden.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
+        }
+        String id = tablaOrden.getValueAt(fila, 1).toString();
+        Orden o = sistema.getOrdenService().buscar(id);
+        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "MODIFICAR", o,this);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosOrdenes();
+    }//GEN-LAST:event_modOrdenActionPerformed
+
+    private void addOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrdenActionPerformed
+        // TODO add your handling code here:
+        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "AGREGAR", null,this);
+        dialogo.setAlwaysOnTop(true);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+    }//GEN-LAST:event_addOrdenActionPerformed
 
     private void bMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMecanicoActionPerformed
         // TODO add your handling code here:
@@ -902,167 +914,199 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Mecánico no encontrado");
         }
-
     }//GEN-LAST:event_bMecanicoActionPerformed
 
-    private void addOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrdenActionPerformed
+    private void delMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delMecanicoActionPerformed
         // TODO add your handling code here:
-        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "AGREGAR", null,this);
+
+        int filaSeleccionada = tablaMecanico.getSelectedRow();
+
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un mecánico para eliminar.");
+            return;
+        }
+
+        int confirmar = JOptionPane.showConfirmDialog(this,
+            "¿Está seguro de que desea eliminar al mecánico seleccionado?",
+            "Confirmar acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            int id = Integer.parseInt(tablaMecanico.getValueAt(filaSeleccionada, 0).toString());
+            boolean tieneOrdenes = sistema.getOrdenService().consultar()
+            .stream()
+            .anyMatch(o -> o.getMecanico() != null
+                && o.getMecanico().getId() == id
+                && !o.getEstado().equals("Finalizada"));
+
+            if (tieneOrdenes) {
+                JOptionPane.showMessageDialog(this,
+                    "No se puede eliminar un mecánico con órdenes activas");
+                return;
+            }
+
+            sistema.getMecanicoService().eliminar(id);
+            JOptionPane.showMessageDialog(this, "Eliminado con éxito");
+            cargarDatosMecanicos();
+        }
+    }//GEN-LAST:event_delMecanicoActionPerformed
+
+    private void modMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modMecanicoActionPerformed
+        // TODO add your handling code here:
+        int fila = tablaMecanico.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un mecánico");
+            return;
+        }
+        int id = Integer.parseInt(tablaMecanico.getValueAt(fila, 0).toString());
+        Mecanico m = sistema.getMecanicoService().buscar(id);
+        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "MODIFICAR", m,this);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosMecanicos();
+    }//GEN-LAST:event_modMecanicoActionPerformed
+
+    private void addMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMecanicoActionPerformed
+        // TODO add your handling code here:
+
+        MecanicoDialogFrame dialogo = new MecanicoDialogFrame(sistema, "AGREGAR", null,this);
         dialogo.setAlwaysOnTop(true);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
-    }//GEN-LAST:event_addOrdenActionPerformed
+    }//GEN-LAST:event_addMecanicoActionPerformed
 
-    private void modOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modOrdenActionPerformed
+    private void bVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVehiculoActionPerformed
         // TODO add your handling code here:
-        
-        int fila = tablaOrden.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una orden");
-            return;
-        }
-        String id = tablaOrden.getValueAt(fila, 1).toString();
-        Orden o = sistema.getOrdenService().buscar(id);
-        OrdenDialogFrame dialogo = new OrdenDialogFrame(sistema, "MODIFICAR", o,this);
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
-        cargarDatosOrdenes();
-    }//GEN-LAST:event_modOrdenActionPerformed
 
-    private void delOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delOrdenActionPerformed
-        // TODO add your handling code here:
-        
-        int fila = tablaOrden.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una orden");
-            return;
-        }
-        String id = tablaOrden.getValueAt(fila, 1).toString();
-        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar orden?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (confirmar == JOptionPane.YES_OPTION) {
-            sistema.getOrdenService().eliminar(id);
-            cargarDatosOrdenes();
-        }
-    }//GEN-LAST:event_delOrdenActionPerformed
-
-    private void bOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bOrdenActionPerformed
-        // TODO add your handling code here:
-        String busqueda = JOptionPane.showInputDialog(this, "Ingrese el ID de la orden:");
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese la placa:");
         if (busqueda == null || busqueda.isBlank()) {
             return;
         }
-        Orden o = sistema.getOrdenService().buscar(busqueda);
-        DefaultTableModel modelo = (DefaultTableModel) tablaOrden.getModel();
+        Vehiculo v = sistema.getVehiculoService().buscar(busqueda);
+        DefaultTableModel modelo = (DefaultTableModel) tablaVehiculo.getModel();
         modelo.setRowCount(0);
-        if (o != null) {
-            modelo.addRow(new Object[]{o.getFecha(), o.getId(), o.getEstado()});
+        if (v != null) {
+            modelo.addRow(new Object[]{v.getPlaca(), v.getMarca(), v.getModelo()});
         } else {
-            JOptionPane.showMessageDialog(this, "Orden no encontrada");
+            JOptionPane.showMessageDialog(this, "Vehículo no encontrado");
         }
-    }//GEN-LAST:event_bOrdenActionPerformed
+    }//GEN-LAST:event_bVehiculoActionPerformed
 
-    private void addInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addInventarioActionPerformed
+    private void delVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delVehiculoActionPerformed
         // TODO add your handling code here:
-        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "AGREGAR", null,this);
+        int fila = tablaVehiculo.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un vehículo");
+            return;
+        }
+        String placa = tablaVehiculo.getValueAt(fila, 0).toString();
+        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar vehículo?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirmar == JOptionPane.YES_OPTION) {
+            sistema.getVehiculoService().eliminar(placa);
+            cargarDatosVehiculos();
+        }
+    }//GEN-LAST:event_delVehiculoActionPerformed
+
+    private void modVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modVehiculoActionPerformed
+        // TODO add your handling code here:
+
+        int fila = tablaVehiculo.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un vehículo");
+            return;
+        }
+
+        String placa = tablaVehiculo.getValueAt(fila, 0).toString();
+        Vehiculo v = sistema.getVehiculoService().buscar(placa);
+        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "MODIFICAR", v,this);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+        cargarDatosVehiculos();
+
+    }//GEN-LAST:event_modVehiculoActionPerformed
+
+    private void addVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehiculoActionPerformed
+        // TODO add your handling code here:
+        VehiculoDialogFrame dialogo = new VehiculoDialogFrame(sistema, "AGREGAR", null,this);
         dialogo.setAlwaysOnTop(true);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
-        cargarDatosInventario();
-    }//GEN-LAST:event_addInventarioActionPerformed
+        cargarDatosVehiculos();
 
-    private void modInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modInventarioActionPerformed
+    }//GEN-LAST:event_addVehiculoActionPerformed
+
+    private void bClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bClientesActionPerformed
         // TODO add your handling code here:
-        
-        int fila = tablaInventario.getSelectedRow();
+        String busqueda = JOptionPane.showInputDialog(this, "Ingrese la cédula:");
+
+        if (busqueda == null || busqueda.isBlank()) return;
+
+        Cliente c = sistema.getClienteService().buscar(Integer.parseInt(busqueda));
+
+        DefaultTableModel modelo = (DefaultTableModel) tablaClientes.getModel();
+        modelo.setRowCount(0);
+
+        if (c != null) {
+            modelo.addRow(new Object[]{
+                c.getId(),
+                c.getNombre(),
+                c.getTelefono(),
+                c.getCorreo()
+            });
+        } else {
+            JOptionPane.showMessageDialog(this, "Cliente no encontrado");
+        }
+    }//GEN-LAST:event_bClientesActionPerformed
+
+    private void delClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delClientesActionPerformed
+        // TODO add your handling code here:
+
+        int fila = tablaClientes.getSelectedRow();
+
         if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un repuesto");
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
             return;
         }
-        String codigo = tablaInventario.getValueAt(fila, 0).toString();
-        Repuesto r = sistema.getInventario().buscar(codigo);
-        InventarioDialogFrame dialogo = new InventarioDialogFrame(sistema, "MODIFICAR", r,this);
+
+        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
+
+        int confirmar = JOptionPane.showConfirmDialog(
+            this,
+            "¿Eliminar cliente?",
+            "Confirmar",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            sistema.getClienteService().eliminar(id);
+            cargarDatosClientes();
+        }
+    }//GEN-LAST:event_delClientesActionPerformed
+
+    private void modClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modClientesActionPerformed
+        // TODO add your handling code here:
+
+        int fila = tablaClientes.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente");
+            return;
+        }
+        int id = Integer.parseInt(tablaClientes.getValueAt(fila, 0).toString());
+        Cliente c = sistema.getClienteService().buscar(id);
+        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "MODIFICAR", c,this);
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
-        cargarDatosInventario();
-    }//GEN-LAST:event_modInventarioActionPerformed
+        cargarDatosClientes();
 
-    private void delInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delInventarioActionPerformed
+    }//GEN-LAST:event_modClientesActionPerformed
+
+    private void addClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addClientesActionPerformed
         // TODO add your handling code here:
-        
-        int fila = tablaInventario.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione un repuesto");
-            return;
-        }
-        String codigo = tablaInventario.getValueAt(fila, 0).toString();
-        int confirmar = JOptionPane.showConfirmDialog(this, "¿Eliminar repuesto?", "Confirmar", JOptionPane.YES_NO_OPTION);
-        if (confirmar == JOptionPane.YES_OPTION) {
-            sistema.getInventario().eliminar(codigo);
-            cargarDatosInventario();
-        }
-    }//GEN-LAST:event_delInventarioActionPerformed
 
-    private void bInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInventarioActionPerformed
-        // TODO add your handling code here:
-        String busqueda = JOptionPane.showInputDialog(this, "Ingrese el código del repuesto:");
-        if (busqueda == null || busqueda.isBlank()) {
-            return;
-        }
-        Repuesto r = sistema.getInventario().buscar(busqueda);
-        DefaultTableModel modelo = (DefaultTableModel) tablaInventario.getModel();
-        modelo.setRowCount(0);
-        if (r != null) {
-            modelo.addRow(new Object[]{r.getId(), r.getNombre(), r.getPrecio(), r.getCantidad()});
-        } else {
-            JOptionPane.showMessageDialog(this, "Repuesto no encontrado");
-        }
-    }//GEN-LAST:event_bInventarioActionPerformed
-
-    private void btnGenararFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenararFacturaActionPerformed
-        // TODO add your handling code here:
-        int fila = tablaOrden.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Seleccione una orden");
-            return;
-        }
-        String id = tablaOrden.getValueAt(fila, 1).toString();
-        Orden orden = sistema.getOrdenService().buscar(id);
-
-        if (!orden.getEstado().equals("Finalizada")) {
-            JOptionPane.showMessageDialog(this,
-                    "Solo se puede generar factura de órdenes Finalizadas");
-            return;
-        }
-
-        Factura factura = orden.generarFactura();
-        FacturaFrame ventana = new FacturaFrame(factura);
-        ventana.setAlwaysOnTop(true);
-        ventana.setLocationRelativeTo(this);
-        ventana.setVisible(true);
-    }//GEN-LAST:event_btnGenararFacturaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String actual = JOptionPane.showInputDialog(this, "Ingrese su contraseña actual:");
-        if (actual == null) {
-            return;
-        }
-
-        Usuario u = sistema.getLoginController().login("recepcionista", actual);
-        if (u == null) {
-            JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
-            return;
-        }
-
-        String nueva = JOptionPane.showInputDialog(this, "Ingrese la nueva contraseña:");
-        if (nueva == null || nueva.isBlank()) {
-            return;
-        }
-
-        u.cambiarContrasena(nueva);
-        ArchivoUtil.guardarDatos(sistema.getLoginController().getUsuarios(), "usuarios.dat");
-        JOptionPane.showMessageDialog(this, "Contraseña cambiada exitosamente");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        ClienteDialogFrame dialogo = new ClienteDialogFrame(sistema, "AGREGAR", null, this);
+        dialogo.setAlwaysOnTop(true);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+    }//GEN-LAST:event_addClientesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1120,6 +1164,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -1136,6 +1181,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
     private javax.swing.JTable tablaInventario;
     private javax.swing.JTable tablaMecanico;
     private javax.swing.JTable tablaOrden;
+    private javax.swing.JTable tablaServicios;
     private javax.swing.JTable tablaVehiculo;
     // End of variables declaration//GEN-END:variables
 
@@ -1183,6 +1229,13 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         for (Repuesto r : sistema.getInventario().consultar()) {
             modelo.addRow(new Object[]{r.getId(), r.getNombre(), r.getPrecio(), r.getCantidad()});
         }
+    }
+    public void cargarDatosServicios() {
+        modeloServicios.setRowCount(0);
+        modeloServicios.addRow(new Object[]{"Cambio de Aceite", sistema.getPrecioServicio("Cambio de Aceite")});
+        modeloServicios.addRow(new Object[]{"Revision de Frenos", sistema.getPrecioServicio("Revision de Frenos")});
+        modeloServicios.addRow(new Object[]{"Revision General", sistema.getPrecioServicio("Revision General")});
+        modeloServicios.addRow(new Object[]{"Cambio de Repuesto", sistema.getPrecioServicio("Cambio de Repuesto")});
     }
 }
 

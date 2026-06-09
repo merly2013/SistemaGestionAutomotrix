@@ -158,12 +158,12 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(0, 42, Short.MAX_VALUE)))
+                        .addGap(0, 17, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelExtra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(52, 52, 52))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,8 +176,8 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
                 .addComponent(servicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -200,8 +200,13 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
 
     private void serviciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviciosActionPerformed
         // TODO add your handling code here:
+        
         String seleccion = (String) servicios.getSelectedItem();
-        panelExtra.removeAll(); // limpia el panel
+        if (seleccion == null) {return;}
+        double precio = sistema.getPrecioServicio(seleccion);
+        jTextField2.setText(String.valueOf(precio));
+        jTextField2.setEditable(false); // no puede cambiarlo
+        panelExtra.removeAll();
 
         switch (seleccion) {
             case "Cambio de Aceite":
@@ -265,7 +270,7 @@ public class AgregarServicioFrame extends javax.swing.JFrame {
             case "Revision General":
                 servicio = new RevisionGeneral(false, descripcion, descripcion, costo, duracion);
                 break;
-            default: // Cambio de Repuesto
+            default:
                 String codigoRep = ((javax.swing.JTextField) panelExtra.getComponent(1)).getText();
                 Repuesto rep = sistema.getInventario().buscar(codigoRep);
                 if (rep == null) {
