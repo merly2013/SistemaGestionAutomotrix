@@ -27,7 +27,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
     public MecanicoFrame(SistemaController sistema, Mecanico mecanico) {
         initComponents();
         setLocationRelativeTo(null); // centra en pantalla
-        
+        setResizable(false);
         this.sistema = sistema;
         this.mecanico = mecanico;
         jLabelBienvenido.setText("Bienvenido, " + mecanico.getNombre());
@@ -72,6 +72,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
         btnVerDetalles = new javax.swing.JButton();
         btnAgregarServicios = new javax.swing.JButton();
         btnCambiarContrasena = new javax.swing.JButton();
+        btnCambiarEstado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,18 +134,21 @@ public class MecanicoFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel3.setText("Mis Ordenes Asignadas");
+        jLabel3.setText("Ordenes Asignadas");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(76, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,6 +180,11 @@ public class MecanicoFrame extends javax.swing.JFrame {
         btnCambiarContrasena.setBorderPainted(false);
         btnCambiarContrasena.addActionListener(this::btnCambiarContrasenaActionPerformed);
 
+        btnCambiarEstado.setBackground(new java.awt.Color(68, 87, 117));
+        btnCambiarEstado.setForeground(new java.awt.Color(255, 255, 255));
+        btnCambiarEstado.setText("Cambiar Estado");
+        btnCambiarEstado.addActionListener(this::btnCambiarEstadoActionPerformed);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -186,9 +195,11 @@ public class MecanicoFrame extends javax.swing.JFrame {
                     .addComponent(btnCambiarContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btnVerDetalles)
-                        .addGap(65, 65, 65)
-                        .addComponent(btnAgregarServicios)))
-                .addContainerGap(275, Short.MAX_VALUE))
+                        .addGap(43, 43, 43)
+                        .addComponent(btnAgregarServicios)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnCambiarEstado)))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +207,8 @@ public class MecanicoFrame extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVerDetalles)
-                    .addComponent(btnAgregarServicios))
+                    .addComponent(btnAgregarServicios)
+                    .addComponent(btnCambiarEstado))
                 .addGap(18, 18, 18)
                 .addComponent(btnCambiarContrasena)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -218,7 +230,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         pack();
@@ -287,6 +299,11 @@ public class MecanicoFrame extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (orden.getEstado().equals("Finalizada")) {
+            JOptionPane.showMessageDialog(this,
+                    "No se pueden agregar servicios a una orden finalizada");
+            return;
+        }
 
         AgregarServicioFrame ventana = new AgregarServicioFrame(sistema, orden, this);
         ventana.setLocationRelativeTo(this);
@@ -324,6 +341,38 @@ public class MecanicoFrame extends javax.swing.JFrame {
     
     }//GEN-LAST:event_btnCambiarContrasenaActionPerformed
 
+    private void btnCambiarEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarEstadoActionPerformed
+        // TODO add your handling code here:
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una orden");
+            return;
+        }
+        String idOrden = jTable1.getValueAt(fila, 0).toString();
+        Orden orden = sistema.getOrdenService().buscar(idOrden);
+
+        if (orden.getEstado().equals("Finalizada")) {
+            JOptionPane.showMessageDialog(this, "Esta orden ya está finalizada");
+            return;
+        }
+
+        String[] opciones = {"En proceso", "Finalizada"};
+        String nuevoEstado = (String) JOptionPane.showInputDialog(this,
+                "Seleccione el nuevo estado:",
+                "Cambiar Estado",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                orden.getEstado());
+
+        if (nuevoEstado != null) {
+            orden.setEstado(nuevoEstado);
+            sistema.getOrdenService().modificar(orden);
+            cargarOrdenes();
+            JOptionPane.showMessageDialog(this, "Estado actualizado a: " + nuevoEstado);
+        }
+    }//GEN-LAST:event_btnCambiarEstadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -352,6 +401,7 @@ public class MecanicoFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarServicios;
     private javax.swing.JButton btnCambiarContrasena;
+    private javax.swing.JButton btnCambiarEstado;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnVerDetalles;
     private javax.swing.JLabel jLabel1;

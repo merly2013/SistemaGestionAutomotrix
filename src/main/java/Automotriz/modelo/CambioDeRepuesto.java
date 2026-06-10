@@ -4,6 +4,7 @@ package Automotriz.modelo;
 
 
 public class CambioDeRepuesto extends Servicio {
+    private static final long serialVersionUID = 1L;
     private Repuesto repuesto;
     private Inventario inventario;
     private int garantiaMeses;
@@ -33,5 +34,12 @@ public class CambioDeRepuesto extends Servicio {
         } else {
             System.out.println("No hay stock disponible para: " + repuesto.getNombre());
         }
+    }
+    @Override
+    public double getCosto() {
+        if (repuesto != null) {
+            return repuesto.getPrecio() + super.getCosto();
+        }
+        return super.getCosto();
     }
 }

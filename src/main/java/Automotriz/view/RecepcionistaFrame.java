@@ -53,6 +53,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         tablaOrden.getTableHeader().setReorderingAllowed(false);
         tablaInventario.getTableHeader().setReorderingAllowed(false);
         tablaServicios.getTableHeader().setReorderingAllowed(false);
+        
         // modelo editable solo en columna Costo
         modeloServicios = new javax.swing.table.DefaultTableModel(
         new String[]{"Servicio", "Costo"}, 0) {
@@ -63,7 +64,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
         };
         tablaServicios.setModel(modeloServicios);
 
-        // listener para guardar cambios al editar
+        //listener para guardar cambios al editar
         tablaServicios.getModel().addTableModelListener(e -> {
             int fila = e.getFirstRow();
             int columna = e.getColumn();
@@ -78,6 +79,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
                 }
             }
         });
+        
 
         cargarDatosServicios();
         
@@ -732,7 +734,7 @@ public class RecepcionistaFrame extends javax.swing.JFrame {
             return;
         }
 
-        Usuario u = sistema.getLoginController().login("recepcionista", actual);
+        Usuario u = sistema.getLoginController().login("admin", actual);
         if (u == null) {
             JOptionPane.showMessageDialog(this, "Contraseña incorrecta");
             return;
